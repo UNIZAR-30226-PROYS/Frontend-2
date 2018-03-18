@@ -1,0 +1,230 @@
+
+div.main-container {
+  padding-top: 50px;
+}
+
+nav.top-menu {
+  z-index: 10000;
+}
+
+div.footer-container {
+  color: #FFF;
+	background-color: #7c7c7c;
+  position: fixed;
+  height: 75px;
+  min-height:50px;
+  bottom: 0;
+  width: 100%;
+}
+
+nav.footer-container {
+  border-top: 5px #000 solid;
+  color: #7c7c7c !important;
+	background-color: #7c7c7c !important;
+}
+
+#bars {
+	margin: 2em auto;
+	max-width: 960px;
+	overflow: hidden;
+}
+
+.bar {
+	float: left;
+	width: 20%;
+	text-align: center;
+}
+
+.bar h3 {
+	font-size: 1.4em;
+	font-weight: normal;
+	margin: 0;
+	text-transform: uppercase;
+}
+
+.bar-circle {
+	display: block;
+	margin: 0.7em auto;
+}
+
+.add-border {
+  border: 5px solid black;
+}
+
+.register-button {
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  padding: 15px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #4286f4;
+  color: #ffffff;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+.register-button:hover, .register-button:focus {
+  background: #214c91;
+}
+
+.register-button-block {
+  display: block;
+  width: 100%;
+}
+
+.valign-middle {
+    vertical-align: middle !important;
+}
+
+div.blockquote-lvl1{
+    padding-left: 15px;
+}
+
+div.search-price{
+    font-size: 14pt;
+    color: #555555;
+}
+
+td.search-vendor {
+    font-variant: small-caps;
+    font-size: 16pt;
+}
+
+/* https://css-tricks.com/examples/hrs/ */
+hr.separator { border: 0; height: 1px; background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0)); }
+
+/*****************************************/
+/* centrado del icono en la barra de navegacion */
+#nav-brand{  
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+}
+/*****************************************/
+/* seccion recomendaciones */
+.recomendaciones h1{
+    margin: 0;
+    padding-top: 40px;
+	text-align: center;
+}
+.recomendaciones h3{
+    margin: 0;
+    text-align: center;
+    padding-bottom: 20px;
+    font-family: Junicode ;
+}
+.recomendaciones h2{
+    text-align: right;
+    position: relative;
+    top: -30px ;
+    right: +60px;
+}
+.recomendaciones{
+    margin: 0;
+    background: url("../imgs/wall2.jpg");
+}
+.recom-class{
+    color: white;
+    position:relative;
+    left:+48px;
+    padding-bottom: 40px;
+}
+.recomendaciones img{
+    width:100%;
+    height: 100%;
+}
+.recomendaciones .grid-images{
+    border:10px solid white;
+    border-radius: 50%;
+}
+/* grid circulos recomendaciones */
+#izq-abj-dec{
+    position:relative;
+    top:+20px;
+    left: +40px;
+}
+
+#izq-abj-izq{
+    position: relative;
+    top:-25px;
+    left: +30px;
+}
+
+#dec-abj-izq{
+    position: relative;
+    left:-15px;
+}
+
+#dec-abj-dec{
+    position: relative;
+    left:-15px;
+    top: +40px;
+}
+
+#dec-arr-izq{
+    position: relative;
+    top:+40px;
+    left:-15px;
+}
+
+#dec-arr-dec{
+    position: relative;
+    top:20px;
+    left: -20px;
+}
+
+.circle{
+    position: relative;
+}
+
+/* play button hover */
+.circle:hover .play-over{ display: block }
+.play-over{
+    position: absolute;
+    opacity: 0.5;
+    display:none;
+    top:0%;
+}
+
+/*****************************************/
+/* seccion novedades */
+.novedades{
+    background-color: black;
+    color: white;
+}
+.novedades-class{
+    position:relative;
+    left:+68px;
+    text-align: center;
+}
+.novedades h1{
+    margin: 0;  /*colapsa margen*/
+    padding-top: 40px;
+    text-align: center;
+}
+.novedades h3{
+    text-align: center;
+    padding-bottom: 20px;
+    font-family: Junicode ;
+}
+.novedades h2{
+    margin: 0;
+    text-align: right;
+    position: relative;
+    right: +60px;
+}
+.novedades img{
+    width:100%;
+    height: 100%;
+}
+/********************************************/
+/* depuracion */
+body{
+    background-color: yellow;
+}
