@@ -129,12 +129,7 @@ hr.separator { border: 0; height: 1px; background-image: linear-gradient(to righ
     margin: 0;
     background: url("../imgs/wall2.jpg");
 }
-.recom-class{
-    color: white;
-    position:relative;
-    left:+48px;
-    padding-bottom: 40px;
-}
+
 .recomendaciones img{
     width:100%;
     height: 100%;
@@ -198,11 +193,7 @@ hr.separator { border: 0; height: 1px; background-image: linear-gradient(to righ
     background-color: black;
     color: white;
 }
-.novedades-class{
-    position:relative;
-    left:+68px;
-    text-align: center;
-}
+
 .novedades h1{
     margin: 0;  /*colapsa margen*/
     padding-top: 40px;
@@ -214,9 +205,9 @@ hr.separator { border: 0; height: 1px; background-image: linear-gradient(to righ
     font-family: Junicode ;
 }
 .novedades h2{
-    margin: 0;
     text-align: right;
     position: relative;
+    top: -30px ;
     right: +60px;
 }
 .novedades img{

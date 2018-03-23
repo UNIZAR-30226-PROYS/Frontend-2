@@ -1,6 +1,33 @@
 ---
 layout: general
 ---
+
+
+
+<script src="ajax.js" type="text/javascript"></script>
+<script src="responseHTML.js" type="text/javascript"></script>
+
+<div id="storage" style="display:none;">
+</div>
+
+<!-- https://www.xul.fr/ajax/responseHTML-attribute.php -->
+
+<h1>Ajax Demo - Getting Data From a HTML Page</h1>
+<hr>
+Load the <b><a href="playlist.html" target="_parent">anotherpage.html</a></b>
+file, get the content of the BODY section and write it into this page, below...
+<FORM name="ajax" method="POST" action="">
+    <p>
+
+        <INPUT type="BUTTON" value="Load HTML and get data"  ONCLICK="loadWholePage('playlist.html')">
+    </p>
+
+</FORM>
+
+<div id="displayed">
+</div>
+
+
 <section class="novedades">
     <div class="novedades-class">
         <h1 class="w3-hide-large w3-hide-medium">Novedades</h1>
@@ -42,23 +69,16 @@ layout: general
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
-                </div>
+
             </div>
         </div>
         <h2>Mas recomendaciones >></h2>
     </div>
 </section>
 
-<section class="recomendaciones"> <!-- -->
-    <!-- Weirdest grid ull see -->
+
+
+<section class="recomendaciones">
     <div class="recom-class">
         <h1>Recomendaciones</h1>
         <h3>Never miss a neew release.</h3>
