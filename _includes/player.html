@@ -10,9 +10,9 @@
         -webkit-justify-content: center;
         -ms-flex-pack: center;
         justify-content: center;
-        -webkit-align-items: center;
+        /*-webkit-align-items: center;*/
         -ms-flex-align: center;
-        align-items: center;
+        /*align-items: center; */
 
         position: fixed;
         z-index: 100;
@@ -20,6 +20,20 @@
         left: 0;
         width: 100%;
     }
+
+    #player-h-list ul{
+        list-style: none;
+    }
+
+    ul#player-h-list li {
+        display:inline;
+        float: left;
+    }
+
+    #player-h-list #seek {
+        width: 100%;
+    }
+
 </style>
 
 <script>
@@ -59,21 +73,42 @@
 
 <body>
     <div class="mobile-bottom-bar">
-        <div class="container gradient">
 
-            <div class="player gradient">
 
-                <input type="range" id="seek" value="0" max=""/>
+            <div class="player-gradient">
+                <ul id="player-h-list">
+                    <li>
+                        <button id="play">Play</button>
+                    </li>
+                    <li>
+                        <button id="pause">Pause</button>
+                    </li>
+                    <li>
+                        <button id="restart">Restart</button>
+                    </li>
+                    <li>
+                        <input type="range" id="seek" value="0" max=""/>
+                    </li>
+                    <li>
+                        <button id="pause">Random</button>
+                    </li>
+                    <li>
+                        <button id="restart">Like</button>
+                    </li>
+                </ul>
+<!--
+                        <h2>Playing Information</h2>
 
-                <button id="play">Play</button>
-                <button id="pause">Pause</button>
-                <button id="restart">Restart</button>
-                <h2>Playing Information</h2>
-                <div id="currentTime">0</div>
-                <div id="length">Duration:</div>
-                <div id="source">Source:</div>
-                <div id="status" style="color:red;">Status: Loading</div>
+                        <div id="currentTime">0</div>
+
+                        <div id="length">Duration:</div>
+
+                        <div id="source">Source:</div>
+
+                        <div id="status" style="color:red;">Status: Loading</div>
+-->
+
             </div><!-- / player -->
-        </div><!-- / Container-->
+
     </div>
 </body>
