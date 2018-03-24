@@ -23,6 +23,7 @@ layout: general
 
         body {
             background-color: white;
+			margin-bottom:60px;	/* reproductor inferior */
         }
 
         .columna-artistas-contenido .artista{
@@ -50,6 +51,22 @@ layout: general
 			text-align: right;
 			
 		}
+		#segunda-linea-izq{
+			margin-top:30px;
+		}
+		#segunda-linea-dec{
+			margin-top:30px;
+		}
+		#primera-linea-izq{
+			margin-top:30px;
+		}
+		#primera-linea-dec{
+			margin-top:30px;
+		}
+		.elemento:hover{
+			background: #aaaaaa;
+		}
+		
 
 </style>
 
@@ -162,49 +179,59 @@ layout: general
                         <h1 class="titulo-busqueda">Canciones</h1>
                         <h1 class="ver-todo">Ver todas</h1>
                         <div class="columna-artistas-contenido">
-                            <div class="row">
+                            <div class="row" id="primera-linea-izq">
+								
+		                            <div class="col-sm">
+										<div class="elemento">
+		                                <div class="row">
+		                                    <div class="col-sm">
+		                                        <img class="artista"  src="resources/imgs/wu.jpg">
+		                                    </div>
+		                                    <div class="col-sm">
+		                                        <h1 class="nombre-artista">artista1</h1>
+		                                    </div>
+		                                </div>
+										</div> <!-- elemento -->
+		                            </div>
+								
                                 <div class="col-sm">
+									<div class="elemento">
                                     <div class="row">
                                         <div class="col-sm">
                                             <img class="artista"  src="resources/imgs/wu.jpg">
                                         </div>
                                         <div class="col-sm">
-                                            <h1>artista1</h1>
+                                            <h1 class="nombre-artista">artista1</h1>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <img class="artista"  src="resources/imgs/wu.jpg">
-                                        </div>
-                                        <div class="col-sm">
-                                            <h1>artista1</h1>
-                                        </div>
-                                    </div>
+									</div> <!-- elemento -->
                                 </div>
                             </div>
                             <!-- segunda linea-->
-                            <div class="row">
+                            <div class="row" id="segunda-linea-izq">
                                 <div class="col-sm">
+									<div class="elemento">
                                     <div class="row">
                                         <div class="col-sm">
                                             <img class="artista"  src="resources/imgs/wu.jpg">
                                         </div>
                                         <div class="col-sm">
-                                            <h1>artista1</h1>
+                                            <h1 class="nombre-artista">artista1</h1>
                                         </div>
                                     </div>
+									</div> <!-- elemento -->
                                 </div>
                                 <div class="col-sm">
+									<div class="elemento">
                                     <div class="row">
                                         <div class="col-sm">
                                             <img class="artista" src="resources/imgs/wu.jpg">
                                         </div>
                                         <div class="col-sm">
-                                            <h1>artista1</h1>
+                                            <h1 class="nombre-artista">artista1</h1>
                                         </div>
                                     </div>
+									</div> <!-- elemento -->
                                 </div>
                             </div>
                         </div>
@@ -217,51 +244,59 @@ layout: general
                         <h1 class="titulo-busqueda">Listas</h1>
                         <h1 class="ver-todo">Ver todas</h1>
                         <div class="columna-listas-contenido">
-                            <div class="row">
+                            <div class="row" id="primera-linea-dec">
                                 <div class="col-sm">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <img class="lista"  src="resources/imgs/wu.jpg">
-                                        </div>
-                                        <div class="col-sm">
-                                            <h1>artista1</h1>
-                                        </div>
-                                    </div>
+									<div class="elemento">
+		                                <div class="row">
+		                                    <div class="col-sm">
+		                                        <img class="lista"  src="resources/imgs/wu.jpg">
+		                                    </div>
+		                                    <div class="col-sm">
+		                                        <h1>artista1</h1>
+		                                    </div>
+		                                </div>
+										 </div><!-- elemento -->
                                 </div>
                                 <div class="col-sm">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <img class="lista"  src="resources/imgs/wu.jpg">
-                                        </div>
-                                        <div class="col-sm">
-                                            <h1>artista1</h1>
-                                        </div>
-                                    </div>
+                                    <div class="elemento">
+		                                <div class="row">
+		                                    <div class="col-sm">
+		                                        <img class="lista"  src="resources/imgs/wu.jpg">
+		                                    </div>
+		                                    <div class="col-sm">
+		                                        <h1>artista1</h1>
+		                                    </div>
+		                                </div>
+										 </div><!-- elemento -->
                                 </div>
                             </div>
                             <!-- segunda linea-->
-                            <div class="row">
-                                <div class="col-sm">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <img class="lista"  src="resources/imgs/wu.jpg">
-                                        </div>
-                                        <div class="col-sm">
-                                            <h1>artista1</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm">
-                                    <div class="row">
-                                        <div class="col-sm">
-                                            <img class="lista" src="resources/imgs/wu.jpg">
-                                        </div>
-                                        <div class="col-sm">
-                                            <h1>artista1</h1>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+		                        <div class="row" id="segunda-linea-dec">
+		                            <div class="col-sm">	
+										<div class="elemento">
+		                                <div class="row">
+		                                    <div class="col-sm">
+		                                        <img class="lista"  src="resources/imgs/wu.jpg">
+		                                    </div>
+		                                    <div class="col-sm">
+		                                        <h1>artista1</h1>
+		                                    </div>
+		                                </div>
+										 </div><!-- elemento -->
+		                            </div>
+		                            <div class="col-sm">
+		                                <div class="elemento">
+		                                <div class="row">
+		                                    <div class="col-sm">
+		                                        <img class="lista"  src="resources/imgs/wu.jpg">
+		                                    </div>
+		                                    <div class="col-sm">
+		                                        <h1>artista1</h1>
+		                                    </div>
+		                                </div>
+										 </div><!-- elemento -->
+		                            </div>
+		                        </div>
                         </div>
                     </div>
                 </div>
