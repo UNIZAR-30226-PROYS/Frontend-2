@@ -51,13 +51,21 @@
             $("#status").text("Status: Ready to play").css("color","green");
         });
 
+		$("#seek").bind("change", function() {
+				audioElement.currentTime = $(this).val();
+				wavesurfer.seekTo(audioElement.currentTime/audioElement.duration);
+			}); 
+
         audioElement.addEventListener("timeupdate",function(){
-            $("#currentTime").text("Current second:" + audioElement.currentTime);
-        });
+			curtime = parseInt(audioElement.currentTime, 10);
+			$("#seek").attr("value", curtime);
+			wavesurfer.seekTo(audioElement.currentTime/audioElement.duration);
+		});
 
         $('#play').click(function() {
             audioElement.play();
             $("#status").text("Status: Playing");
+			$('#seek').attr('max',song.duration);
         });
 
         $('#pause').click(function() {
@@ -95,19 +103,21 @@
                     <li>
                         <button id="restart">Like</button>
                     </li>
+					<li><div id="currentTime">0</div></li>
+
                 </ul>
 <!--
                         <h2>Playing Information</h2>
 
-                        <div id="currentTime">0</div>
+                        
 
                         <div id="length">Duration:</div>
 
                         <div id="source">Source:</div>
 
                         <div id="status" style="color:red;">Status: Loading</div>
--->
 
+-->
             </div><!-- / player -->
 
     </div>
