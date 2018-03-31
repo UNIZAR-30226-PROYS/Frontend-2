@@ -1,0 +1,172 @@
+---
+layout: general
+---
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/1.3.7/wavesurfer.min.js"></script>
+<script src="/resources/js/jquery.min.js"></script>
+<script src="/resources/js/jQuerySimpleCounter.js"></script>
+
+<script>
+    var wavesurfer = Object.create(WaveSurfer);
+
+    document.addEventListener('DOMContentLoaded', function () {
+
+        wavesurfer.init({
+            container: '#waveform',
+            waveColor: '#A8DBA8',
+            progressColor: '#3B8686'
+        });
+
+        wavesurfer.load('downloaded_song.mp3');	
+    });
+
+    wavesurfer.on('ready', function () {
+        /*wavesurfer.play();*/
+    });
+
+	wavesurfer.on('seek', function () {
+    	audioElement.currentTime = $(this).val();
+		curtime = parseInt(audioElement.currentTime, 10);
+		$("#seek").attr("value", curtime);
+	});
+
+</script>
+
+<style>
+    .song{
+
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+
+    .song-header{
+        background-color: gray;
+        padding-right: 0px;
+        padding-left: 50px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+
+    .album{
+        width: 100%;
+    }
+
+    body{
+        background-color: white;
+		margin-bottom:60px;	/* reproductor inferior */
+    }
+
+    #play{
+        width: 100%;
+    }
+
+    #waveform{
+        position: relative;
+        top: 20px;
+    }
+
+	.song-content{
+      
+        padding-right: 80px;
+        padding-left: 80px;
+        padding-top: 30px;
+    }
+
+	.columna{
+		border-top: 1px solid gray;
+		padding-top: 20px;
+		padding-right: 20px;
+        padding-left: 20px;
+	}
+
+	#song-info-header{
+		position: relative;
+        top: 30px;
+	}
+
+</style>
+
+</head>
+
+<body>
+	
+    <div class="song">
+        <!--
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-7">
+
+                    <div id="waveform"></div>
+                </div>
+                <div class="col-4">
+                    <img class="album"  src="/resources/imgs/album.jpg">
+                </div>
+            </div>
+        </div>
+        -->
+        <div class="song-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-4">
+                                <img id="play" src="resources/imgs/play.gif">
+                            </div>
+                            <div class="col-4" id="song-info-header">
+                                <h1>Titulo</h1>
+                                <h2>Artista</h2>
+								<h2>Album</h2>
+                            </div>
+                        </div>
+                        <div id="waveform"></div>
+                    </div>
+                    <div class="col-4">
+                        <img class="album"  src="/resources/imgs/album.jpg">
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div id="counter"></div>
+		<div class="song-content">
+			 <div class="container-fluid">
+                <div class="row">
+                    <div class="col-6">
+						<h1>Añadir a una playlist</h1>						
+						<div class="columna">
+							<div class="alert alert-danger" role="alert">
+  								This is a danger alert—check it out!
+							</div>
+							  <form action="/action_page.php">
+								  <select name="cars">
+										<option value="volvo">Volvo</option>
+										<option value="saab">Saab</option>
+										<option value="fiat">Fiat</option>
+										<option value="audi">Audi</option>
+								  </select>
+							  <button type="button" class="btn btn-outline-secondary">Secondary</button>
+							</form>
+						</div>
+					</div><!-- col -->
+					 <div class="col-6">
+						<h1>Cancion</h1>
+						<div class="columna">
+							<div class="alert alert-danger" role="alert">
+  								This is a danger alert—check it out!
+							</div>
+							 <div class="row">
+								<div class="col-6">
+									<h1>1234 me gusta...</h1>
+									<button type="button" class="btn btn-outline-danger">Me gusta</button>
+								</div>
+								<div class="col-6">
+									<button type="button" class="btn btn-outline-warning">Favorito</button>
+								</div>
+							</div>				
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div> <!-- song -->
+	
+</body>
