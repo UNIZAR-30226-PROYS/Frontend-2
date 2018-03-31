@@ -1,72 +1,200 @@
 ---
-layout: users
-title: Perfil de usuario
+layout: general
 ---
 
-<script src="/resources/js/request.js"></script>
-<script src="/resources/js/product.js"></script>
-<script src="/resources/js/profile.js"></script>
-<script src="/resources/js/bars.js"></script>
-<script>
-window.onload = function() {
-    var user = getURLParameter("user");
-    if(user === null || user === undefined || user === ""){
-      redirectToPage("/404.html")
+<style>
+    body{
+        background-color: white;
     }
-    load_profile(user);
-};
-</script>
+    #profile-header{
+        overflow: hidden;
+    }
+    #profile-back-image{
+        position: relative;
+        top: 0px;
+        width: 100%;
+        height:100%;
+        margin: -1070px 0 0 0;
+        /*filter: blur(5px);*/
+    }
 
-<div class="container">
+    #profile-main-image{
+        border-radius: 50%;
+        border: 10px solid honeydew;
+        position: relative;
+        width: 400px;
+        height:100%;
+        top: -200px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
 
-  <div class="row">
-    <div id="username">DummyName</div>
-    <div id="bars">
-      <div id="public_rate" class="bar" data-percent="100">
-        <canvas class="bar-circle" width="70" height="70"></canvas>
-      </div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-4 col-xs-5 col-sm-5 col-lg-2">
-      <div id="mail_header"><h4>Email:</h4></div>
-    </div>
-    <div>
-      <div id="mail">random@random.com</div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-4 col-xs-5 col-sm-5 col-lg-2">
-      <div id="name_header"><h4>Nombre:</h4></div>
-    </div>
-    <div>
-      <div id="name">MyName</div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div>
-      <div id="desc_header"><h4>Descripci&oacute;n:</h4></div>
-    </div>
-    <div>
-      <blockquote id="description">SuperDescription</blockquote>
-    </div>
-  </div>
-  
-  <div class="row">
-    <h4>Rese&ntilde;as de productos</h4>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-    <table id="product_table" class="table table-striped table-bordered table-hover">
-      <tr>
-        <td width="10%">Fecha</td>
-        <td width="20%">Producto</td>
-        <td width="10%">Puntuación</td>
-        <td>Descripci&oacute;n</td>
-      </tr>
-    </table>
-    </div>
-  </div>
+    #profile-id #verificado{
+        width: 50px;
+        height: 50px;
+    }
 
-</div>
+    #profile-id #profile-name{
+        position: relative;
+        top: 4px;
+        left: 4px;
+        display: inline;
+        color: white;
+    }
+
+    #profile-id{
+        display: inline-block;
+        background-color: transparent;
+        position: relative;
+        top: -650px;
+        left: 80px;
+        padding-top: 5px;
+        padding-right: 15px;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        background: rgb(34,34,34); /* for IE */
+        background: rgba(34,34,34,0.75);
+    }
+
+    .profile-top-album{
+        width: 120%;
+        height: 120%;
+    }
+
+    .top-elem .profile-top-name{
+        line-height: 30px;
+        font-size: 200%;
+        position: relative;
+        top: 5px;
+        left: 40px;
+    }
+
+    .top-elem .profile-top-repro{
+        font-size: 200%;
+        position: relative;
+        float: right;
+        top: 7px;
+    }
+
+    .top-elem{
+        border-top: 1px solid gray;
+        background-color: transparent;
+        padding-bottom: 6px;
+    }
+
+    .top-elem:hover{
+        background-color: cadetblue;
+    }
+
+    #profile-top-canciones{
+        border-bottom: 1px solid gray;
+
+    }
+
+    #profile-top-canciones{
+
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    #profile-top{
+        position: relative;
+        top: -200px;
+        background-color: gainsboro;
+    }
+
+</style>
+
+<body>
+    <div id="profile-header"  >
+        <img id="profile-back-image" src="resources/imgs/wu.jpg">
+        <img id="profile-main-image"  src="resources/imgs/nas-illmatic.jpg">
+        <div id="profile-id">
+            <img id="verificado"  src="resources/imgs/ok.png">
+            <h1 id="profile-name">Artist  </h1>
+        </div>
+    </div>
+
+    <div id="profile-top">
+
+        <div id="profile-top-canciones">
+            <h1>Canciones populares</h1>
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="profile-content"></div>
+</body>
