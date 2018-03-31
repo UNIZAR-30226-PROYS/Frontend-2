@@ -24,6 +24,12 @@ layout: general
         /*wavesurfer.play();*/
     });
 
+	wavesurfer.on('seek', function () {
+    	audioElement.currentTime = $(this).val();
+		curtime = parseInt(audioElement.currentTime, 10);
+		$("#seek").attr("value", curtime);
+	});
+
 </script>
 
 <style>
