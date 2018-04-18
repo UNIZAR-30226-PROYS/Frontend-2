@@ -58,12 +58,13 @@ layout: general
 
     /************************************/
     .album-chart-image{
-        display: inline-block;
+		display: inline-block;
         width: 55px;
         height: 55px;
     }
     .album-chart-content{
-        display: inline-block;
+	
+		display: inline-block;
         height:55px;
         background: darkslategrey;
         position: relative;
@@ -75,26 +76,40 @@ layout: general
         margin: 0;
         position: relative;
         top: +7px;
-        left: +20px;
+		left: -15px
     }
-    .album-chart-content .song-chart-content-titulo{
+    .album-chart-content .album-chart-content-titulo{
         font-size: 15px;
         font-weight: bold;
     }
+	
     #album-chart-content-1{
-
         width: 400px;
         border-left: solid 6px red;
     }
     #album-chart-content-2{
-
-
         width: 320px;
         border-left: solid 6px white;
     }
-    #album-chart-container{
-
+#album-chart-content-3{
+        width: 220px;
+        border-left: solid 6px white;
     }
+#album-chart-content-4{
+        width: 200px;
+        border-left: solid 6px white;
+    }
+#album-chart-content-5{
+        width: 120px;
+        border-left: solid 6px white;
+    }
+    #album-chart-container{
+		position:relative;
+		top: -290px;
+    }
+.album-chart{
+	 
+}
     /************************************/
      h1{
         margin: 0;
@@ -202,24 +217,48 @@ file, get the content of the BODY section and write it into this page, below...
     </div>
 
 
-    <div id="album-chart-container">
+    <div id="album-chart-container" align='right'>
         <div class="album-chart">
 
             <div class="album-chart-content" id="album-chart-content-1">
                 <p class="album-chart-content-titulo">Titulo</p>
-                <p>Artista</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
             <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
 
         <div class="album-chart">
-
             <div class="album-chart-content" id="album-chart-content-2">
                 <p class="album-chart-content-titulo">Titulo</p>
-                <p>Artista</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
             <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
+
+		<div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-3">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+
+		<div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-4">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+
+		<div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-5">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+
     </div>
 
 </section>
