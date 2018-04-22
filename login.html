@@ -64,6 +64,14 @@ layout: general
             <div id="loading-icon-signup" class="hidden" align="center"><img width="100" height="100" src="/resources/imgs/loading.gif"></div>
           <div id="signup-alert" class="hidden alert"></div>
           <form class="form-horizontal" action="">
+			<div id="user-signup-container" class="form-group has-feedback">
+              <!-- Esto habrá que cambiarlo por un POST al autentificador -->
+              <label for="user-signup" class="col-sm-3 control-label">Nickname</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="nick-signup" name="nickSignUp" placeholder="Nombre de usuario">
+                  <span id="user-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+              </div>
+            </div>
             <div id="user-signup-container" class="form-group has-feedback">
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-signup" class="col-sm-3 control-label">Usuario</label>
@@ -72,6 +80,25 @@ layout: general
                   <span id="user-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
               </div>
             </div>
+
+			<div id="user-signup-container" class="form-group has-feedback">
+              <!-- Esto habrá que cambiarlo por un POST al autentificador -->
+              <label for="user-signup" class="col-sm-3 control-label">Fecha de nacimiento</label>
+              <div class="col-sm-9">
+					<input class="form-control" id="date" type="date">
+                  <span id="user-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+              </div>
+            </div>
+
+			<div id="user-signup-container" class="form-group has-feedback">
+              <!-- Esto habrá que cambiarlo por un POST al autentificador -->
+              <label for="user-signup" class="col-sm-3 control-label">País</label>
+              <div class="col-sm-9">
+					<input class="form-control" id="country" type="country">
+                  <span id="user-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+              </div>
+            </div>
+
               <div id="mail-signup-container" class="form-group has-feedback">
               <label for="mail-signup" class="col-sm-3 control-label">Email</label>
               <div class="col-sm-9">

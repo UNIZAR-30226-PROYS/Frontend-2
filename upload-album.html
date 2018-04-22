@@ -1,0 +1,115 @@
+---
+layout: general
+---
+
+
+<style>
+
+    .album-header{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .album-image img{
+        width: 100%;
+        height: 100%;
+    }
+
+    #upload-album-content{
+        border-top: solid 1px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .upload-album-content-song{
+        padding-top: 20px;
+    }
+
+</style>
+
+<body>
+    <div class="container-fluid">
+
+
+                <h1>Información Albums</h1>
+
+                <div class="album">
+                    <div class="album-header">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="album-image">
+                                    <img src="resources/imgs/wu.jpg">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlFile1">Imagen del album</label>
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <label>Nombre del album</label>
+                                    <input class="form-control" value="album name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Año del album</label>
+                                    <input class="form-control" value="1900">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="album-content">
+
+
+                        <h1>Canciones</h1>
+
+                        <!-- HEADER -->
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h5 id="playlist-type">ARCHIVO</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <h5 id="playlist-type">TITLE</h5>
+                            </div>
+                            <div class="col-sm-4">
+                                <h5 id="playlist-type">ARTIST</h5>
+                            </div>
+                        </div>
+
+                        <!-- CONTENT -->
+                        <div id="upload-album-content">
+                            <div class="upload-album-content-song">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input type="file" class="form-control-file">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="form-control" value="song title">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="form-control" value="user1, user2">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="upload-album-content-song">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <input type="file" class="form-control-file">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="form-control" value="song title">
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input class="form-control" value="user1, user2">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+    </div>
+</body>
