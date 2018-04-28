@@ -19,7 +19,20 @@ layout: general
     color: black;
     border-radius: 30px;
   }
+    label{
+        font-size: 15px;
+    }
+    ul li{
+        font-size: 15px;
+    }
+    .tab-content{
+        padding-top: 30px;
+    }
 </style>
+
+<!-- kotlin code -->
+<script src="/resources/js/KOTLINJS/out/production/KOTLINJS/lib/kotlin.js"></script>
+<script src="/resources/js/KOTLINJS/out/production/KOTLINJS/KOTLINJS.js"></script>
 
 <script>
   $(document).ready( function () {
@@ -63,12 +76,11 @@ layout: general
                   $('span[id="date-signup-icon"]').removeClass("hidden");
               }
           } else {
-              /* REQUEST */
+
           }
       });
 
       $('#login-button').click(function () {
-          console.log('HEY');
           var user = $('input[id="user-login"]').val();
           var pass = $('input[id="pass-login"]').val();
           resetLoginInputs();
@@ -82,7 +94,19 @@ layout: general
                   $('span[id="pass-login-icon"]').removeClass("hidden");
               }
           } else {
-              /* REQUEST */
+              try {
+                  KOTLINJS.apis.doLoginServer_puj7f4$(user, pass);
+              }catch(error) {
+                  var x = document.getElementById("login-error-msg");
+                  var y = document.getElementById("login-error-msg-space");
+                  if (x.style.display === "none") {
+                      x.style.display = "block";
+                      y.style.display = "block";
+                  } else {
+                      x.style.display = "none";
+                      y.style.display = "none";
+                  }
+              }
           }
       });
   });
@@ -117,16 +141,23 @@ layout: general
   <div class="row">
     <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8">
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
-        <li><a data-toggle="tab" href="#signup">SignUp</a></li>
+        <li class="active"><a data-toggle="tab" href="#login">LOGIN</a></li>
+        <li><a data-toggle="tab" href="#signup">SIGN UP</a></li>
       </ul>
+
+
 
       <div class="tab-content">
         <div id="login" class="tab-pane fade in active">
-          <h3>Login</h3>
             <div id="loading-icon-login" class="hidden" align="center"><img width="100" height="100" src="/resources/imgs/loading.gif"></div>
           <div id="login-alert" class="hidden alert"></div>
           <form class="form-horizontal" action="myprofile.html" method="post">
+              <label class="col-sm-3 control-label" style="display: none" id="login-error-msg-space"></label>
+              <div class="col-sm-9" id="login-error-msg" style="display: none">
+                  <div class="alert alert-danger">
+                      <strong>Error!</strong> Error msg
+                  </div>
+              </div>
             <div id="user-login-container" class="form-group has-feedback">
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-login" class="col-sm-3 control-label">Usuario</label>
@@ -153,7 +184,6 @@ layout: general
 
 
         <div id="signup" class="tab-pane fade">
-          <h3>SignUp</h3>
             <div id="loading-icon-signup" class="hidden" align="center"><img width="100" height="100" src="/resources/imgs/loading.gif"></div>
           <div id="signup-alert" class="hidden alert"></div>
           <form class="form-horizontal" action="">
@@ -161,7 +191,7 @@ layout: general
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-signup" class="col-sm-3 control-label">Nickname</label>
               <div class="col-sm-9">
-                <input class="form-control" type="text" id="nick-signup" name="nickSignUp" placeholder="Nombre de usuario">
+                <input class="form-control" type="text" id="nick-signup" name="nickSignUp" placeholder="Nickname">
                   <span id="nick-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
               </div>
             </div>
@@ -187,7 +217,7 @@ layout: general
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-signup" class="col-sm-3 control-label">País</label>
               <div class="col-sm-9">
-					<input class="form-control" id="country" type="country">
+					<input class="form-control" id="country" type="country" placeholder="País">
                   <span id="country-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
               </div>
             </div>
