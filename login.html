@@ -76,7 +76,10 @@ layout: general
                   $('span[id="date-signup-icon"]').removeClass("hidden");
               }
           } else {
-
+              /****** TODO *******/
+              document.cookie = "username=" + user + ";token=" + token;
+              setCookie("username", user);
+              setCookie("token", token);
           }
       });
 
@@ -95,7 +98,10 @@ layout: general
               }
           } else {
               try {
-                  KOTLINJS.apis.doLoginServer_puj7f4$(user, pass);
+                  var token = KOTLINJS.apis.doLoginServer_puj7f4$(user, pass);
+                  document.cookie = "username=" + user + ";token=" + token;
+                  setCookie("username", user);
+                  setCookie("token", token);
               }catch(error) {
                   var x = document.getElementById("login-error-msg");
                   var y = document.getElementById("login-error-msg-space");
