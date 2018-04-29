@@ -72,6 +72,21 @@ layout: general
         color: black;
     }
 
+    #editar{
+        border-radius: 30px;
+        font-size: 30px;
+        width: 15%;
+        position: relative;
+        top: -480px;
+        left: -90px;
+        color: yellow;
+        border-width: 3px;
+    }
+
+    #editar:hover{
+        color: black;
+    }
+
     /************/
 
     .profile-top-album{
@@ -181,7 +196,63 @@ layout: general
 
     }
 
+    body{
+        background-color: white;
+    }
+
+    #profile-content{
+        background-color: gray;
+    }
+
+    #social-media{
+        position: relative;
+        top: -710px;
+        right: -74%;
+        color: white;
+        background-color: transparent;
+        width: 20%;
+        padding-top: 5px;
+        padding-right: 15px;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        background: rgb(34,34,34); /* for IE */
+        background: rgba(34,34,34,0.75);
+    }
+
 </style>
+
+<script>
+    $(document).ready( function () {
+        var user = 'ususario';
+        var token = 'token';
+        /* if(user === get parameter user)   (si es el perfil del usuario)*/
+        if(true){   /* perfil del usuario */
+            $('button[id="seguir"]').addClass("hidden");
+
+            var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
+
+            /* cambiar nombre */
+            document.getElementById("profile-name").innerHTML = usuario.username;
+            /* cambiar imagen */
+            var imagen = document.getElementById('profile-main-image');
+            imagen.src = usuario.pictureLocationUri;
+            /* cambiar rrss */
+            if( usuario.instagramAccount !== null ){
+                document.getElementById("instagram").innerHTML = usuario.instagramAccount;
+            }
+            if( usuario.facebookAccount!== null ){
+                document.getElementById("instagram").innerHTML = usuario.facebookAccount;
+            }
+            if( usuario.twitterAccount !== null ){
+                document.getElementById("instagram").innerHTML = usuario.twitterAccount;
+            }
+
+
+        }else{      /* otro artista */
+
+        }
+    });
+</script>
 
 <body>
     <div id="profile-header"  >
@@ -192,6 +263,12 @@ layout: general
             <h1 id="profile-name">Artist  </h1>
         </div>
         <button id="seguir" type="button" class="btn btn-outline-warning"><strong>+ Seguir</strong></button>
+        <button id="editar" type="button" class="btn btn-outline-warning"><strong>Editar perfil</strong></button>
+        <div id="social-media">
+            <h1 id="twitter"><strong></strong></h1>
+            <h1 id="instagram"><strong></strong></h1>
+            <h1 id="facebook"><strong></strong></h1>
+        </div>
     </div>
 
     <div id="profile-top">
