@@ -9,13 +9,13 @@ layout: general
     #profile-header{
         overflow: hidden;
     }
-    #profile-back-image{
-        position: relative;
-        top: 0px;
+    #profile-back-back{
+
         width: 100%;
-        height:100%;
-        margin: -1070px 0 0 0;
+        height:300px;
+
         /*filter: blur(5px);*/
+        background-color: black;
     }
 
     #profile-main-image{
@@ -23,7 +23,7 @@ layout: general
         border: 10px solid honeydew;
         position: relative;
         width: 400px;
-        height:100%;
+        height:400px;
         top: -200px;
         display: block;
         margin-left: auto;
@@ -149,8 +149,8 @@ layout: general
     }
 
     .card-img-top{
-        width:100%;
-        height: 100%;
+        width:200px%;
+        height: 200px;
         position: relative;
     }
 
@@ -164,7 +164,6 @@ layout: general
     }
 
     .artista:hover #down{ display: block }
-
     .artista h4{
         text-align: center;
         padding-top: 8px;
@@ -172,15 +171,10 @@ layout: general
     .artista p{
         text-align: center;
     }
-
-    #profile-content .row{
-        padding-top: 40px;
-        padding-left: 40px;
-    }
-
     .artista {
         width: 80%;
     }
+
 
     #profile-content h1{
         display: block;
@@ -190,19 +184,20 @@ layout: general
         border-bottom: 1px solid gray;
     }
 
-    #profile-content{
-        position: relative;
-        top: -120px;
-
+    #profile-content-2 h1{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        border-bottom: 1px solid gray;
     }
+
 
     body{
         background-color: white;
     }
 
-    #profile-content{
-        background-color: gray;
-    }
+
 
     #social-media{
         position: relative;
@@ -223,7 +218,7 @@ layout: general
 
 <script>
     $(document).ready( function () {
-        var user = 'ususario';
+        var user = 'Media';
         var token = 'token';
         /* if(user === get parameter user)   (si es el perfil del usuario)*/
         if(true){   /* perfil del usuario */
@@ -247,6 +242,72 @@ layout: general
                 document.getElementById("instagram").innerHTML = usuario.twitterAccount;
             }
 
+            /* albumes */
+            var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
+            var albums_len = albums.modCount;
+            var albums_row = albums_len/4;
+            var html_content = "";
+
+            for (row = 0; row < albums_row; row++) {
+                html_content = html_content + "<div class=\"row\">";
+                for (col = 0; col < 4; col++) {
+                    if( typeof( albums.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                        html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "</div>";
+                    }else {
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                                "<div class=\"artista\">\n" +
+                                    "<div class=\"card bg-light mb-3\" >\n" +
+                                        "<img class=\"card-img-top\"  src=\"" + albums.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                                        "<div class=\"card-block\">\n" +
+                                            "<h4 class=\"card-title\">" + albums.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                                            "<p class=\"card-text\">" + albums.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                                        "</div>\n" +
+                                    "</div>\n" +
+                                "</div>\n" +
+                            "</div>";
+                    }
+                }
+                html_content = html_content + "</div>";
+            }
+            document.getElementById('profile-content-album').innerHTML = html_content;
+
+            /* playlist */
+            var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
+            var playlist_len = playlist.modCount;
+            var playlist_row = playlist_len/4;
+            var html_content = "";
+
+            for (row = 0; row < playlist_row; row++) {
+                html_content = html_content + "<div class=\"row\">";
+                for (col = 0; col < 4; col++) {
+                    if( typeof( playlist.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                            "</div>";
+                    }else {
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                            "<div class=\"artista\">\n" +
+                            "<div class=\"card bg-light mb-3\" >\n" +
+                            "<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                            "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                            "<div class=\"card-block\">\n" +
+                            "<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                            "<p class=\"card-text\">" + playlist.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                            "</div>\n" +
+                            "</div>\n" +
+                            "</div>\n" +
+                            "</div>";
+                    }
+                }
+                html_content = html_content + "</div>";
+            }
+            document.getElementById('profile-content-playlist').innerHTML = html_content;
+
 
         }else{      /* otro artista */
 
@@ -255,8 +316,9 @@ layout: general
 </script>
 
 <body>
-    <div id="profile-header"  >
-        <img id="profile-back-image" src="resources/imgs/wu.jpg">
+    <div id="profile-header">
+        <div id="profile-back-back"></div>
+
         <img id="profile-main-image"  src="resources/imgs/nas-illmatic.jpg">
         <div id="profile-id">
             <img id="verificado"  src="resources/imgs/ok.png">
@@ -270,6 +332,8 @@ layout: general
             <h1 id="facebook"><strong></strong></h1>
         </div>
     </div>
+
+
 
     <div id="profile-top">
         <div id="profile-top-canciones">
@@ -349,121 +413,24 @@ layout: general
         </div>
     </div>
 
+
+
+
     <div id="profile-content">
         <h1>Albums</h1>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white">
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div> <!-- row-->
-
-
-
-            <div class="row">
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white">
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div> <!-- row-->
-
+        <div class="container-fluid" id="profile-content-album">
 
 
         </div> <!-- container fluid -->
     </div>
+
+
+    <div id="profile-content-2">
+        <h1>Playlist</h1>
+        <div class="container-fluid" id="profile-content-playlist">
+
+        </div>
+    </div>
+
+
 </body>
