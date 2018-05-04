@@ -12,7 +12,7 @@ layout: general
     #profile-back-back{
 
         width: 100%;
-        height:300px;
+        height:280px;
 
         /*filter: blur(5px);*/
         background-color: black;
@@ -217,9 +217,19 @@ layout: general
 </style>
 
 <script>
+
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
     $(document).ready( function () {
-        var user = 'Media';
-        var token = 'token';
+        var user = getParameterByName('user');
+		var token = 'ERRORRRR';
+        /*var token = getCookie('token');*/
+		/*var registered_user = getCookie('username');*/
         /* if(user === get parameter user)   (si es el perfil del usuario)*/
         if(true){   /* perfil del usuario */
             $('button[id="seguir"]').addClass("hidden");

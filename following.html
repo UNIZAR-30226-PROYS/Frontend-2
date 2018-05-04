@@ -1,0 +1,45 @@
+---
+layout: general
+---
+
+<style>
+    #container-followers img{
+        width: 100%;
+        height: 100%;
+    }
+	#seguir:hover {
+		color:black;
+	}
+</style>
+
+<script>
+function changeText()
+	{
+		document.getElementById("seguir-content").innerHTML='Dejar de seguir';
+		//$('#seguir-content').text('rand');
+	}
+function changeTextOut()
+	{
+		document.getElementById("seguir-content").innerHTML='Siguiendo';
+		//$('#seguir-content').text('rand');
+	}
+</script>
+
+<body>
+    <div class="container-fluid" id="container-followers">
+        <div class="row">
+            <div class="col-xs-1">
+                <img src="resources/imgs/nas-illmatic.jpg">
+            </div>
+            <div class="col-xs-4">
+                <h1>NOMBRE</h1>
+            </div>
+            <div class="col-xs-2">
+                <button onmouseover="changeText()" onmouseout="changeTextOut()" id="seguir" type="button" class="btn btn-outline-warning">
+					<strong> <span  id="seguir-content"> Siguiendo </span> </strong>
+				</button>
+                
+            </div>
+        </div>
+    </div>
+</body>
