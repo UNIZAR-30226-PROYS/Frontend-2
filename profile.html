@@ -3,6 +3,7 @@ layout: general
 ---
 
 <style>
+    a { color: inherit; }
     body{
         background-color: white;
     }
@@ -84,6 +85,27 @@ layout: general
     }
 
     #editar:hover{
+        color: black;
+    }
+
+     #col-follow{
+        border-left: 2px solid black;
+        padding-left: 50px;
+    }
+
+    #profile-header #follow-info{
+        position: relative;
+        top: -460px;
+        left: 60px;
+    }
+
+    #profile-header .col-sm-1{
+        margin-right: 70px;
+    }
+
+    #profile-header .follow-hover:hover{
+        background-color: #7c7c7c;
+        width: 130px;
         color: black;
     }
 
@@ -217,21 +239,18 @@ layout: general
 </style>
 
 <script>
-
-function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
     $(document).ready( function () {
+
         var user = getParameterByName('user');
-		var token = 'ERRORRRR';
-        /*var token = getCookie('token');*/
-		/*var registered_user = getCookie('username');*/
+
+        document.getElementById("following-link").href="http://127.0.0.1:4000/following?user=" + user.username + "&type=following";
+        document.getElementById("followers-link").href="http://127.0.0.1:4000/following?user=" + user.username + "&type=followers";
+
+
+        var token = getCookie('token');
+		var registered_user = getCookie('username');
         /* if(user === get parameter user)   (si es el perfil del usuario)*/
-        if(true){   /* perfil del usuario */
+        if(user === registered_user){   /* perfil del usuario */
             $('button[id="seguir"]').addClass("hidden");
 
             var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
@@ -251,6 +270,9 @@ function getParameterByName(name) {
             if( usuario.twitterAccount !== null ){
                 document.getElementById("instagram").innerHTML = usuario.twitterAccount;
             }
+
+            /* canciones */
+            /*var canciones = KOTLINJS.apis.get*/
 
             /* albumes */
             var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
@@ -319,6 +341,7 @@ function getParameterByName(name) {
             document.getElementById('profile-content-playlist').innerHTML = html_content;
 
 
+
         }else{      /* otro artista */
 
         }
@@ -340,6 +363,26 @@ function getParameterByName(name) {
             <h1 id="twitter"><strong></strong></h1>
             <h1 id="instagram"><strong></strong></h1>
             <h1 id="facebook"><strong></strong></h1>
+        </div>
+
+        <div class="containter-fluid" id="follow-info">
+            <div class="row">
+                <div class="col-sm-1" >
+                    <a id="following-link" >
+                    <div class="follow-hover">
+                    <h1>Siguiendo</h1>
+                    <h1 id="num-following">10000000</h1>
+                    </div>
+                    </a>
+                </div>
+                <div class="col-sm-1" id="col-follow">
+                    <a id="followers-link">
+                    <div class="follow-hover">
+                    <h1>Sequidores</h1>
+                    <h1 id="num-followers">0</h1>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

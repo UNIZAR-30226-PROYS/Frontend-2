@@ -3,43 +3,222 @@ layout: general
 ---
 
 <style>
-    #container-followers img{
-        width: 100%;
-        height: 100%;
+
+    #siguiendo{
+        margin-left:22%;
+        color: white;
+        font-size: 40px;
     }
-	#seguir:hover {
-		color:black;
-	}
+    #container-followers{
+        margin-top: 3%;
+    }
+    #container-followers .row{
+        border-top: 1px solid white;
+        margin-left: 20%;
+        margin-right: 20%;
+        margin-bottom: 1%;
+        padding-top: 1%;
+    }
+    #container-followers img{
+        width: 70%;
+        height: 100%;
+        border:8px solid gray;
+        border-radius: 50%;
+    }
+    #container-followers .btn-outline-warning{
+        border-radius: 30px;
+        font-size: 20px;
+        color: yellow;
+        border-width: 3px;
+        position: relative;
+        top: 30%;
+    }
+    #container-followers .btn-outline-warning:hover{
+        color: black;
+    }
+    #container-followers h1{
+        color: white;
+        position: relative;
+        top: 30%;
+    }
+	#container-followers .nombre-followed{
+        margin-top: 5%;
+    }
+    #container-followers .button-followed{
+        margin-top: 5%;
+    }
 </style>
 
 <script>
-function changeText()
+function changeText(id)
 	{
-		document.getElementById("seguir-content").innerHTML='Dejar de seguir';
+		document.getElementById(id).innerHTML='Dejar de seguir';
 		//$('#seguir-content').text('rand');
 	}
-function changeTextOut()
+function changeTextOut(id)
 	{
-		document.getElementById("seguir-content").innerHTML='Siguiendo';
+		document.getElementById(id).innerHTML='Siguiendo';
 		//$('#seguir-content').text('rand');
 	}
+function changeText2(id)
+{
+    document.getElementById(id).innerHTML='Seguir';
+    //$('#seguir-content').text('rand');
+}
+function changeTextOut2(id)
+{
+    document.getElementById(id).innerHTML='Seguir';
+    //$('#seguir-content').text('rand');
+}
+
+function clickFollow(touser, toshow, tohide) {
+    console.log('follow' + touser);
+    document.getElementById(tohide).style.display = "none";
+    document.getElementById(toshow).style.display = "block";
+}
+
+function clickUnfollow(touser, toshow, tohide) {
+    console.log('unfollow' + touser);
+    document.getElementById(tohide).style.display = "none";
+    document.getElementById(toshow).style.display = "block";
+}
+
+function redirectToUser(touser) {
+    window.location = "http://127.0.0.1:4000/profile?user=" + touser;
+}
+
+$(document).ready( function () {
+    var type = getParameterByName('type');
+
+    if(type === 'following'){
+        document.getElementById("siguiendo").innerHTML = "Siguiendo";
+        var user = getParameterByName('user');
+        var token = getCookie('token');
+        var registered_user = getCookie('username');
+        /* if(user === get parameter user)   (si es el perfil del usuario)*/
+        if(user === registered_user) {   /* perfil del usuario */
+            var followers = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
+            var followers_len = followers.modCount;
+            console.log(followers_len);
+            for (ind = 0; ind < followers_len; ind++) {
+                var follower = followers.array_hd7ov6$_0[ind];
+                var html_content = "<div class=\"row\">\n" +
+                    "            <div class=\"row-intern\">\n" +
+                    "                <div class=\"col-xs-3\">\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
+                    "                    <img src=\" " + follower.artLocationUri + ">\n" +
+                    "                    </a>" +
+                    "                </div>\n" +
+                    "                <div class=\"col-xs-6 nombre-followed\">\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
+                    "                    <h1>" + follower.name + "</h1>" +
+                    "                    </a>" +
+                    "                </div>\n" +
+                    "                <div class=\"col-xs-1 button-followed\">\n" +
+                    "                    <button id=\"button-siguiendo-" + ind + "\" onclick=\"clickUnfollow(" + follower.username + ", 'button-seguir-" + ind + "' ,'button-siguiendo-" + ind + "')\"\n" +
+                    "                            onmouseover=\"changeText('seguir-content-" + ind + " ')\" onmouseout=\"changeTextOut('seguir-content-" + ind + "')\"\n" +
+                    "                            type=\"button\" class=\"btn btn-outline-warning siguiendo\">\n" +
+                    "                        <strong> <span  id=\"seguir-content-" + ind + "\"> Siguiendo </span> </strong>\n" +
+                    "                    </button>\n" +
+                    "                    <button id=\"button-seguir-" + ind + "\" onclick=\"clickFollow(" + follower.username + ", 'button-siguiendo-" + ind + "', 'button-seguir-" + ind + "')\"\n" +
+                    "                            onmouseover=\"changeText2('seguir-content-" + ind + "2')\" onmouseout=\"changeTextOut2('seguir-content-" + ind + "2')\"\n" +
+                    "                            type=\"button\" class=\"btn btn-outline-warning no-siguiendo\" style=\"display: none;\">\n" +
+                    "                        <strong> <span  id=\"seguir-content-" + ind + "2\"> Seguir </span> </strong>\n" +
+                    "                    </button>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>";
+                document.getElementById("container-followers").innerHTML = html_content;
+            }
+        }else{
+            var followers = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
+            var followers_len = followers.modCount;
+            console.log(followers_len);
+            for (ind = 0; ind < followers_len; ind++) {
+                var follower = followers.array_hd7ov6$_0[ind];
+                var html_content = "<div class=\"row\">\n" +
+                    "            <div class=\"row-intern\">\n" +
+                    "                <div class=\"col-xs-3\">\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
+                    "                    <img src=\" " + follower.artLocationUri + ">\n" +
+                    "                    </a>" +
+                    "                </div>\n" +
+                    "                <div class=\"col-xs-6 nombre-followed\">\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
+                    "                    <h1>" + follower.name + "</h1>" +
+                    "                    </a>" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>";
+                document.getElementById("container-followers").innerHTML = html_content;
+
+            }
+        }
+
+    }else if(type === 'followers'){
+        document.getElementById("siguiendo").innerHTML = "Seguidores";
+        var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
+        var followers_len = followers.modCount;
+        console.log(followers_len);
+        for (ind = 0; ind < followers_len; ind++) {
+            var follower = followers.array_hd7ov6$_0[ind];
+            var html_content = "<div class=\"row\">\n" +
+                "            <div class=\"row-intern\">\n" +
+                "                <div class=\"col-xs-3\">\n" +
+                "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
+                "                    <img src=\" " + follower.artLocationUri + ">\n" +
+                "                    </a>" +
+                "                </div>\n" +
+                "                <div class=\"col-xs-6 nombre-followed\">" +
+                "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
+                "                    <h1>" + follower.name + "</h1>" +
+                "                    </a>" +
+                "                </div>\n" +
+                "            </div>\n" +
+                "        </div>";
+            document.getElementById("container-followers").innerHTML = html_content;
+        }
+    }else{
+        /*error*/
+    }
+
+});
+
 </script>
 
 <body>
+
+    <h1 id="siguiendo"><strong>Siguiendo</strong></h1>
+
     <div class="container-fluid" id="container-followers">
+
         <div class="row">
-            <div class="col-xs-1">
-                <img src="resources/imgs/nas-illmatic.jpg">
-            </div>
-            <div class="col-xs-4">
-                <h1>NOMBRE</h1>
-            </div>
-            <div class="col-xs-2">
-                <button onmouseover="changeText()" onmouseout="changeTextOut()" id="seguir" type="button" class="btn btn-outline-warning">
-					<strong> <span  id="seguir-content"> Siguiendo </span> </strong>
-				</button>
-                
+            <div class="row-intern">
+                <div class="col-xs-3">
+                    <a href="http://127.0.0.1:4000/profile?user=Media">
+                        <img src="resources/imgs/nas-illmatic.jpg">
+                    </a>
+                </div>
+                <div class="col-xs-6 nombre-followed">
+                    <a href="http://127.0.0.1:4000/profile?user=Media">
+                        <h1 onclick="redirectToUser('Media')">NOMBRE</h1>
+                    </a>
+                </div>
+                <div class="col-xs-1 button-followed">
+                    <button id="button-siguiendo-1" onclick="clickUnfollow('NOMBRE', 'button-seguir-1' ,'button-siguiendo-1')"
+                            onmouseover="changeText('seguir-content-1')" onmouseout="changeTextOut('seguir-content-1')"
+                            type="button" class="btn btn-outline-warning siguiendo">
+                        <strong> <span  id="seguir-content-1"> Siguiendo </span> </strong>
+                    </button>
+                    <button id="button-seguir-1" onclick="clickFollow('NOMBRE', 'button-siguiendo-1', 'button-seguir-1')"
+                            onmouseover="changeText2('seguir-content-12')" onmouseout="changeTextOut2('seguir-content-12')"
+                            type="button" class="btn btn-outline-warning no-siguiendo" style="display: none;">
+                        <strong> <span  id="seguir-content-12"> Seguir </span> </strong>
+                    </button>
+                </div>
             </div>
         </div>
+
+
     </div>
 </body>
