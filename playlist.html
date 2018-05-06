@@ -5,16 +5,15 @@ layout: general
 
         .playlist-page{
 /*COOREGIR*/
-            position:relative;
-            left:+68px;
+            margin-left: 68px;
         }
         .playlist-head{
             align="center";
             margin:0 auto;
         }
-        .playlist-page img{
-            width:90%;
-            height:90%;
+        .playlist-head img{
+            width:250px;
+            height:250px;
         }
         #playlist-type{
             color: gray;
@@ -24,13 +23,33 @@ layout: general
         }
 		.playlist-elem{
 			border-top: 1px solid gray;
+            margin-right: 100px;
+            padding-left: 100px;
 		}
+        #playlist-meta{
+            margin-right: 100px;
+            padding-left: 40px;
+        }
         .playlist-elem h5{
             line-height: 30px;
         }
         .playlist-elem:hover{
             background: #aaaaaa;
+        }
 
+        .play-img{
+            width: 40px;
+            height: 40px;
+            position: relative;
+            left: -50px;
+        }
+        .play-img:hover{
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .play-img:active {
+            vertical-align: top;
+            padding: 5px 5px 5px;
         }
         #follow{
             border-radius: 30px;
@@ -43,6 +62,88 @@ layout: general
 
 </style>
 
+<script>
+    function toggleText(button_id)  {
+        console.log('hey');
+
+        var token = getCookie('token');
+        var user = getCookie('username');
+        var el = document.getElementById(button_id);
+        var id = getParameterByName('id');
+
+        if (el.firstChild.data == "Seguir")
+        {
+            el.firstChild.data = "Dejar de seguir";
+            KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);
+        }
+        else
+        {
+            el.firstChild.data = "Seguir";
+            KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);
+        }
+    }
+
+    $(document).ready( function () {
+        var type = getParameterByName('type');
+        var id = getParameterByName('id');
+
+        var token = getCookie('token');
+        var user = getCookie('username');
+
+        if (type === 'album') {
+            document.getElementById("playlist-type").innerHTML = "ALBUM";
+            /*var album = KOTLINJS.apis.obtain*/
+
+        }else if(type ==='playlist'){
+            var playlist = KOTLINJS.apis.obtainPlaylistDataServer_s8cxhz$( kotlin.Long.fromInt( id ) );
+            document.getElementById("playlist-type").innerHTML = "PLAYLIST";
+            document.getElementById("playlist-name").innerHTML = playlist.name;
+            document.getElementById("playlist-img").src = playlist.artLocationUri;
+            document.getElementById("playlist-creator").innerHTML =
+                "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>"
+
+            if(user === null || user === playlist.creator){
+                 document.getElementById("follow").style.visibility = "hidden";
+            }else{
+                try{
+                    if( KOTLINJS.apis.isPlaylistFollowedByUserServer_4wgjuj$( user, kotlin.Long.fromInt( id ) ) ) {
+                        document.getElementById("follow").innerHTML = "Dejar de seguir";
+                    }
+                }catch(error){
+                    console.log('error ?????');
+                }
+            }
+
+            var playlist_len = playlist.content.array_hd7ov6$_0.length;
+            console.log(playlist_len);
+            var inner_html = "";
+            for( i=0; i<playlist_len; i++){
+                var playlist_elem = playlist.content.array_hd7ov6$_0[ i ];
+                console.log(playlist_elem.locationUri);
+                inner_html = inner_html + "<div class=\"playlist-elem\">\n" +
+                    "                    <div class=\"row\">\n" +
+                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" + playlist_elem.locationUri + "')\">" +
+                    "    \n" +
+                    "                        <div class=\"col-sm-4\">\n" +
+                    "                            <h5> <a href=\"\">" + playlist_elem.name + "</a> </h5>\n" +
+                    "                        </div>\n" +
+                    "                        <div class=\"col-sm-4\">\n" +
+                    "                            <h5> <a href=\"http://127.0.0.1:4000/profile?user=" + playlist_elem.album.creator.username + "\">" + playlist_elem.album.creator.name + "</a></a>  </h5>\n" +
+                    "                        </div>\n" +
+                    "                        <div class=\"col-sm-2\">\n" +
+                    "                            <h5> <a href=\"http://127.0.0.1:4000/playlist?type=album&id=" + playlist_elem.album.id + "\">" + playlist_elem.album.name + "</a> </h5>\n" +
+                    "                        </div>\n" +
+
+                    "                    </div>\n" +
+                    "                </div>";
+            }
+            document.getElementById("playlist-container-elem").innerHTML = inner_html;
+        }else{
+            /* error */
+        }
+    });
+</script>
+
 <div class="playlist-page">
     <div class="playlist-head">
         <div class="container-fluid">
@@ -50,13 +151,13 @@ layout: general
                 <!-- spacing -->
                 <div class="col-sm-2"></div>
                 <div class="col-sm-3">
-                    <img class="playlist-img" src="resources/imgs/wu.jpg">
+                    <img id="playlist-img" src="resources/imgs/wu.jpg">
                 </div>
                 <div class="col-sm-5">
                     <h5 id="playlist-type">PLAYLIST</h5>
                     <h1 id="playlist-name"><strong>Playlist Name</strong></h1>
-                    <h3>Created by  <a href="">User1</a> </h3>
-                    <a href="#" class="btn btn-outline-primary btn-lg" role="button" id="follow">Seguir</a>
+                    <h3 id="playlist-creator"></h3>
+                    <a class="btn btn-outline-primary btn-lg" role="button" id="follow" onclick="toggleText(this.id)">Seguir</a>
                 </div>
 
             </div>
@@ -65,119 +166,49 @@ layout: general
     <div class="playlist-content">
         <div class="container-fluid">
             <!-- playlist meta -->
-            <div class="row">
+            <div id="playlist-meta">
+            <div class="row" >
+                <div class="col-sm-1">
+                    <h5>PLAY</h5>
+                </div>
                 <div class="col-sm-4">
-                    <h5 id="playlist-type">TITLE</h5>
+                    <h5 >TITLE</h5>
+                </div>
+                <div class="col-sm-4">
+                    <h5 >ARTIST</h5>
                 </div>
                 <div class="col-sm-2">
-                    <h5 id="playlist-type">ARTIST</h5>
+                    <h5 >ALBUM</h5>
                 </div>
-                <div class="col-sm-2">
-                    <h5 id="playlist-type">ALBUM</h5>
-                </div>
+            </div>
             </div>
 
             <!-- playlist -->
-            <div class="playlist-elem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
+            <div id="playlist-container-elem">
+
+
+                <div class="playlist-elem">
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <img class="play-img" src="resources/imgs/play.gif" onclick="playSong('#')">
+                        </div>
+
+                        <div class="col-sm-4">
+                            <h5> <a href="">Titulo</a> </h5>
+                        </div>
+                        <div class="col-sm-4">
+                            <h5> <a href="">Artista1</a>  </h5>
+                        </div>
+                        <div class="col-sm-2">
+                            <h5> <a href="">Album</a> </h5>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-
-            <div class="playlist-elem" style="background: #999999;">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
-                    </div>
-                </div>
 
             </div>
 
-            <div class="playlist-elem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
-                    </div>
-                </div>
 
-            </div>
-
-            <div class="playlist-elem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="playlist-elem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="playlist-elem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
-                    </div>
-                </div>
-            </div>
-
-            <div class="playlist-elem">
-                <div class="row">
-                    <div class="col-sm-4">
-                        <h5> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                    </div>
-                    <div class="col-sm-2">
-                        <h5> <a href="">Album</a> </h5>
-                    </div>
-                </div>
-            </div>
 
         </div>
     </div>

@@ -37,9 +37,20 @@
 </style>
 
 <script>
+
+    var audioElement = document.createElement('audio');
+
+    function playSong(song_src) {
+
+        console.log('playing' + song_src);
+        audioElement = document.createElement('audio');
+        audioElement.setAttribute('src', song_src);
+        audioElement.play();
+        $('#seek').attr('max',audioElement.duration);
+    }
+
     $(document).ready(function() {
-        var audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');
+        /*audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');*/
 
         audioElement.addEventListener('ended', function() {
             this.play();
@@ -65,7 +76,7 @@
         $('#play').click(function() {
             audioElement.play();
             $("#status").text("Status: Playing");
-			$('#seek').attr('max',song.duration);
+			$('#seek').attr('max',audioElement.duration);
         });
 
         $('#pause').click(function() {

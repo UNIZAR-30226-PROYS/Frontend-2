@@ -270,6 +270,11 @@ layout: general
             if( usuario.twitterAccount !== null ){
                 document.getElementById("instagram").innerHTML = usuario.twitterAccount;
             }
+            /* seguidores */
+            var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
+            var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
+            document.getElementById("num-followers").innerHTML = followers.modCount;
+            document.getElementById("num-following").innerHTML = following.modCount;
 
             /* canciones */
             /*var canciones = KOTLINJS.apis.get*/
@@ -339,8 +344,6 @@ layout: general
                 html_content = html_content + "</div>";
             }
             document.getElementById('profile-content-playlist').innerHTML = html_content;
-
-
 
         }else{      /* otro artista */
 
