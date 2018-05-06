@@ -114,6 +114,51 @@ layout: general
 
 <script>
 
+    function toggleTextLike(button_id)  {
+        var token = getCookie('token');
+        var user = getCookie('username');
+
+        var el = document.getElementById(button_id);
+        if (el.firstChild.class === "btn btn-outline-danger active")
+        {
+            console.log('hey');
+            el.firstChild.class = "btn btn-outline-danger";
+            el.style.color = "#ec3333";
+            el.style.backgroundColor = "white";
+            /*KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);*/
+        }
+        else
+        {
+            el.firstChild.class = "btn btn-outline-danger active";
+            el.style.backgroundColor = "#ec3333";
+            el.style.color = "white";
+            /*KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);*/
+        }
+    }
+
+    function toggleTextFav(button_id)  {
+        var token = getCookie('token');
+        var user = getCookie('username');
+        var id = getParameterByName('id');
+
+        var el = document.getElementById(button_id);
+        if (el.firstChild.class === "btn btn-outline-warning active")
+        {
+            console.log('hey');
+            el.firstChild.class = "btn btn-outline-warning";
+            el.style.color = "black";
+            el.style.backgroundColor = "white";
+            KOTLINJS.apis.unSetSongFavoutireServer_18v4st$(user, token, id);
+        }
+        else
+        {
+            el.firstChild.class = "btn btn-outline-warning active";
+            el.style.backgroundColor = "yellow";
+            el.style.color = "black";
+            KOTLINJS.apis.setSongFavoutireServer_18v4st$(user, token, id);
+        }
+    }
+
     function addPlaylist() {
         var id = document.getElementById("select-playlist").value;
         console.log(id);
@@ -150,7 +195,11 @@ layout: general
                     inner_html = inner_html + "<option value=\"" + playlist_elem.id + "\">" + playlist_elem.name + "</option>";
                 }
                 document.getElementById("select-playlist").innerHTML = inner_html;
-                
+                document.getElementById("num-like").innerHTML = "0 likes";
+                if( true /*KOTLINJS.apis.isSongFavoutireByUserServer_18v4st$(user)*/ ){
+                    document.getElementById("fav-button").class = "btn btn-outline-warning active";
+                }
+
             } else {
                 /* no registrado */
                 console.log('heyy');
@@ -228,13 +277,13 @@ layout: general
 							 <div class="row">
 								<div class="col-6">
                                     <div class="columna-like">
-									<button type="button" class="btn btn-outline-danger">Me gusta</button>
-                                    <h2>1234 me gusta...</h2>
+									<button type="button" class="btn btn-outline-danger" id="like-button" onclick="toggleTextLike(this.id)">Me gusta</button>
+                                    <h2 id="num-like"></h2>
                                     </div>
 								</div>
 								<div class="col-6">
                                     <div class="columna-like">
-									<button type="button" class="btn btn-outline-warning">Favorito</button>
+									<button type="button" class="btn btn-outline-warning" id="fav-button" onclick="toggleTextFav(this.id)">Favorito</button>
                                     </div>
 								</div>
 							</div>				
