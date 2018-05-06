@@ -38,6 +38,7 @@ fun doLoginServer(username: String, password: String): String {
 fun doSignUpServer(user: User): String {
     //TODO:
     return "dfsdfdsdf"
+    return "dfsdfdsdf"
 }
 
 /**

@@ -28,11 +28,11 @@ layout: general
     .tab-content{
         padding-top: 30px;
     }
+	#login-page{
+		padding-top: 5%;
+	}
 </style>
 
-<!-- kotlin code -->
-<script src="/resources/js/KOTLINJS/out/production/KOTLINJS/lib/kotlin.js"></script>
-<script src="/resources/js/KOTLINJS/out/production/KOTLINJS/KOTLINJS.js"></script>
 
 <script>
   $(document).ready( function () {
@@ -102,6 +102,7 @@ layout: general
                   document.cookie = "username=" + user + ";token=" + token;
                   setCookie("username", user);
                   setCookie("token", token);
+				  window.location = "http://127.0.0.1:4000/profile?user=" + user;
               }catch(error) {
                   var x = document.getElementById("login-error-msg");
                   var y = document.getElementById("login-error-msg-space");
@@ -142,7 +143,7 @@ layout: general
 
 </script>
 
-<div class="login-page">
+<div id="login-page" >
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8">

@@ -3,19 +3,20 @@ layout: general
 ---
 
 <style>
+    a { color: inherit; }
     body{
         background-color: white;
     }
     #profile-header{
         overflow: hidden;
     }
-    #profile-back-image{
-        position: relative;
-        top: 0px;
+    #profile-back-back{
+
         width: 100%;
-        height:100%;
-        margin: -1070px 0 0 0;
+        height:280px;
+
         /*filter: blur(5px);*/
+        background-color: black;
     }
 
     #profile-main-image{
@@ -23,7 +24,7 @@ layout: general
         border: 10px solid honeydew;
         position: relative;
         width: 400px;
-        height:100%;
+        height:400px;
         top: -200px;
         display: block;
         margin-left: auto;
@@ -69,6 +70,42 @@ layout: general
     }
 
     #seguir:hover{
+        color: black;
+    }
+
+    #editar{
+        border-radius: 30px;
+        font-size: 30px;
+        width: 15%;
+        position: relative;
+        top: -480px;
+        left: -90px;
+        color: yellow;
+        border-width: 3px;
+    }
+
+    #editar:hover{
+        color: black;
+    }
+
+     #col-follow{
+        border-left: 2px solid black;
+        padding-left: 50px;
+    }
+
+    #profile-header #follow-info{
+        position: relative;
+        top: -460px;
+        left: 60px;
+    }
+
+    #profile-header .col-sm-1{
+        margin-right: 70px;
+    }
+
+    #profile-header .follow-hover:hover{
+        background-color: #7c7c7c;
+        width: 130px;
         color: black;
     }
 
@@ -134,8 +171,8 @@ layout: general
     }
 
     .card-img-top{
-        width:100%;
-        height: 100%;
+        width:200px%;
+        height: 200px;
         position: relative;
     }
 
@@ -149,7 +186,6 @@ layout: general
     }
 
     .artista:hover #down{ display: block }
-
     .artista h4{
         text-align: center;
         padding-top: 8px;
@@ -157,15 +193,10 @@ layout: general
     .artista p{
         text-align: center;
     }
-
-    #profile-content .row{
-        padding-top: 40px;
-        padding-left: 40px;
-    }
-
     .artista {
         width: 80%;
     }
+
 
     #profile-content h1{
         display: block;
@@ -175,24 +206,190 @@ layout: general
         border-bottom: 1px solid gray;
     }
 
-    #profile-content{
-        position: relative;
-        top: -120px;
+    #profile-content-2 h1{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        border-bottom: 1px solid gray;
+    }
 
+
+    body{
+        background-color: white;
+    }
+
+
+
+    #social-media{
+        position: relative;
+        top: -710px;
+        right: -74%;
+        color: white;
+        background-color: transparent;
+        width: 20%;
+        padding-top: 5px;
+        padding-right: 15px;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        background: rgb(34,34,34); /* for IE */
+        background: rgba(34,34,34,0.75);
     }
 
 </style>
 
+<script>
+    $(document).ready( function () {
+
+        var user = getParameterByName('user');
+
+        document.getElementById("following-link").href="http://127.0.0.1:4000/following?user=" + user.username + "&type=following";
+        document.getElementById("followers-link").href="http://127.0.0.1:4000/following?user=" + user.username + "&type=followers";
+
+
+        var token = getCookie('token');
+		var registered_user = getCookie('username');
+        /* if(user === get parameter user)   (si es el perfil del usuario)*/
+        if(user === registered_user){   /* perfil del usuario */
+            $('button[id="seguir"]').addClass("hidden");
+
+            var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
+
+            /* cambiar nombre */
+            document.getElementById("profile-name").innerHTML = usuario.username;
+            /* cambiar imagen */
+            var imagen = document.getElementById('profile-main-image');
+            imagen.src = usuario.pictureLocationUri;
+            /* cambiar rrss */
+            if( usuario.instagramAccount !== null ){
+                document.getElementById("instagram").innerHTML = usuario.instagramAccount;
+            }
+            if( usuario.facebookAccount!== null ){
+                document.getElementById("instagram").innerHTML = usuario.facebookAccount;
+            }
+            if( usuario.twitterAccount !== null ){
+                document.getElementById("instagram").innerHTML = usuario.twitterAccount;
+            }
+            /* seguidores */
+            var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
+            var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
+            document.getElementById("num-followers").innerHTML = followers.modCount;
+            document.getElementById("num-following").innerHTML = following.modCount;
+
+            /* canciones */
+            /*var canciones = KOTLINJS.apis.get*/
+
+            /* albumes */
+            var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
+            var albums_len = albums.modCount;
+            var albums_row = albums_len/4;
+            var html_content = "";
+
+            for (row = 0; row < albums_row; row++) {
+                html_content = html_content + "<div class=\"row\">";
+                for (col = 0; col < 4; col++) {
+                    if( typeof( albums.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                        html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "</div>";
+                    }else {
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                                "<div class=\"artista\">\n" +
+                                    "<div class=\"card bg-light mb-3\" >\n" +
+                                        "<img class=\"card-img-top\"  src=\"" + albums.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                                        "<div class=\"card-block\">\n" +
+                                            "<h4 class=\"card-title\">" + albums.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                                            "<p class=\"card-text\">" + albums.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                                        "</div>\n" +
+                                    "</div>\n" +
+                                "</div>\n" +
+                            "</div>";
+                    }
+                }
+                html_content = html_content + "</div>";
+            }
+            document.getElementById('profile-content-album').innerHTML = html_content;
+
+            /* playlist */
+            var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
+            var playlist_len = playlist.modCount;
+            var playlist_row = playlist_len/4;
+            var html_content = "";
+
+            for (row = 0; row < playlist_row; row++) {
+                html_content = html_content + "<div class=\"row\">";
+                for (col = 0; col < 4; col++) {
+                    if( typeof( playlist.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                            "</div>";
+                    }else {
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                            "<div class=\"artista\">\n" +
+                            "<div class=\"card bg-light mb-3\" >\n" +
+                            "<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                            "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                            "<div class=\"card-block\">\n" +
+                            "<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                            "<p class=\"card-text\">" + playlist.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                            "</div>\n" +
+                            "</div>\n" +
+                            "</div>\n" +
+                            "</div>";
+                    }
+                }
+                html_content = html_content + "</div>";
+            }
+            document.getElementById('profile-content-playlist').innerHTML = html_content;
+
+        }else{      /* otro artista */
+
+        }
+    });
+</script>
+
 <body>
-    <div id="profile-header"  >
-        <img id="profile-back-image" src="resources/imgs/wu.jpg">
+    <div id="profile-header">
+        <div id="profile-back-back"></div>
+
         <img id="profile-main-image"  src="resources/imgs/nas-illmatic.jpg">
         <div id="profile-id">
             <img id="verificado"  src="resources/imgs/ok.png">
             <h1 id="profile-name">Artist  </h1>
         </div>
         <button id="seguir" type="button" class="btn btn-outline-warning"><strong>+ Seguir</strong></button>
+        <button id="editar" type="button" class="btn btn-outline-warning"><strong>Editar perfil</strong></button>
+        <div id="social-media">
+            <h1 id="twitter"><strong></strong></h1>
+            <h1 id="instagram"><strong></strong></h1>
+            <h1 id="facebook"><strong></strong></h1>
+        </div>
+
+        <div class="containter-fluid" id="follow-info">
+            <div class="row">
+                <div class="col-sm-1" >
+                    <a id="following-link" >
+                    <div class="follow-hover">
+                    <h1>Siguiendo</h1>
+                    <h1 id="num-following">10000000</h1>
+                    </div>
+                    </a>
+                </div>
+                <div class="col-sm-1" id="col-follow">
+                    <a id="followers-link">
+                    <div class="follow-hover">
+                    <h1>Sequidores</h1>
+                    <h1 id="num-followers">0</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+
 
     <div id="profile-top">
         <div id="profile-top-canciones">
@@ -272,121 +469,24 @@ layout: general
         </div>
     </div>
 
+
+
+
     <div id="profile-content">
         <h1>Albums</h1>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white">
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div> <!-- row-->
-
-
-
-            <div class="row">
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white">
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="artista">
-                        <div class="card bg-primary text-white" >
-                            <img class="card-img-top"  src="/resources/imgs/album.jpg">
-                            <img  id="down" src="/resources/imgs/play.gif">
-                            <div class="card-block">
-                                <h4 class="card-title">Album</h4>
-                                <p class="card-text">1900</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-            </div> <!-- row-->
-
+        <div class="container-fluid" id="profile-content-album">
 
 
         </div> <!-- container fluid -->
     </div>
+
+
+    <div id="profile-content-2">
+        <h1>Playlist</h1>
+        <div class="container-fluid" id="profile-content-playlist">
+
+        </div>
+    </div>
+
+
 </body>

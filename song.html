@@ -14,10 +14,13 @@ layout: general
         wavesurfer.init({
             container: '#waveform',
             waveColor: '#A8DBA8',
-            progressColor: '#3B8686'
+            progressColor: '#3B8686',
+            barWidth: 5,
+            pixelRatio: 1,
+            barHeight: 1
         });
 
-        wavesurfer.load('http://155.210.13.105:7480/TEST/malabar.mp3');	
+        /*wavesurfer.load('/resources/music/downloaded_song.mp3');*/
     });
 
     wavesurfer.on('ready', function () {
@@ -49,24 +52,21 @@ layout: general
         padding-bottom: 30px;
     }
 
-    .album{
+    #play-button{
         width: 100%;
     }
 
-    
-
-    #play-header{
+    #h-image{
         width: 100%;
     }
 
-	#play-header:hover{
+	#play-button:hover{
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	}
 
-	#play-header:active {
+	#play-button:active {
     	vertical-align: top;
     	padding: 8px 13px 6px;
-		
 	}
 
     #waveform{
@@ -74,19 +74,32 @@ layout: general
         top: 20px;
     }
 
-	.song-content{
+	#song-content{
       
         padding-right: 80px;
         padding-left: 80px;
         padding-top: 30px;
     }
 
-	.columna{
-		border-top: 1px solid gray;
+    #song-content h1{
+        border-bottom: 1px solid gray;
+    }
+
+	#columna-playlist{
 		padding-top: 20px;
 		padding-right: 20px;
         padding-left: 20px;
+        font-size: 12px;
+        margin:auto;
+        width: 50%;
 	}
+
+    .columna-like{
+        margin:auto;
+        width: 50%;
+        font-size: 12px;
+    }
+
 
 	#song-info-header{
 		position: relative;
@@ -98,6 +111,104 @@ layout: general
 	}
 
 </style>
+
+<script>
+
+    function toggleTextLike(button_id)  {
+        var token = getCookie('token');
+        var user = getCookie('username');
+
+        var el = document.getElementById(button_id);
+        if (el.firstChild.class === "btn btn-outline-danger active")
+        {
+            console.log('hey');
+            el.firstChild.class = "btn btn-outline-danger";
+            el.style.color = "#ec3333";
+            el.style.backgroundColor = "white";
+            /*KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);*/
+        }
+        else
+        {
+            el.firstChild.class = "btn btn-outline-danger active";
+            el.style.backgroundColor = "#ec3333";
+            el.style.color = "white";
+            /*KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);*/
+        }
+    }
+
+    function toggleTextFav(button_id)  {
+        var token = getCookie('token');
+        var user = getCookie('username');
+        var id = getParameterByName('id');
+
+        var el = document.getElementById(button_id);
+        if (el.firstChild.class === "btn btn-outline-warning active")
+        {
+            console.log('hey');
+            el.firstChild.class = "btn btn-outline-warning";
+            el.style.color = "black";
+            el.style.backgroundColor = "white";
+            KOTLINJS.apis.unSetSongFavoutireServer_18v4st$(user, token, id);
+        }
+        else
+        {
+            el.firstChild.class = "btn btn-outline-warning active";
+            el.style.backgroundColor = "yellow";
+            el.style.color = "black";
+            KOTLINJS.apis.setSongFavoutireServer_18v4st$(user, token, id);
+        }
+    }
+
+    function addPlaylist() {
+        var id = document.getElementById("select-playlist").value;
+        console.log(id);
+        if(true){
+            document.getElementById("error-playlist").style.display = "block";
+        }else{
+
+        }
+    }
+
+    $(document).ready( function () {
+        var token = getCookie('token');
+        var user = getCookie('username');
+
+        var id = getParameterByName('id');
+        var song = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$(user).array_hd7ov6$_0[0];
+
+        if (song === null) {
+            /* error */
+        } else {
+            console.log('hey');
+            document.getElementById("h-titulo").innerHTML = song.name;
+            document.getElementById("h-artista").innerHTML = song.album.creator.name;
+            document.getElementById("h-album").innerHTML = song.album.name;
+            document.getElementById("play-button-container").innerHTML = "<img id=\"play-button\"  src=\"resources/imgs/play.gif\" alt=\"play button\" onclick=\"playSong('" +  song.locationUri + "')\">";
+            document.getElementById("h-image").src = song.album.artLocationUri;
+            /*wavesurfer.load(song.locationUri);*/
+            if (user !== null) {
+                var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
+                var playlist_len = playlist.array_hd7ov6$_0.length;
+                inner_html = "";
+                for( i=0; i < playlist_len; i++){
+                    var playlist_elem = playlist.array_hd7ov6$_0[i];
+                    inner_html = inner_html + "<option value=\"" + playlist_elem.id + "\">" + playlist_elem.name + "</option>";
+                }
+                document.getElementById("select-playlist").innerHTML = inner_html;
+                document.getElementById("num-like").innerHTML = "0 likes";
+                if( true /*KOTLINJS.apis.isSongFavoutireByUserServer_18v4st$(user)*/ ){
+                    document.getElementById("fav-button").class = "btn btn-outline-warning active";
+                }
+
+            } else {
+                /* no registrado */
+                console.log('heyy');
+                document.getElementById("song-content").innerHTML = "<h1>Login to add song to playlist</h1>";
+            }
+        }
+        /* if song null*/
+    });
+</script>
 
 </head>
 
@@ -122,57 +233,58 @@ layout: general
                 <div class="row">
                     <div class="col-7">
                         <div class="row">
-                            <div class="col-4">
-                                <img id="play-header"  src="resources/imgs/play.gif" alt="play button">
+                            <div class="col-4" id="play-button-container">
+                                <img id="play-button"  src="resources/imgs/play.gif" alt="play button" onclick="playSong("'" + song.locationUri + "'")">
                             </div>
                             <div class="col-4" id="song-info-header">
-                                <h1>Titulo</h1>
-                                <h2>Artista</h2>
-								<h2>Album</h2>
+                                <h1 id="h-titulo">Titulo</h1>
+                                <h2 id="h-artista">Artista</h2>
+								<h2 id="h-album">Album</h2>
                             </div>
                         </div>
                         <div id="waveform"></div>
                     </div>
                     <div class="col-4">
-                        <img class="album"  src="/resources/imgs/album.jpg">
+                        <img src="/resources/imgs/album.jpg" id="h-image">
                     </div>
                 </div>
             </div>
         </div>
 		<div id="counter"></div>
-		<div class="song-content">
+		<div id="song-content">
 			 <div class="container-fluid">
                 <div class="row">
                     <div class="col-6">
 						<h1>Añadir a una playlist</h1>						
-						<div class="columna">
-							<div class="alert alert-danger" role="alert">
-  								This is a danger alert—check it out!
+						<div id="columna-playlist">
+							<div class="alert alert-danger" role="alert" id="error-playlist" style="display: none">
+                                La playlist ya contiene esta canción.
 							</div>
-							  <form action="/action_page.php">
-								  <select name="cars">
-										<option value="volvo">Volvo</option>
-										<option value="saab">Saab</option>
-										<option value="fiat">Fiat</option>
-										<option value="audi">Audi</option>
+
+								  <select name="cars" id="select-playlist">
+
 								  </select>
-							  <button type="button" class="btn btn-outline-secondary">Secondary</button>
-							</form>
+							  <button type="button" class="btn btn-outline-secondary" onclick="addPlaylist()">Añadir a playlist</button>
+
 						</div>
 					</div><!-- col -->
 					 <div class="col-6">
 						<h1>Cancion</h1>
-						<div class="columna">
-							<div class="alert alert-danger" role="alert">
+						<div id="columna-like-fav">
+							<div class="alert alert-danger" role="alert" id="error-like" style="display: none">
   								This is a danger alert—check it out!
 							</div>
 							 <div class="row">
 								<div class="col-6">
-									<h1>1234 me gusta...</h1>
-									<button type="button" class="btn btn-outline-danger">Me gusta</button>
+                                    <div class="columna-like">
+									<button type="button" class="btn btn-outline-danger" id="like-button" onclick="toggleTextLike(this.id)">Me gusta</button>
+                                    <h2 id="num-like"></h2>
+                                    </div>
 								</div>
 								<div class="col-6">
-									<button type="button" class="btn btn-outline-warning">Favorito</button>
+                                    <div class="columna-like">
+									<button type="button" class="btn btn-outline-warning" id="fav-button" onclick="toggleTextFav(this.id)">Favorito</button>
+                                    </div>
 								</div>
 							</div>				
 						</div>
