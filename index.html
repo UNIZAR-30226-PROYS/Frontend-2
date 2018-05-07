@@ -110,6 +110,37 @@ layout: general
 .album-chart{
 	 
 }
+
+#artists-chart img{
+    width: 100%;
+    height: 100%;
+    border:10px solid white;
+    border-radius: 50%;
+}
+    #artist-chart-sec{
+        position: relative;
+        top: -25px;
+    }
+    #artist-chart-thr{
+        position: relative;
+        top: -70px;
+        left: -4%;
+    }
+#artists-chart{
+    position: relative;
+    left: 14%;
+    top: -550px;
+    width: 65%;
+    margin: auto;
+}
+#artists-chart img:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 blue;
+}
+
+#populares{
+    margin-bottom: -600px;
+}
+
     /************************************/
      h1{
         margin: 0;
@@ -178,8 +209,22 @@ file, get the content of the BODY section and write it into this page, below...
 </section>
 
 <section class="songs">
-    <h1>Canciones en alza</h1>
-    <h3>Never miss a neew release.</h3>
+
+  <div id="populares">
+    <div class="container-fluid"><div class="row">
+        <div class="col">
+            <h1>Canciones populares</h1>
+            <h3>Never miss a neew release.</h3>
+        </div>
+        <div class="col">
+            <h1>Artistas populares</h1>
+            <h3>Never miss a neew release.</h3>
+        </div>
+        <div class="col">
+            <h1>Albumes populares</h1>
+            <h3>Never miss a neew release.</h3>
+        </div>
+    </div></div>
     <div class="song-chart">
         <img class="song-chart-image" src="resources/imgs/wu.jpg">
         <div class="song-chart-content" id="song-chart-content-1">
@@ -258,9 +303,35 @@ file, get the content of the BODY section and write it into this page, below...
             </div>
             <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
-
     </div>
 
+
+    <div id="artists-chart">
+        <div class="container-fluid">
+            <div class="row" id="artists-chart-fis">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-3"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-2"></div>
+            </div>
+            <div class="row" id="artist-chart-sec">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="row" id="artist-chart-thr">
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+
+            </div>
+        </div>
+    </div>
+
+  </div>
 </section>
 
 <section class="novedades">
@@ -403,31 +474,83 @@ file, get the content of the BODY section and write it into this page, below...
         </div>
     </div>
 </section>
+</body>
 
+<style>
+    .carousel-inner{
+        height: 300px;
+        overflow: hidden;
+    }
 
+    #carousel .back-image-carousel{
+        filter: blur(10px);
+        z-index: -1; position:relative;
+    }
+
+    .carousel-content{
+        margin-bottom: -300px;
+        padding-top: 30px;
+
+    }
+    .carousel-content img{
+        width: 250px;
+        height: 250px;
+    }
+
+</style>
+
+<body>
 <section>
-    <div class="container">
+    <div class="container" id="carousel">
         <h2>Carousel Example</h2>
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#myCarousel" data-slide-to="1"></li>
-                <li data-target="#myCarousel" data-slide-to="2"></li>
-            </ol>
+
 
             <!-- Wrapper for slides -->
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1>TITULO</h1>
+                                <h1>TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
                 </div>
 
                 <div class="item">
-                    <img src="resources/imgs/wu.jpg" alt="Chicago" style="width:100%;">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1>TITULO</h1>
+                                <h1>TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
                 </div>
 
                 <div class="item">
-                    <img src="resources/imgs/nas-illmatic.jpg" alt="New york" style="width:100%;">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1>TITULO</h1>
+                                <h1>TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
                 </div>
             </div>
 
