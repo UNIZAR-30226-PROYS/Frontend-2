@@ -49,16 +49,14 @@
     var audioElement = document.createElement('audio');
 
     function playSong(song_src) {
-
         console.log('playing' + song_src);
-        audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', song_src);
         audioElement.play();
         $('#seek').attr('max',audioElement.duration);
     }
 
     $(document).ready(function() {
-        /*audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');*/
+        //audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');
+        audioElement.setAttribute('src', '/resources/music/4AM.mp3');
 
         audioElement.addEventListener('ended', function() {
             this.play();
@@ -72,13 +70,20 @@
 
 		$("#seek").bind("change", function() {
 				audioElement.currentTime = $(this).val();
-				wavesurfer.seekTo(audioElement.currentTime/audioElement.duration);
-			}); 
+			});
 
         audioElement.addEventListener("timeupdate",function(){
-			curtime = parseInt(audioElement.currentTime, 10);
+            curtime = parseInt(audioElement.currentTime, 10);
 			$("#seek").attr("value", curtime);
-			wavesurfer.seekTo(audioElement.currentTime/audioElement.duration);
+			if( end_subs == false ) {
+                if (curtime * 1000 > subtitles[last_sub].start) {
+                    $("#lyrics").text(subtitles[last_sub].text);
+                    last_sub = last_sub + 1;
+                    if ( last_sub >= subtitles.length){
+                        end_subs = true;
+                    }
+                }
+            }
 		});
 
         $('#play').click(function() {/*

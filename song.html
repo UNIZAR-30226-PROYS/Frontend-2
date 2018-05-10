@@ -6,36 +6,6 @@ layout: general
 <script src="/resources/js/jquery.min.js"></script>
 <script src="/resources/js/jQuerySimpleCounter.js"></script>
 
-<script>
-    var wavesurfer = Object.create(WaveSurfer);
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-        wavesurfer.init({
-            container: '#waveform',
-            waveColor: '#A8DBA8',
-            progressColor: '#3B8686',
-            barWidth: 5,
-            pixelRatio: 1,
-            barHeight: 1
-        });
-
-        /*wavesurfer.load('/resources/music/downloaded_song.mp3');*/
-    });
-
-    wavesurfer.on('ready', function () {
-        /*wavesurfer.play();*/
-    });
-
-	wavesurfer.on('seek', function () {
-    	audioElement.currentTime = $(this).val();
-		curtime = parseInt(audioElement.currentTime, 10);
-		$("#seek").attr("value", curtime);
-	});
-
-
-
-</script>
 
 <style>
     .song{
@@ -132,7 +102,31 @@ layout: general
         toSrtTime: function toSrtTime()
         toVttTime: function toVttTime()
     */
-    console.log(window.Subtitle.parse(readTextFile('file:///resources/js/example.srt')));
+
+    var subtitles = [{ start: 0, end: 0, text: "Lyrics not loaded" }];
+    var last_sub = 0;
+    var end_subs = false;
+
+    function readTextFile(file)
+    {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                {
+                    var allText = rawFile.responseText;
+                    subtitles = window.Subtitle.parse(allText);
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+    readTextFile('http://127.0.0.1:4000/resources/example.srt');
+
 </script>
 
 <script>
@@ -489,12 +483,12 @@ function animate() {
 								<h2 id="h-album">Album</h2>
                             </div>
                         </div>
-
                     </div>
                     <div class="col-4">
                         <img src="/resources/imgs/album.jpg" id="h-image">
                     </div>
                 </div>
+                <h1 id="lyrics"></h1>
             </div>
         </div>
 		<div id="counter"></div>
