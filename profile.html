@@ -313,7 +313,7 @@ layout: general
             document.getElementById('profile-content-album').innerHTML = html_content;
 
             /* playlist */
-            var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
+            var playlist = KOTLINJS.obtainPlaylistsFromUserServer(user);
             var playlist_len = playlist.modCount;
             var playlist_row = playlist_len/4;
             var html_content = "";
@@ -329,14 +329,16 @@ layout: general
                         html_content = html_content +
                             "<div class=\"col-sm\">\n" +
                             "<div class=\"artista\">\n" +
+							"<a href='http://127.0.0.1:4000/playlist?type=playlist&id=" + playlist.array_hd7ov6$_0[(row*4)+col].id + "'>" +
                             "<div class=\"card bg-light mb-3\" >\n" +
-                            "<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
-                            "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
-                            "<div class=\"card-block\">\n" +
-                            "<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
-                            "<p class=\"card-text\">" + playlist.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                            	"<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                            	"<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                            	"<div class=\"card-block\">\n" +
+                            		"<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                            		"<p class=\"card-text\">" + playlist.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                            	"</div>\n" +
                             "</div>\n" +
-                            "</div>\n" +
+							"</a>" +
                             "</div>\n" +
                             "</div>";
                     }
