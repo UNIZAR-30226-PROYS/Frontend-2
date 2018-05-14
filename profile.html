@@ -243,8 +243,8 @@ layout: general
 
         var user = getParameterByName('user');
 
-        document.getElementById("following-link").href="http://127.0.0.1:4000/following?user=" + user.username + "&type=following";
-        document.getElementById("followers-link").href="http://127.0.0.1:4000/following?user=" + user.username + "&type=followers";
+        document.getElementById("following-link").href="http://127.0.0.1:4000/following?user=" + user + "&type=following";
+        document.getElementById("followers-link").href="http://127.0.0.1:4000/following?user=" + user + "&type=followers";
 
 
         var token = getCookie('token');
@@ -262,13 +262,13 @@ layout: general
             imagen.src = usuario.pictureLocationUri;
             /* cambiar rrss */
             if( usuario.instagramAccount !== null ){
-                document.getElementById("instagram").innerHTML = usuario.instagramAccount;
+                document.getElementById("instagram").innerHTML = "<i class=\"fa fa-twitter\" style=\"font-size: 20px\"></i>  " + usuario.instagramAccount;
             }
             if( usuario.facebookAccount!== null ){
-                document.getElementById("instagram").innerHTML = usuario.facebookAccount;
+                document.getElementById("instagram").innerHTML = "<i class=\"fa fa-facebook\" style=\"font-size: 20px\"></i>  " + usuario.facebookAccount;
             }
             if( usuario.twitterAccount !== null ){
-                document.getElementById("instagram").innerHTML = usuario.twitterAccount;
+                document.getElementById("instagram").innerHTML = "<i class=\"fa fa-instagram\" style=\"font-size: 20px\"></i>  " + usuario.twitterAccount;
             }
             /* seguidores */
             var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
@@ -296,6 +296,7 @@ layout: general
                         html_content = html_content +
                             "<div class=\"col-sm\">\n" +
                                 "<div class=\"artista\">\n" +
+                                "<a href='http://127.0.0.1:4000/playlist?type=album&id=" + albums.array_hd7ov6$_0[(row*4)+col].id + "'>"  +
                                     "<div class=\"card bg-light mb-3\" >\n" +
                                         "<img class=\"card-img-top\"  src=\"" + albums.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
                                         "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
@@ -304,6 +305,7 @@ layout: general
                                             "<p class=\"card-text\">" + albums.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
                                         "</div>\n" +
                                     "</div>\n" +
+                                "</a>" +
                                 "</div>\n" +
                             "</div>";
                     }
@@ -363,11 +365,13 @@ layout: general
             <h1 id="profile-name">Artist  </h1>
         </div>
         <button id="seguir" type="button" class="btn btn-outline-warning"><strong>+ Seguir</strong></button>
-        <button id="editar" type="button" class="btn btn-outline-warning"><strong>Editar perfil</strong></button>
+        <a href="http://127.0.0.1:4000/edit-profile">
+            <button id="editar" type="button" class="btn btn-outline-warning"><strong>Editar perfil</strong></button>
+        </a>
         <div id="social-media">
-            <h1 id="twitter"><strong></strong></h1>
-            <h1 id="instagram"><strong></strong></h1>
-            <h1 id="facebook"><strong></strong></h1>
+            <h1 id="twitter"><strong><i class="fa fa-twitter" style="font-size: 20px"></i></strong></h1>
+            <h1 id="instagram"><strong><i class="fa fa-instagram" style="font-size: 20px"></i> </strong></h1>
+            <h1 id="facebook"><strong><i class="fa fa-facebook" style="font-size: 20px"></i></strong></h1>
         </div>
 
         <div class="containter-fluid" id="follow-info">

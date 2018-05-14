@@ -32,6 +32,7 @@ layout: general
         }
         .playlist-elem h5{
             line-height: 30px;
+            margin-top: 3px;
         }
         .playlist-elem:hover{
             background: #aaaaaa;
@@ -100,9 +101,10 @@ layout: general
             document.getElementById("playlist-name").innerHTML = playlist.name;
             document.getElementById("playlist-img").src = playlist.artLocationUri;
             document.getElementById("playlist-creator").innerHTML =
-                "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>"
+                "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>";
 
-            if(user === null || user === playlist.creator){
+            if(user === null || user === playlist.creator.username ){
+                 console.log('error');
                  document.getElementById("follow").style.visibility = "hidden";
             }else{
                 try{

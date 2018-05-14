@@ -29,6 +29,32 @@ layout: general
 
 </style>
 
+<script>
+
+
+    $(document).ready( function () {
+        $("#buttonAddRow").click(function(){
+            console.log('anyadir');
+            var row =
+                "<div class=\"upload-album-content-song\">\n" +
+                "                                <div class=\"row\">\n" +
+                "                                    <div class=\"col-sm-4\">\n" +
+                "                                        <input type=\"file\" class=\"form-control-file\" accept=\"audio/*\">\n" +
+                "                                    </div>\n" +
+                "                                    <div class=\"col-sm-4\">\n" +
+                "                                        <input class=\"form-control\" value=\"song title\">\n" +
+                "                                    </div>\n" +
+                "                                    <div class=\"col-sm-4\">\n" +
+                "                                        <input type=\"file\" class=\"form-control-file\" accept=\".srt\">\n" +
+                "                                    </div>\n" +
+                "                                </div>\n" +
+                "                            </div>";
+
+            $('#upload-album-content').append(row);
+        });
+    });
+</script>
+
 <body>
     <div class="container-fluid">
 
@@ -43,7 +69,7 @@ layout: general
                                     <img src="resources/imgs/wu.jpg">
                                         <div class="form-group">
                                             <label for="exampleFormControlFile1">Imagen del album</label>
-                                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                                            <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*">
                                         </div>
                                 </div>
                             </div>
@@ -73,7 +99,7 @@ layout: general
                                 <h5 id="playlist-type">TITLE</h5>
                             </div>
                             <div class="col-sm-4">
-                                <h5 id="playlist-type">ARTIST</h5>
+                                <h5 id="playlist-type">LETRA (FORMATO SRT)</h5>
                             </div>
                         </div>
 
@@ -82,13 +108,13 @@ layout: general
                             <div class="upload-album-content-song">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <input type="file" class="form-control-file">
+                                        <input type="file" class="form-control-file" accept="audio/*">
                                     </div>
                                     <div class="col-sm-4">
                                         <input class="form-control" value="song title">
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="form-control" value="user1, user2">
+                                        <input type="file" class="form-control-file" accept=".srt">
                                     </div>
                                 </div>
                             </div>
@@ -101,12 +127,18 @@ layout: general
                                         <input class="form-control" value="song title">
                                     </div>
                                     <div class="col-sm-4">
-                                        <input class="form-control" value="user1, user2">
+                                        <input type="file" class="form-control-file">
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+
+                        </div><!-- upload-album -->
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <button id="buttonAddRow" style="font-size: 35px;"><i class="fa fa-plus-square-o"></i></button>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
