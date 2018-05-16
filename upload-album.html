@@ -62,7 +62,18 @@ layout: general
         $('#confirm').click(function () {
             document.getElementById("voidfile").style.display = "none";
             document.getElementById("voidtitle").style.display = "none";
+            document.getElementById("voidalbum").style.display = "none";
             var error = false;
+            if( document.getElementById("formalbum").albumname.value === "" ){
+                error = true;
+                document.getElementById("voidalbum").innerHTML = "El nombre del album no puede ser vacio";
+                document.getElementById("voidalbum").style.display = "block";
+            }
+            if( document.getElementById("formalbum").albumyear.value === "" ){
+                error = true;
+                document.getElementById("voidalbum").innerHTML = "El año del album no puede ser vacio";
+                document.getElementById("voidalbum").style.display = "block";
+            }
            for( var i = 0; i < last_index; i++){
                if( document.getElementById("form-upload-" + i ).songfile.value === "" ){
                    document.getElementById("voidfile").innerHTML = "El fichero " + (i+1) + " no puede ser vacio";
@@ -79,7 +90,20 @@ layout: general
            }
 
            if( error == false ){
-
+               var name = document.getElementById("formalbum").albumname.value;
+               var year = document.getElementById("formalbum").albumyear.value;
+               var uri = document.getElementById("formalbum").albumimage.value;
+               var token = getCookie('token');
+               var user = getCookie('username');
+               var album = KOTLINJS.models.Album(0, name, user, year, uri);
+               KOTLINJS.apis.createAlbumsServer_xdras9$(user, token, album);
+               for( var i = 0; i < last_index; i++){
+                   var file = document.getElementById("form-upload-" + i ).songfile.value;
+                   var title = document.getElementById("form-upload-" + i ).songtitle.value;
+                   var srt = document.getElementById("form-upload-" + i ).songsrt.value;
+                   var song = KOTLINJS.models.Song(0, tile, file, 0, album, genere, srt);
+                   /*TODO*/
+               }
            }
 
         });
@@ -94,27 +118,32 @@ layout: general
 
                 <div class="album">
                     <div class="album-header">
+                        <div id="voidalbum" class="alert alert-danger" style="display: none;">
+                            <strong>Error!</strong>
+                        </div>
+                        <form id="formalbum">
                         <div class="row">
                             <div class="col-4">
                                 <div class="album-image">
                                     <img src="resources/imgs/wu.jpg">
                                         <div class="form-group">
                                             <label for="exampleFormControlFile1">Imagen del album</label>
-                                            <input type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*">
+                                            <input  name="albumimage" type="file" class="form-control-file" id="exampleFormControlFile1" accept="image/*">
                                         </div>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="form-group">
                                     <label>Nombre del album</label>
-                                    <input class="form-control" value="album name">
+                                    <input name="albumname" class="form-control"  value="album name">
                                 </div>
                                 <div class="form-group">
                                     <label>Año del album</label>
-                                    <input class="form-control" value="1900">
+                                    <input name="albumyear" class="form-control" value="1900">
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                     <div class="album-content">
 
