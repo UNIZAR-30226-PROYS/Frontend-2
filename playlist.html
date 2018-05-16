@@ -124,7 +124,10 @@ layout: general
                 console.log(playlist_elem.locationUri);
                 inner_html = inner_html + "<div class=\"playlist-elem\">\n" +
                     "                    <div class=\"row\">\n" +
-                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" + playlist_elem.locationUri + "')\">" +
+                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" +
+                    playlist_elem.locationUri +"','"+ playlist_elem.album.artLocationUri +"','"+
+                    playlist_elem.name +"','"+ playlist_elem.album.creator.name +
+                    "')\">" +
                     "    \n" +
                     "                        <div class=\"col-sm-4\">\n" +
                     "                            <h5> <a href=\"http://127.0.0.1:4000/song?id=" + playlist_elem.id + "\">" + playlist_elem.name + "</a> </h5>\n" +

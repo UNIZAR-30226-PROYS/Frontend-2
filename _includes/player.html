@@ -47,11 +47,19 @@
 <script>
 
     var audioElement = document.createElement('audio');
+    var mutex_seek = false;
 
-    function playSong(song_src) {
-        console.log('playing' + song_src);
+    function playSong( song_location, song_art, song_name, song_artist ) {
+        audioElement.setAttribute('src', song_location );
+        document.getElementById("player-icon").src = song_art;
+        document.getElementById("player-songname").innerHTML = song_name;
+        document.getElementById("player-songartist").innerHTML = song_artist;
+        document.getElementById("pause").style.display = "block";
+        document.getElementById("play").style.display = "none";
+        console.log('playing' + song_name);
         audioElement.play();
         $('#seek').attr('max',audioElement.duration);
+
     }
 
     $(document).ready(function() {
@@ -69,18 +77,36 @@
         });
 
 		$("#seek").bind("change", function() {
-				audioElement.currentTime = $(this).val();
-			});
+
+            mutex_seek = true;
+            curtime = $(this).val();
+            audioElement.currentTime = curtime;
+            // si esta en la pantalla de sing actualiza posicion
+            if( window.location.href.includes( "song" )  ) {
+                var counter_last_lyrics = 0;
+                if (end_subs == false) {
+                    while (curtime * 1000 > subtitles[counter_last_lyrics].start) {
+                        counter_last_lyrics++;
+                    }
+                    last_sub = counter_last_lyrics;
+                }
+            }
+            mutex_seek = false;
+		});
 
         audioElement.addEventListener("timeupdate",function(){
+            // si la pagina esta en la pagina de la canción se muestran las lyrics
             curtime = parseInt(audioElement.currentTime, 10);
-			$("#seek").attr("value", curtime);
-			if( end_subs == false ) {
-                if (curtime * 1000 > subtitles[last_sub].start) {
-                    $("#lyrics").text(subtitles[last_sub].text);
-                    last_sub = last_sub + 1;
-                    if ( last_sub >= subtitles.length){
-                        end_subs = true;
+            $("#seek").attr("value", curtime);
+            if( window.location.href.includes( "song" )  ) {
+                console.log(mutex_seek + " " + last_sub);
+                if (end_subs == false && mutex_seek == false) {
+                    if (curtime * 1000 > subtitles[last_sub].start) {
+                        $("#lyrics").text(subtitles[last_sub].text);
+                        last_sub = last_sub + 1;
+                        if (last_sub >= subtitles.length) {
+                            end_subs = true;
+                        }
                     }
                 }
             }
@@ -103,7 +129,8 @@
         });
 
 		$('#play-header').click(function(){
-			audioElement.play();
+			/*audioElement.play();*/
+			/* TODO */
 		});
 
 
@@ -143,11 +170,11 @@
             <div class="player-gradient">
                 <ul id="player-h-list">
                     <li>
-                        <img src="/resources/imgs/nas-illmatic.jpg" style="width: 45px; height: 45px; margin-top: -10px">
+                        <img id="player-icon" src="/resources/imgs/nas-illmatic.jpg" style="width: 45px; height: 45px; margin-top: -10px">
                     </li>
                     <li style="margin-top: -5px">
-                        <h5 style="color: white">Cancion</h5>
-                        <h6 style="color: white">Artista</h6>
+                        <h5 id="player-songname" style="color: white">Cancion</h5>
+                        <h6 id="player-songartist" style="color: white">Artista</h6>
                     </li>
                     <div id="player-center">
                         <li>

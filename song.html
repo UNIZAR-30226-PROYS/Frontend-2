@@ -105,7 +105,7 @@ layout: general
 
     var subtitles = [{ start: 0, end: 0, text: "Lyrics not loaded" }];
     var last_sub = 0;
-    var end_subs = false;
+    var end_subs = true;
 
     function readTextFile(file)
     {
@@ -119,6 +119,7 @@ layout: general
                 {
                     var allText = rawFile.responseText;
                     subtitles = window.Subtitle.parse(allText);
+                    end_subs = false;
                 }
             }
         }
@@ -141,14 +142,14 @@ layout: general
             el.firstChild.class = "btn btn-outline-danger";
             el.style.color = "#ec3333";
             el.style.backgroundColor = "white";
-            /*KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);*/
+            KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);
         }
         else
         {
             el.firstChild.class = "btn btn-outline-danger active";
             el.style.backgroundColor = "#ec3333";
             el.style.color = "white";
-            /*KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);*/
+            KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);
         }
     }
 
@@ -424,7 +425,10 @@ function animate() {
             document.getElementById("h-titulo").innerHTML = song.name;
             document.getElementById("h-artista").innerHTML = song.album.creator.name;
             document.getElementById("h-album").innerHTML = song.album.name;
-            document.getElementById("play-button-container").innerHTML = "<img id=\"play-button\"  src=\"resources/imgs/play.gif\" alt=\"play button\" onclick=\"playSong('" +  song.locationUri + "')\">";
+            document.getElementById("play-button-container").innerHTML = "<img id=\"play-button\"  src=\"resources/imgs/play.gif\" alt=\"play button\" onclick=\"playSong('" +
+                song.locationUri +"','"+ song.album.artLocationUri +"','"+
+                song.name +"','"+ song.album.creator.name +
+                "')\">";
             document.getElementById("h-image").src = song.album.artLocationUri;
             /*wavesurfer.load(song.locationUri);*/
             if (user !== null) {
