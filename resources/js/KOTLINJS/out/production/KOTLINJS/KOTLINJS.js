@@ -250,7 +250,7 @@ var KOTLINJS = function (_, Kotlin) {
     simpleName: 'Recommendation',
     interfaces: []
   };
-  function Song(id, name, locationUri, duration, album, genere, lyricsPath) {
+  function Song(id, name, locationUri, duration, album, genere, lyricsPath){
     this.id = id;
     this.name = name;
     this.locationUri = locationUri;

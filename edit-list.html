@@ -60,6 +60,27 @@ layout: general
         body {
             background-color: white;
         }
+    /**********************************************************************************************************/
+    /*animation*/
+        .animated {
+            -webkit-animation-duration: 2s;animation-duration: 2s;
+            -webkit-animation-fill-mode: both;animation-fill-mode: both;
+        }
+
+        @-webkit-keyframes fadeOut {
+            0% {opacity: 1;}
+            100% {opacity: 0;}
+        }
+
+        @keyframes fadeOut {
+            0% {opacity: 1;}
+            100% {opacity: 0;}
+        }
+
+        .fadeOut {
+            -webkit-animation-name: fadeOut;
+            animation-name: fadeOut;
+        }
 
 </style>
 
@@ -84,11 +105,44 @@ layout: general
         }
     }
 
-    function redirectEditPage() {
+    $(document).ready(function() {
+
+
+
+    });
+
+    function deleteSongClick( index, id_song ) {
+        var returnVal = confirm("Are you sure?");
+        if( returnVal ){
+            /*TODO DELETE*/
+            setTimeout(function(){
+                document.getElementById('divdelete'+index).style.display = "none";
+            }, 2000);
+            document.getElementById('divdelete'+index).className += " fadeOut";
+        }
+    }
+
+    function returnToList() {
+        var type = getParameterByName('type');
+        var id = getParameterByName('id');
+        window.location = "http://127.0.0.1:4000/playlist?type=" + type + "&id=" + id;
+    }
+    
+    function deleteComplete() {
+        var token = getCookie('token');
+        var user = getCookie('username');
         var type = getParameterByName('type');
         var id = getParameterByName('id');
 
-        window.location = "http://127.0.0.1:4000/edit-list?type=" + type + "&id=" + id;
+        var returnVal = confirm("¿Seguro que quiere eliminar la lista?");
+        if(returnVal) {
+            if (type === 'album') {
+                KOTLINJS.apis.deleteAlbumsServer_xdras9$(user, token, id);
+            } else if (type === 'playlist') {
+                KOTLINJS.apis.deletePlaylistServer_l2qie2$(user, token, id);
+            }
+        }
+        window.location = "http://127.0.0.1:4000/profile?user=" + user;
     }
 
     $(document).ready( function () {
@@ -111,10 +165,8 @@ layout: general
                 "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>";
 
             if(user === null || user === playlist.creator.username ){
-                 console.log('error');
-                 document.getElementById("follow").style.display = "none";
+
             }else{
-                document.getElementById("editlist").style.display = "none";
                 try{
                     if( KOTLINJS.apis.isPlaylistFollowedByUserServer_4wgjuj$( user, kotlin.Long.fromInt( id ) ) ) {
                         document.getElementById("follow").innerHTML = "Dejar de seguir";
@@ -130,23 +182,22 @@ layout: general
             for( i=0; i<playlist_len; i++){
                 var playlist_elem = playlist.content.array_hd7ov6$_0[ i ];
                 console.log(playlist_elem.locationUri);
-                inner_html = inner_html + "<div class=\"playlist-elem\">\n" +
+                inner_html = inner_html +
+                    "               <div id='divdelete" + i + "' class=\"playlist-elem animated  \">\n" +
                     "                    <div class=\"row\">\n" +
-                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" +
-                    playlist_elem.locationUri +"','"+ playlist_elem.album.artLocationUri +"','"+
-                    playlist_elem.name +"','"+ playlist_elem.album.creator.name +
-                    "')\">" +
-                    "    \n" +
-                    "                        <div class=\"col-sm-4\">\n" +
+                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" + playlist_elem.locationUri +"','"+ playlist_elem.album.artLocationUri +"','"+ playlist_elem.name +"','"+ playlist_elem.album.creator.name + "')\">" + "    \n" +
+                    "                        <div class=\"col-sm-3\">\n" +
                     "                            <h5> <a href=\"http://127.0.0.1:4000/song?id=" + playlist_elem.id + "\">" + playlist_elem.name + "</a> </h5>\n" +
                     "                        </div>\n" +
-                    "                        <div class=\"col-sm-4\">\n" +
+                    "                        <div class=\"col-sm-3\">\n" +
                     "                            <h5> <a href=\"http://127.0.0.1:4000/profile?user=" + playlist_elem.album.creator.username + "\">" + playlist_elem.album.creator.name + "</a></a>  </h5>\n" +
                     "                        </div>\n" +
-                    "                        <div class=\"col-sm-2\">\n" +
+                    "                        <div class=\"col-sm-3\">\n" +
                     "                            <h5> <a href=\"http://127.0.0.1:4000/playlist?type=album&id=" + playlist_elem.album.id + "\">" + playlist_elem.album.name + "</a> </h5>\n" +
                     "                        </div>\n" +
-
+                    "                        <div class=\"col-sm-1\">\n" +
+                    "                            <button type=\"button\" class=\"btn btn-outline-danger\" onclick='deleteSongClick("+i+","+id+")' style=\"font-size: 15px; margin-top:4px;\">Eliminar</button> \n" +
+                    "                        </div>\n" +
                     "                    </div>\n" +
                     "                </div>";
             }
@@ -170,12 +221,13 @@ layout: general
                     <h5 id="playlist-type">PLAYLIST</h5>
                     <h1 id="playlist-name"><strong>Playlist Name</strong></h1>
                     <h3 id="playlist-creator"></h3>
-                    <a class="btn btn-outline-primary btn-lg" role="button" id="follow" onclick="toggleText(this.id)">Seguir</a>
-                    <a class="btn btn-outline-primary btn-lg" role="button" id="editlist" onclick="redirectEditPage()">Editar</a>
+                    <button type="button" onclick="deleteComplete()" class="btn btn-outline-danger" style="font-size: 25px;">Eliminar completo</button>
+
                 </div>
 
             </div>
         </div>
+
     </div>
     <div class="playlist-content">
         <div class="container-fluid">
@@ -201,7 +253,7 @@ layout: general
             <div id="playlist-container-elem">
 
 
-                <div class="playlist-elem">
+                <div class="playlist-elem"  id='divdelete0'>
                     <div class="row">
                         <div class="col-sm-1">
                             <img class="play-img" src="resources/imgs/play.gif" onclick="playSong('#')">
@@ -218,12 +270,19 @@ layout: general
                         </div>
                     </div>
                 </div>
-
-
             </div>
 
+            <div class="row">
+                <div class="col-sm-2">
+                    <button type="button" onclick="returnToList()" class="btn btn-outline-danger" id="cancelar" style="font-size: 25px; margin-top: 30px; margin-left: 30px;" >Volver</button>
+                </div>
+                <div class="col-sm-2">
 
+                </div>
+            </div>
 
-        </div>
+        </div><!-- container fluid -->
     </div>
+
+
 </div>

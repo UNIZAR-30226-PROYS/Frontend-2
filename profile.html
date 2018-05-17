@@ -93,17 +93,17 @@ layout: general
         padding-left: 50px;
     }
 
-    #profile-header #follow-info{
-        position: relative;
-        top: -460px;
-        left: 60px;
+    #follow-info{
+        position: absolute;
+        top: 370px;
     }
 
-    #profile-header .col-sm-1{
+    #follow-info .col-sm-1{
+        margin-left: 70px;
         margin-right: 70px;
     }
 
-    #profile-header .follow-hover:hover{
+     .follow-hover:hover{
         background-color: #7c7c7c;
         width: 130px;
         color: black;
@@ -374,30 +374,12 @@ layout: general
             <h1 id="facebook"><strong><i class="fa fa-facebook" style="font-size: 20px"></i></strong></h1>
         </div>
 
-        <div class="containter-fluid" id="follow-info">
-            <div class="row">
-                <div class="col-sm-1" >
-                    <a id="following-link" >
-                    <div class="follow-hover">
-                    <h1>Siguiendo</h1>
-                    <h1 id="num-following">10000000</h1>
-                    </div>
-                    </a>
-                </div>
-                <div class="col-sm-1" id="col-follow">
-                    <a id="followers-link">
-                    <div class="follow-hover">
-                    <h1>Sequidores</h1>
-                    <h1 id="num-followers">0</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 
 
 
-    <div id="profile-top">
+    <div  id="profile-top">
         <div id="profile-top-canciones">
             <h1 id="profile-top-titulo">Canciones populares</h1>
 
@@ -406,11 +388,11 @@ layout: general
                     <div class="col-sm-1">
                         <img class="profile-top-album" src="resources/imgs/wu.jpg">
                     </div>
-                    <div class="col-sm-4">
-                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    <div class="col-sm-5">
+                        <h5 class="profile-top-name">Titulo vdzfbsbdfbsb</h5>
                     </div>
                     <div class="col-sm-4">
-                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                        <h5 class="profile-top-repro">100.000</h5>
                     </div>
                 </div>
             </div>
@@ -475,7 +457,25 @@ layout: general
         </div>
     </div>
 
-
+    <div class="containter-fluid" id="follow-info">
+        <div class="row">
+            <div class="col-sm-1" >
+                <a id="following-link" >
+                    <div class="follow-hover">
+                        <h1>Siguiendo</h1>
+                        <h1 id="num-following">10000000</h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-1" id="col-follow">
+                <a id="followers-link">
+                    <div class="follow-hover">
+                        <h1>Sequidores</h1>
+                        <h1 id="num-followers">0</h1>
+                    </div>
+            </div>
+        </div>
+    </div>
 
 
     <div id="profile-content">

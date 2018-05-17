@@ -351,6 +351,12 @@ layout: general
         margin-top: 0px;
     }
 
+    /********************************************************************************************************************/
+
+
+
+
+
 
     body{
         background-color: black;
@@ -358,32 +364,14 @@ layout: general
 </style>
 
 
-<div id="storage" style="display:none;">
-</div>
+<body>
 
-<!-- https://www.xul.fr/ajax/responseHTML-attribute.php -->
-<!--
-<h1>Ajax Demo - Getting Data From a HTML Page</h1>
-<hr>
-Load the <b><a href="playlist.html" target="_parent">anotherpage.html</a></b>
-file, get the content of the BODY section and write it into this page, below...
-<FORM name="ajax" method="POST" action="">
-    <p>
-
-        <INPUT type="BUTTON" value="Load HTML and get data"  ONCLICK="loadWholePage('playlist.html')">
-    </p>
-
-</FORM>
-
-<div id="displayed">
-</div>
--->
 <section class="novedades-circle">
     <div class="recom-class">
         <h1>Recomendaciones</h1>
         <h3>Never miss a neew release.</h3>
         {% include circle-grid.html %}
-        <h2>Mas recomendaciones >></h2>
+
     </div>
 </section>
 
@@ -607,121 +595,98 @@ file, get the content of the BODY section and write it into this page, below...
 </section>
 
 
-<section class="novedades">
-    <div class="novedades-class">
-        <h1 class="w3-hide-large w3-hide-medium">Novedades</h1>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <h2>Mas recomendaciones >></h2>
-    </div>
-</section>
-
-
+<style>
+    .grid-container {
+        display: grid;
+    }
+    .grid-item-1 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+    }
+    .grid-item-2 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    .grid-item-3 {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
+    .grid-item-4 {
+        grid-column-start: 4;
+        grid-column-end: 4;
+    }
+    .grid-item-5 {
+        grid-column-start: 5;
+        grid-column-end: 5;
+    }
+    .grid-s{
+        height: 150px;
+    }
+</style>
 
 
 <section id="generos">
     <h1>Generos</h1>
     <h3>Never miss a neew release.</h3>
     <div id="generos-content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo" >Mood</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo" >Latin</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo">Pop</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo">Focus</p>
-                </div>
+        <div class="grid-container">
+            <div class="grid-s grid-item-1 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
             </div>
-
-            <div class="row">
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo" >Mood</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo" >Latin</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo">Pop</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo">Focus</p>
-                </div>
+            <div class="grid-s grid-item-2 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
             </div>
-
-
-            <div class="row">
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo" >Mood</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo" >Latin</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo">Pop</p>
-                </div>
-                <div class="col-sm-3">
-                    <img class="card-img-top" src="resources/imgs/wu.jpg">
-                    <p class="lista-exitos-titulo">Focus</p>
-                </div>
+            <div class="grid-s grid-item-3 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
             </div>
-
-
+            <div class="grid-s grid-item-4 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-5 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class=" grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item">8</div>
+            <div class="grid-item">9</div>
         </div>
+
     </div>
 </section>
+
+
+
+<section>
+    <h1>Generos</h1>
+    <h3>Never miss a neew release.</h3>
+    <div id="generos-content">
+        <div class="grid-container">
+            <div class="grid-s grid-item-1 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-2 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-3 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-4 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-5 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class=" grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item">8</div>
+            <div class="grid-item">9</div>
+        </div>
+
+    </div>
+</section>
+
+
+
+<script src="resources/js/tilt.jquery.min.js"></script>
+
+</body>
