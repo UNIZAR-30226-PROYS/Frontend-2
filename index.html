@@ -353,15 +353,91 @@ layout: general
 
     /********************************************************************************************************************/
 
+    .grid-container {
+        display: grid;
+    }
+    .grid-item-1 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+    }
+    .grid-item-2 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    .grid-item-3 {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
+    .grid-item-4 {
+        grid-column-start: 4;
+        grid-column-end: 4;
+    }
+    .grid-item-5 {
+        grid-column-start: 5;
+        grid-column-end: 5;
+    }
+    #generos .grid-s{
+        height: 150px;
+    }
+    #recomendaciones-grid .grid-s{
 
-
-
+    }
 
 
     body{
         background-color: black;
     }
 </style>
+
+
+<script>
+
+    $(document).ready(function() {
+        var token = getCookie('token');
+        var user = getCookie('username');
+
+        var container_r = document.getElementById("containerrecomendacionesaux");
+        var recom = KOTLINJS.apis.obtainRecomendationsForUserServer_18v4st$('abelcht', token, 8);
+        var inner = "";
+        console.log(recom);
+        for (var i = 0; i < recom.modCount; i++) {
+            var elem = recom.array_hd7ov6$_0[i];
+            console.log(((i%4)+1));
+            if (elem.username == null) {
+                var pic = ""
+                if( elem.album == null ){
+                    pic = elem.artLocationUri;
+                }else{
+                    pic = elem.album.artLocationUri;
+                }
+                inner +=
+                    "<div class=\"grid-s grid-item-" + ((i % 4) + 1) + " your-element\" >\n" +
+                    "        <figure class=\"imghvr-fade\">\n" +
+                    "            <img  src=\'" + pic + "' style=\"width: 100%; height: 100% \">\n" +
+                    "            <figcaption style=\"background-color: #aaaaaa\">\n" +
+                    "                <h5 style=\"color: black\">" + elem.name + "</h5>\n" +
+                    "            </figcaption>\n" +
+                    "            <a href=\"#\"></a>\n" +
+                    "        </figure>\n" +
+                    "    </div>";
+            } else {
+
+                inner +=
+                    "<div class=\"grid-s grid-item-" + ((i % 4) + 1) + " your-element\"  >\n" +
+                    "            <figure class=\"imghvr-fade\" style=\"  border-radius: 50%;\">\n" +
+                    "                <img  src=\"" + elem.pictureLocationUri + "\" style=\"width: 100%; height: 100%; border-radius: 50%;  \">\n" +
+                    "                <figcaption style=\"background-color: #aaaaaa; text-align: center; padding-top: 40%\">\n" +
+                    "                    <h5  style=\"color: black; font-size:50px\">" + elem.username + "</h5>\n" +
+                    "                </figcaption>\n" +
+                    "                <a href=\"#\"></a>\n" +
+                    "            </figure>\n" +
+                    "        </div>";
+            }
+            container_r.innerHTML = inner;
+        }
+    });
+
+</script>
 
 
 <body>
@@ -595,34 +671,6 @@ layout: general
 </section>
 
 
-<style>
-    .grid-container {
-        display: grid;
-    }
-    .grid-item-1 {
-        grid-column-start: 1;
-        grid-column-end: 1;
-    }
-    .grid-item-2 {
-        grid-column-start: 2;
-        grid-column-end: 2;
-    }
-    .grid-item-3 {
-        grid-column-start: 3;
-        grid-column-end: 3;
-    }
-    .grid-item-4 {
-        grid-column-start: 4;
-        grid-column-end: 4;
-    }
-    .grid-item-5 {
-        grid-column-start: 5;
-        grid-column-end: 5;
-    }
-    .grid-s{
-        height: 150px;
-    }
-</style>
 
 
 <section id="generos">
@@ -656,33 +704,17 @@ layout: general
 
 
 
-<section>
-    <h1>Generos</h1>
+<section id="recomendaciones-grid">
+    <h1>Recomendaciones</h1>
     <h3>Never miss a neew release.</h3>
-    <div id="generos-content">
-        <div class="grid-container">
-            <div class="grid-s grid-item-1 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px">
-                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
-            </div>
-            <div class="grid-s grid-item-2 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
-                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
-            </div>
-            <div class="grid-s grid-item-3 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
-                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
-            </div>
-            <div class="grid-s grid-item-4 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
-                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
-            </div>
-            <div class="grid-s grid-item-5 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
-                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
-            </div>
-            <div class=" grid-item">6</div>
-            <div class="grid-item">7</div>
-            <div class="grid-item">8</div>
-            <div class="grid-item">9</div>
-        </div>
+
+    <div id="containerrecomendacionesaux" class="grid-container" >
+
+    <h5>LOADING</h5>
+
 
     </div>
+
 </section>
 
 
