@@ -162,6 +162,9 @@ layout: general
                   var x = document.getElementById("login-error-msg");
                   var y = document.getElementById("login-error-msg-space");
                   if (x.style.display === "none") {
+                      x.innerHTML = "<div class=\"alert alert-danger\">\n" +
+                          "                      <strong>Error!</strong> Usuario o contraseña incorrectos\n" +
+                          "                  </div>";
                       x.style.display = "block";
                       y.style.display = "block";
                   } else {

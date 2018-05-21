@@ -246,112 +246,116 @@ layout: general
         document.getElementById("following-link").href="http://127.0.0.1:4000/following?user=" + user + "&type=following";
         document.getElementById("followers-link").href="http://127.0.0.1:4000/following?user=" + user + "&type=followers";
 
-
         var token = getCookie('token');
 		var registered_user = getCookie('username');
-        /* if(user === get parameter user)   (si es el perfil del usuario)*/
+
+        if( (registered_user == undefined || registered_user == "" || registered_user.length == 0) ){
+            console.log("usuario sin login");
+            document.getElementById("seguir").style.display = "none";
+            document.getElementById("editar").style.display = "none";
+        }
+
         if(user === registered_user){   /* perfil del usuario */
-            $('button[id="seguir"]').addClass("hidden");
-
-            var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
-
-            /* cambiar nombre */
-            document.getElementById("profile-name").innerHTML = usuario.username;
-            /* cambiar imagen */
-            var imagen = document.getElementById('profile-main-image');
-            imagen.src = usuario.pictureLocationUri;
-            /* cambiar rrss */
-            if( usuario.instagramAccount !== null ){
-                document.getElementById("instagram").innerHTML = "<i class=\"fa fa-twitter\" style=\"font-size: 20px\"></i>  " + usuario.instagramAccount;
-            }
-            if( usuario.facebookAccount!== null ){
-                document.getElementById("instagram").innerHTML = "<i class=\"fa fa-facebook\" style=\"font-size: 20px\"></i>  " + usuario.facebookAccount;
-            }
-            if( usuario.twitterAccount !== null ){
-                document.getElementById("instagram").innerHTML = "<i class=\"fa fa-instagram\" style=\"font-size: 20px\"></i>  " + usuario.twitterAccount;
-            }
-            /* seguidores */
-            var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
-            var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
-            document.getElementById("num-followers").innerHTML = followers.modCount;
-            document.getElementById("num-following").innerHTML = following.modCount;
-
-            /* canciones */
-            /*var canciones = KOTLINJS.apis.get*/
-
-            /* albumes */
-            var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
-            var albums_len = albums.modCount;
-            var albums_row = albums_len/4;
-            var html_content = "";
-
-            for (row = 0; row < albums_row; row++) {
-                html_content = html_content + "<div class=\"row\">";
-                for (col = 0; col < 4; col++) {
-                    if( typeof( albums.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
-                        html_content = html_content +
-                        "<div class=\"col-sm\">\n" +
-                        "</div>";
-                    }else {
-                        html_content = html_content +
-                            "<div class=\"col-sm\">\n" +
-                                "<div class=\"artista\">\n" +
-                                "<a href='http://127.0.0.1:4000/playlist?type=album&id=" + albums.array_hd7ov6$_0[(row*4)+col].id + "'>"  +
-                                    "<div class=\"card bg-light mb-3\" >\n" +
-                                        "<img class=\"card-img-top\"  src=\"" + albums.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
-                                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
-                                        "<div class=\"card-block\">\n" +
-                                            "<h4 class=\"card-title\">" + albums.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
-                                            "<p class=\"card-text\">" + albums.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
-                                        "</div>\n" +
-                                    "</div>\n" +
-                                "</a>" +
-                                "</div>\n" +
-                            "</div>";
-                    }
-                }
-                html_content = html_content + "</div>";
-            }
-            document.getElementById('profile-content-album').innerHTML = html_content;
-
-            /* playlist */
-            var playlist = KOTLINJS.obtainPlaylistsFromUserServer(user);
-            var playlist_len = playlist.modCount;
-            var playlist_row = playlist_len/4;
-            var html_content = "";
-
-            for (row = 0; row < playlist_row; row++) {
-                html_content = html_content + "<div class=\"row\">";
-                for (col = 0; col < 4; col++) {
-                    if( typeof( playlist.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
-                        html_content = html_content +
-                            "<div class=\"col-sm\">\n" +
-                            "</div>";
-                    }else {
-                        html_content = html_content +
-                            "<div class=\"col-sm\">\n" +
-                            "<div class=\"artista\">\n" +
-							"<a href='http://127.0.0.1:4000/playlist?type=playlist&id=" + playlist.array_hd7ov6$_0[(row*4)+col].id + "'>" +
-                            "<div class=\"card bg-light mb-3\" >\n" +
-                            	"<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
-                            	"<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
-                            	"<div class=\"card-block\">\n" +
-                            		"<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
-                            		"<p class=\"card-text\">" + playlist.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
-                            	"</div>\n" +
-                            "</div>\n" +
-							"</a>" +
-                            "</div>\n" +
-                            "</div>";
-                    }
-                }
-                html_content = html_content + "</div>";
-            }
-            document.getElementById('profile-content-playlist').innerHTML = html_content;
-
+            document.getElementById("seguir").style.display = "none";
         }else{      /* otro artista */
 
         }
+
+        /**************************************************************************************************************/
+        var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
+
+        document.getElementById("profile-name").innerHTML = usuario.username;
+        var imagen = document.getElementById('profile-main-image');
+        imagen.src = usuario.pictureLocationUri;
+        if( usuario.instagramAccount !== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-twitter\" style=\"font-size: 20px\"></i>  " + usuario.instagramAccount;
+        }
+        if( usuario.facebookAccount!== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-facebook\" style=\"font-size: 20px\"></i>  " + usuario.facebookAccount;
+        }
+        if( usuario.twitterAccount !== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-instagram\" style=\"font-size: 20px\"></i>  " + usuario.twitterAccount;
+        }
+        /* seguidores */
+        var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
+        var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
+        document.getElementById("num-followers").innerHTML = followers.modCount;
+        document.getElementById("num-following").innerHTML = following.modCount;
+
+        /* canciones */
+        /*var canciones = KOTLINJS.apis.get*/
+
+        /* albumes */
+        var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
+        var albums_len = albums.modCount;
+        var albums_row = albums_len/4;
+        var html_content = "";
+
+        for (row = 0; row < albums_row; row++) {
+            html_content = html_content + "<div class=\"row\">";
+            for (col = 0; col < 4; col++) {
+                if( typeof( albums.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "</div>";
+                }else {
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "<div class=\"artista\">\n" +
+                        "<a href='http://127.0.0.1:4000/playlist?type=album&id=" + albums.array_hd7ov6$_0[(row*4)+col].id + "'>"  +
+                        "<div class=\"card bg-light mb-3\" >\n" +
+                        "<img class=\"card-img-top\"  src=\"" + albums.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                        "<div class=\"card-block\">\n" +
+                        "<h4 class=\"card-title\">" + albums.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                        "<p class=\"card-text\">" + albums.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</a>" +
+                        "</div>\n" +
+                        "</div>";
+                }
+            }
+            html_content = html_content + "</div>";
+        }
+        document.getElementById('profile-content-album').innerHTML = html_content;
+
+        /* playlist */
+        var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
+        var playlist_len = playlist.modCount;
+        var playlist_row = playlist_len/4;
+        var html_content = "";
+
+        for (row = 0; row < playlist_row; row++) {
+            html_content = html_content + "<div class=\"row\">";
+            for (col = 0; col < 4; col++) {
+                if( typeof( playlist.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "</div>";
+                }else {
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "<div class=\"artista\">\n" +
+                        "<a href='http://127.0.0.1:4000/playlist?type=playlist&id=" + playlist.array_hd7ov6$_0[(row*4)+col].id + "'>" +
+                        "<div class=\"card bg-light mb-3\" >\n" +
+                        "<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                        "<div class=\"card-block\">\n" +
+                        "<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                        "<p class=\"card-text\">" + playlist.array_hd7ov6$_0[(row*4)+col].releaseDate + "</p>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</a>" +
+                        "</div>\n" +
+                        "</div>";
+                }
+            }
+            html_content = html_content + "</div>";
+        }
+        document.getElementById('profile-content-playlist').innerHTML = html_content;
+        /*************************************************************************************************************/
+
     });
 </script>
 

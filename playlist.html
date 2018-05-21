@@ -100,7 +100,10 @@ layout: general
 
         if (type === 'album') {
             document.getElementById("playlist-type").innerHTML = "ALBUM";
-            /*var album = KOTLINJS.apis.obtain*/
+            document.getElementById("follow").style.display = "none";
+            document.getElementById("editlist").style.display = "none";
+
+
 
         }else if(type ==='playlist'){
             var playlist = KOTLINJS.apis.obtainPlaylistDataServer_s8cxhz$( kotlin.Long.fromInt( id ) );
@@ -110,17 +113,22 @@ layout: general
             document.getElementById("playlist-creator").innerHTML =
                 "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>";
 
-            if(user === null || user === playlist.creator.username ){
-                 console.log('error');
-                 document.getElementById("follow").style.display = "none";
-            }else{
+            if( (user == undefined || user == "" || user.length == 0) ){
+                document.getElementById("follow").style.display = "none";
                 document.getElementById("editlist").style.display = "none";
-                try{
-                    if( KOTLINJS.apis.isPlaylistFollowedByUserServer_4wgjuj$( user, kotlin.Long.fromInt( id ) ) ) {
-                        document.getElementById("follow").innerHTML = "Dejar de seguir";
+            }else{
+                if(  user === playlist.creator.username ){
+                    console.log('error');
+                    document.getElementById("follow").style.display = "none";
+                }else{
+                    document.getElementById("editlist").style.display = "none";
+                    try{
+                        if( KOTLINJS.apis.isPlaylistFollowedByUserServer_4wgjuj$( user, kotlin.Long.fromInt( id ) ) ) {
+                            document.getElementById("follow").innerHTML = "Dejar de seguir";
+                        }
+                    }catch(error){
+                        console.log('error ?????');
                     }
-                }catch(error){
-                    console.log('error ?????');
                 }
             }
 
@@ -151,8 +159,16 @@ layout: general
                     "                </div>";
             }
             document.getElementById("playlist-container-elem").innerHTML = inner_html;
-        }else{
-            /* error */
+
+
+
+        }else if(type ==='genero'){
+            var generos = KOTLINJS.apis.obtainPopularByGenreServer_s8cxhz$()
+
+                document.getElementById("playlist-type").innerHTML = "GENERO";
+                document.getElementById("follow").style.display = "none";
+                document.getElementById("editlist").style.display = "none";
+                document.getElementById("playlist-name").innerHTML = id;
         }
     });
 </script>

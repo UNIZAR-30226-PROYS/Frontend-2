@@ -416,22 +416,32 @@ function animate() {
         var user = getCookie('username');
 
         var id = getParameterByName('id');
-        var song = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$(user).array_hd7ov6$_0[0];
+        var song = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$("Media").array_hd7ov6$_0[0];
 
-        if (song === null) {
+        if (null === song) {
             /* error */
         } else {
             console.log('hey');
             document.getElementById("h-titulo").innerHTML = song.name;
             document.getElementById("h-artista").innerHTML = song.album.creator.name;
             document.getElementById("h-album").innerHTML = song.album.name;
+            document.getElementById("h-image").src = song.album.artLocationUri;
+            document.getElementById("enlace-album").href = "http://127.0.0.1:4000/playlist?type=album&id=" + song.album.id;
             document.getElementById("play-button-container").innerHTML = "<img id=\"play-button\"  src=\"resources/imgs/play.gif\" alt=\"play button\" onclick=\"playSong('" +
                 song.locationUri +"','"+ song.album.artLocationUri +"','"+
                 song.name +"','"+ song.album.creator.name +
                 "')\">";
-            document.getElementById("h-image").src = song.album.artLocationUri;
+
+
             /*wavesurfer.load(song.locationUri);*/
-            if (user !== null) {
+            if (  (user == undefined || user == "" || user.length == 0) ) {
+                /* no registrado */
+                console.log('heyy');
+                document.getElementById("song-content").innerHTML = "<h1>Login to add song to playlist</h1>";
+
+
+            } else {
+
                 var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
                 var playlist_len = playlist.array_hd7ov6$_0.length;
                 inner_html = "";
@@ -445,10 +455,6 @@ function animate() {
                     document.getElementById("fav-button").class = "btn btn-outline-warning active";
                 }
 
-            } else {
-                /* no registrado */
-                console.log('heyy');
-                document.getElementById("song-content").innerHTML = "<h1>Login to add song to playlist</h1>";
             }
         }
         /* if song null*/
@@ -489,7 +495,9 @@ function animate() {
                         </div>
                     </div>
                     <div class="col-4">
+                        <a href="" id="enlace-album">
                         <img src="/resources/imgs/album.jpg" id="h-image">
+                        </a>
                     </div>
                 </div>
                 <h1 id="lyrics"></h1>

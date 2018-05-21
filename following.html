@@ -47,6 +47,9 @@ layout: general
     #container-followers .button-followed{
         margin-top: 5%;
     }
+    body{
+        background-color: black;
+    }
 </style>
 
 <script>
@@ -89,6 +92,9 @@ function redirectToUser(touser) {
 
 $(document).ready( function () {
     var type = getParameterByName('type');
+    var user = getCookie('username');
+    var token = getCookie('token');
+    var invitado = ( user == undefined || user == "" || user.length == 0 );
 
     if(type === 'following'){
         document.getElementById("siguiendo").innerHTML = "Siguiendo";
@@ -96,13 +102,14 @@ $(document).ready( function () {
         var token = getCookie('token');
         var registered_user = getCookie('username');
         /* if(user === get parameter user)   (si es el perfil del usuario)*/
-        if(user === registered_user) {   /* perfil del usuario */
+        if(user === registered_user && !invitado) {   /* perfil del usuario */
             var followers = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
             var followers_len = followers.modCount;
             console.log(followers_len);
+            var html_content = "";
             for (ind = 0; ind < followers_len; ind++) {
                 var follower = followers.array_hd7ov6$_0[ind];
-                var html_content = "<div class=\"row\">\n" +
+                html_content = "<div class=\"row\">\n" +
                     "            <div class=\"row-intern\">\n" +
                     "                <div class=\"col-xs-3\">\n" +
                     "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
@@ -128,15 +135,16 @@ $(document).ready( function () {
                     "                </div>\n" +
                     "            </div>\n" +
                     "        </div>";
-                document.getElementById("container-followers").innerHTML = html_content;
             }
+            document.getElementById("container-followers").innerHTML = html_content;
         }else{
             var followers = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
             var followers_len = followers.modCount;
             console.log(followers_len);
+            var html_content = "";
             for (ind = 0; ind < followers_len; ind++) {
                 var follower = followers.array_hd7ov6$_0[ind];
-                var html_content = "<div class=\"row\">\n" +
+                html_content += "<div class=\"row\">\n" +
                     "            <div class=\"row-intern\">\n" +
                     "                <div class=\"col-xs-3\">\n" +
                     "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
@@ -150,9 +158,8 @@ $(document).ready( function () {
                     "                </div>\n" +
                     "            </div>\n" +
                     "        </div>";
-                document.getElementById("container-followers").innerHTML = html_content;
-
             }
+            document.getElementById("container-followers").innerHTML = html_content;
         }
 
     }else if(type === 'followers'){
@@ -160,9 +167,10 @@ $(document).ready( function () {
         var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
         var followers_len = followers.modCount;
         console.log(followers_len);
+        var html_content = "";
         for (ind = 0; ind < followers_len; ind++) {
             var follower = followers.array_hd7ov6$_0[ind];
-            var html_content = "<div class=\"row\">\n" +
+            html_content = "<div class=\"row\">\n" +
                 "            <div class=\"row-intern\">\n" +
                 "                <div class=\"col-xs-3\">\n" +
                 "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
@@ -176,8 +184,8 @@ $(document).ready( function () {
                 "                </div>\n" +
                 "            </div>\n" +
                 "        </div>";
-            document.getElementById("container-followers").innerHTML = html_content;
         }
+        document.getElementById("container-followers").innerHTML = html_content;
     }else{
         /*error*/
     }
