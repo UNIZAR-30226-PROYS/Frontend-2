@@ -2,17 +2,9 @@
     /* https://foundation.zurb.com/building-blocks/blocks/mobile-bottom-bar.html */
     .mobile-bottom-bar {
         width: 100%;
-        height: 3.778rem;
+        height: 4.5rem;
         background: black;
-        display: -webkit-flex;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-justify-content: center;
-        -ms-flex-pack: center;
-        justify-content: center;
-        /*-webkit-align-items: center;*/
-        -ms-flex-align: center;
-        /*align-items: center; */
+
 
         position: fixed;
         z-index: 100;
@@ -28,10 +20,26 @@
     ul#player-h-list li {
         display:inline;
         float: left;
+        margin-left: 20px;
     }
 
     #player-h-list #seek {
-        width: 100%;
+        width: 300px;
+    }
+
+    .mobile-bottom-bar i{
+        color: white;
+        font-size:25px
+
+    }
+    .mobile-bottom-bar i:hover{
+        color: gray;
+        font-size:27px
+    }
+
+    #player-center{
+        margin: auto;
+        width: 50%;
     }
 
 </style>
@@ -39,18 +47,24 @@
 <script>
 
     var audioElement = document.createElement('audio');
+    var mutex_seek = false;
 
-    function playSong(song_src) {
-
-        console.log('playing' + song_src);
-        audioElement = document.createElement('audio');
-        audioElement.setAttribute('src', song_src);
+    function playSong( song_location, song_art, song_name, song_artist ) {
+        audioElement.setAttribute('src', song_location );
+        document.getElementById("player-icon").src = song_art;
+        document.getElementById("player-songname").innerHTML = song_name;
+        document.getElementById("player-songartist").innerHTML = song_artist;
+        document.getElementById("pause").style.display = "block";
+        document.getElementById("play").style.display = "none";
+        console.log('playing' + song_name);
         audioElement.play();
         $('#seek').attr('max',audioElement.duration);
+
     }
 
     $(document).ready(function() {
-        /*audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');*/
+        //audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');
+        audioElement.setAttribute('src', '/resources/music/4AM.mp3');
 
         audioElement.addEventListener('ended', function() {
             this.play();
@@ -63,25 +77,51 @@
         });
 
 		$("#seek").bind("change", function() {
-				audioElement.currentTime = $(this).val();
-				wavesurfer.seekTo(audioElement.currentTime/audioElement.duration);
-			}); 
 
-        audioElement.addEventListener("timeupdate",function(){
-			curtime = parseInt(audioElement.currentTime, 10);
-			$("#seek").attr("value", curtime);
-			wavesurfer.seekTo(audioElement.currentTime/audioElement.duration);
+            mutex_seek = true;
+            curtime = $(this).val();
+            audioElement.currentTime = curtime;
+            // si esta en la pantalla de sing actualiza posicion
+            if( window.location.href.includes( "song" )  ) {
+                var counter_last_lyrics = 0;
+                if (end_subs == false) {
+                    while (curtime * 1000 > subtitles[counter_last_lyrics].start) {
+                        counter_last_lyrics++;
+                    }
+                    last_sub = counter_last_lyrics;
+                }
+            }
+            mutex_seek = false;
 		});
 
-        $('#play').click(function() {
+        audioElement.addEventListener("timeupdate",function(){
+            // si la pagina esta en la pagina de la canción se muestran las lyrics
+            curtime = parseInt(audioElement.currentTime, 10);
+            $("#seek").attr("value", curtime);
+            if( window.location.href.includes( "song" )  ) {
+                console.log(mutex_seek + " " + last_sub);
+                if (end_subs == false && mutex_seek == false) {
+                    if (curtime * 1000 > subtitles[last_sub].start) {
+                        $("#lyrics").text(subtitles[last_sub].text);
+                        last_sub = last_sub + 1;
+                        if (last_sub >= subtitles.length) {
+                            end_subs = true;
+                        }
+                    }
+                }
+            }
+		});
+
+        $('#play').click(function() {/*
             audioElement.play();
             $("#status").text("Status: Playing");
-			$('#seek').attr('max',audioElement.duration);
+			$('#seek').attr('max',audioElement.duration);*/
         });
 
         $('#pause').click(function() {
+            /*
             audioElement.pause();
-            $("#status").text("Status: Paused");
+            $("#status").text("Status: Paused");*/
         });
 
         $('#restart').click(function() {
@@ -89,9 +129,37 @@
         });
 
 		$('#play-header').click(function(){
-			audioElement.play();
+			/*audioElement.play();*/
+			/* TODO */
 		});
+
+
+		/**********************************************************************************/
+
+		document.getElementById("pause").style.display = "none";
+
     });
+
+
+    function play_toggle(icon_id, pause_id)  {
+        document.getElementById(pause_id).style.display = "block";
+        document.getElementById(icon_id).style.display = "none";
+
+
+            console.log('play');
+            audioElement.play();
+            $("#status").text("Status: Playing");
+            $('#seek').attr('max',audioElement.duration);
+
+    }
+    function pause_toggle(icon_id, play_id)  {
+        document.getElementById(play_id).style.display = "block";
+        document.getElementById(icon_id).style.display = "none";
+
+
+        audioElement.pause();
+        $("#status").text("Status: Paused");
+    }
 
 </script>
 
@@ -102,39 +170,41 @@
             <div class="player-gradient">
                 <ul id="player-h-list">
                     <li>
-                        <button id="play">Play</button>
+                        <img id="player-icon" src="/resources/imgs/nas-illmatic.jpg" style="width: 45px; height: 45px; margin-top: -10px">
                     </li>
-                    <li>
-                        <button id="pause">Pause</button>
+                    <li style="margin-top: -5px">
+                        <h5 id="player-songname" style="color: white">Cancion</h5>
+                        <h6 id="player-songartist" style="color: white">Artista</h6>
                     </li>
-                    <li>
-                        <button id="restart">Restart</button>
-                    </li>
-                    <li>
-                        <input type="range" id="seek" value="0" max=""/>
-                    </li>
-                    <li>
-                        <button id="pause">Random</button>
-                    </li>
-                    <li>
-                        <button id="restart">Like</button>
-                    </li>
-					<li><div id="currentTime">0</div></li>
+                    <div id="player-center">
+                        <li>
+                            <i class="fa fa-backward"></i>
+                        </li>
+                        <li>
+                            <i class="fa fa-play" id="play" onclick="play_toggle(this.id, 'pause')" ></i>
+                        </li>
+                        <li>
+                            <i class="fa fa-pause" id="pause" onclick="pause_toggle(this.id, 'play')" ></i>
+                        </li>
+                        <li>
+                            <i class="fa fa-forward"></i>
+                        </li>
+
+                        <li>
+                            <input type="range" id="seek" value="0" max=""/>
+                        </li>
+                        <li>
+                            <i class="glyphicon glyphicon-random" id="random" style="font-size: 25px;"></i>
+                        </li>
+                        <li>
+                            <i class="glyphicon glyphicon-heart" id="like"></i>
+                        </li>
+                      
+
+                    </div>
 
                 </ul>
-<!--
-                        <h2>Playing Information</h2>
 
-                        
-
-                        <div id="length">Duration:</div>
-
-                        <div id="source">Source:</div>
-
-                        <div id="status" style="color:red;">Status: Loading</div>
-
--->
-            </div><!-- / player -->
-
+            </div>
     </div>
 </body>

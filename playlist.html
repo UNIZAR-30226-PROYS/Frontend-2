@@ -32,6 +32,7 @@ layout: general
         }
         .playlist-elem h5{
             line-height: 30px;
+            margin-top: 3px;
         }
         .playlist-elem:hover{
             background: #aaaaaa;
@@ -83,6 +84,13 @@ layout: general
         }
     }
 
+    function redirectEditPage() {
+        var type = getParameterByName('type');
+        var id = getParameterByName('id');
+
+        window.location = "http://127.0.0.1:4000/edit-list?type=" + type + "&id=" + id;
+    }
+
     $(document).ready( function () {
         var type = getParameterByName('type');
         var id = getParameterByName('id');
@@ -92,7 +100,10 @@ layout: general
 
         if (type === 'album') {
             document.getElementById("playlist-type").innerHTML = "ALBUM";
-            /*var album = KOTLINJS.apis.obtain*/
+            document.getElementById("follow").style.display = "none";
+            document.getElementById("editlist").style.display = "none";
+
+
 
         }else if(type ==='playlist'){
             var playlist = KOTLINJS.apis.obtainPlaylistDataServer_s8cxhz$( kotlin.Long.fromInt( id ) );
@@ -100,17 +111,24 @@ layout: general
             document.getElementById("playlist-name").innerHTML = playlist.name;
             document.getElementById("playlist-img").src = playlist.artLocationUri;
             document.getElementById("playlist-creator").innerHTML =
-                "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>"
+                "Created by  <a href=\"http://127.0.0.1:4000/profile?user=" + playlist.creator.username + "\">" + playlist.creator.username + "</a>";
 
-            if(user === null || user === playlist.creator){
-                 document.getElementById("follow").style.visibility = "hidden";
+            if( (user == undefined || user == "" || user.length == 0) ){
+                document.getElementById("follow").style.display = "none";
+                document.getElementById("editlist").style.display = "none";
             }else{
-                try{
-                    if( KOTLINJS.apis.isPlaylistFollowedByUserServer_4wgjuj$( user, kotlin.Long.fromInt( id ) ) ) {
-                        document.getElementById("follow").innerHTML = "Dejar de seguir";
+                if(  user === playlist.creator.username ){
+                    console.log('error');
+                    document.getElementById("follow").style.display = "none";
+                }else{
+                    document.getElementById("editlist").style.display = "none";
+                    try{
+                        if( KOTLINJS.apis.isPlaylistFollowedByUserServer_4wgjuj$( user, kotlin.Long.fromInt( id ) ) ) {
+                            document.getElementById("follow").innerHTML = "Dejar de seguir";
+                        }
+                    }catch(error){
+                        console.log('error ?????');
                     }
-                }catch(error){
-                    console.log('error ?????');
                 }
             }
 
@@ -122,7 +140,10 @@ layout: general
                 console.log(playlist_elem.locationUri);
                 inner_html = inner_html + "<div class=\"playlist-elem\">\n" +
                     "                    <div class=\"row\">\n" +
-                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" + playlist_elem.locationUri + "')\">" +
+                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" +
+                    playlist_elem.locationUri +"','"+ playlist_elem.album.artLocationUri +"','"+
+                    playlist_elem.name +"','"+ playlist_elem.album.creator.name +
+                    "')\">" +
                     "    \n" +
                     "                        <div class=\"col-sm-4\">\n" +
                     "                            <h5> <a href=\"http://127.0.0.1:4000/song?id=" + playlist_elem.id + "\">" + playlist_elem.name + "</a> </h5>\n" +
@@ -138,8 +159,16 @@ layout: general
                     "                </div>";
             }
             document.getElementById("playlist-container-elem").innerHTML = inner_html;
-        }else{
-            /* error */
+
+
+
+        }else if(type ==='genero'){
+            var generos = KOTLINJS.apis.obtainPopularByGenreServer_s8cxhz$()
+
+                document.getElementById("playlist-type").innerHTML = "GENERO";
+                document.getElementById("follow").style.display = "none";
+                document.getElementById("editlist").style.display = "none";
+                document.getElementById("playlist-name").innerHTML = id;
         }
     });
 </script>
@@ -158,6 +187,7 @@ layout: general
                     <h1 id="playlist-name"><strong>Playlist Name</strong></h1>
                     <h3 id="playlist-creator"></h3>
                     <a class="btn btn-outline-primary btn-lg" role="button" id="follow" onclick="toggleText(this.id)">Seguir</a>
+                    <a class="btn btn-outline-primary btn-lg" role="button" id="editlist" onclick="redirectEditPage()">Editar</a>
                 </div>
 
             </div>

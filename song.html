@@ -6,36 +6,6 @@ layout: general
 <script src="/resources/js/jquery.min.js"></script>
 <script src="/resources/js/jQuerySimpleCounter.js"></script>
 
-<script>
-    var wavesurfer = Object.create(WaveSurfer);
-
-    document.addEventListener('DOMContentLoaded', function () {
-
-        wavesurfer.init({
-            container: '#waveform',
-            waveColor: '#A8DBA8',
-            progressColor: '#3B8686',
-            barWidth: 5,
-            pixelRatio: 1,
-            barHeight: 1
-        });
-
-        /*wavesurfer.load('/resources/music/downloaded_song.mp3');*/
-    });
-
-    wavesurfer.on('ready', function () {
-        /*wavesurfer.play();*/
-    });
-
-	wavesurfer.on('seek', function () {
-    	audioElement.currentTime = $(this).val();
-		curtime = parseInt(audioElement.currentTime, 10);
-		$("#seek").attr("value", curtime);
-	});
-
-
-
-</script>
 
 <style>
     .song{
@@ -106,14 +76,61 @@ layout: general
         top: 30px;
 	}
 
+    #canvas-container{
+        margin: auto;
+        width: 70%;
+    }
+
 	body{
 		background: white;
 	}
 
 </style>
 
-<script>
 
+<script src="/resources/js/subtitle.bundle.js"></script>
+<script>
+    // `Subtitle` will be globally available
+    //console.log(window.Subtitle)
+    /*
+      {
+        parse: function parse()
+        resync: function resync()
+        stringify: function stringify()
+        stringifyVtt: function stringifyVtt()
+        toMS: function toMS()
+        toSrtTime: function toSrtTime()
+        toVttTime: function toVttTime()
+    */
+
+    var subtitles = [{ start: 0, end: 0, text: "Lyrics not loaded" }];
+    var last_sub = 0;
+    var end_subs = true;
+
+    function readTextFile(file)
+    {
+        var rawFile = new XMLHttpRequest();
+        rawFile.open("GET", file, true);
+        rawFile.onreadystatechange = function ()
+        {
+            if(rawFile.readyState === 4)
+            {
+                if(rawFile.status === 200 || rawFile.status == 0)
+                {
+                    var allText = rawFile.responseText;
+                    subtitles = window.Subtitle.parse(allText);
+                    end_subs = false;
+                }
+            }
+        }
+        rawFile.send(null);
+    }
+
+    readTextFile('http://127.0.0.1:4000/resources/example.srt');
+
+</script>
+
+<script>
     function toggleTextLike(button_id)  {
         var token = getCookie('token');
         var user = getCookie('username');
@@ -125,14 +142,14 @@ layout: general
             el.firstChild.class = "btn btn-outline-danger";
             el.style.color = "#ec3333";
             el.style.backgroundColor = "white";
-            /*KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);*/
+            KOTLINJS.apis.addFollowerToPlaylistServer_18v4st$(user, token, id);
         }
         else
         {
             el.firstChild.class = "btn btn-outline-danger active";
             el.style.backgroundColor = "#ec3333";
             el.style.color = "white";
-            /*KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);*/
+            KOTLINJS.apis.deleteFollowerToPlaylistServer_18v4st$(user, token, id);
         }
     }
 
@@ -170,23 +187,261 @@ layout: general
     }
 
     $(document).ready( function () {
+
+
+
+
+		/**************************************************************************************************************/
+var SAMPLES_PER_PIXEL = 15;
+var SAMPLES_PER_SECOND = 60;
+var SAMPLES_PER_PICK;
+var sampled;
+var peak = 1;
+
+var canvas = document.createElement('canvas');
+canvas.width = 1024;
+canvas.height = 200;
+
+var halfHeight = canvas.height / 4;
+document.getElementById('canvas-container').appendChild(canvas);
+
+var ctx = canvas.getContext('2d');
+ctx.translate(0.5, 0.5);
+
+var audioCtx = new AudioContext();
+
+var audio = document.createElement( 'audio' );
+audio.controls = true;
+audio.style.position = 'absolute';
+audio.style.left = 'calc(50% - 150px)';
+audio.style.bottom = '25px';
+audio.style.transition = 'opacity 1s';
+//audio.play();
+//document.body.appendChild( audio );
+
+
+canvas.addEventListener('mousedown', function(e) {
+  audio.currentTime = (e.offsetX || e.clientX) / SAMPLES_PER_SECOND * SAMPLES_PER_PIXEL;
+});
+
+canvas.style.cssText = 'cursor: pointer';
+
+
+function handleFileSelect(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+
+  var files = evt.dataTransfer.files; // FileList object.
+
+  var reader = new FileReader();
+
+  reader.onload = function(event) {
+
+    loadAudioBuffer(event.target.result);
+  };
+
+  // files is a FileList of File objects. List some properties.
+  var output = [];
+  for (var i = 0, f; f = files[i]; i++) {
+    console.log(
+      f.name, 'type: ', f.type || 'n/a', ') - ',
+      f.size, ' bytes, last modified: ',
+      f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a'
+    );
+
+    audio.src = URL.createObjectURL(f);
+    reader.readAsArrayBuffer(f);
+
+  }
+}
+
+function handleDragOver(evt) {
+  evt.stopPropagation();
+  evt.preventDefault();
+  evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+
+// Setup the dnd listeners.
+//var dropZone = document.getElementById('drop_zone');
+//dropZone.addEventListener('dragover', handleDragOver, false);
+//dropZone.addEventListener('drop', handleFileSelect, false);
+
+getData('http://upload.wikimedia.org/wikipedia/commons/3/3c/01_-_Vivaldi_Spring_mvt_1_Allegro_-_John_Harrison_violin.ogg');
+var source = audioCtx.createMediaElementSource(audio);
+//var source = getData('http://upload.wikimedia.org/wikipedia/commons/3/3c/01_-_Vivaldi_Spring_mvt_1_Allegro_-_John_Harrison_violin.ogg');
+
+function getData(url) {
+  var request = new XMLHttpRequest();
+
+  request.open('GET', url, true);
+
+  request.responseType = 'arraybuffer';
+
+  request.onload = function() {
+    var audioData = request.response;
+    loadAudioBuffer(audioData);
+    audio.src = url;
+  }
+
+  request.send();
+}
+
+function loadAudioBuffer(audioData) {
+  audioCtx.decodeAudioData(audioData, function(buffer) {
+    source.buffer = buffer;
+    source.connect(audioCtx.destination);
+    onLoaded(buffer.getChannelData(0), buffer.getChannelData(1), buffer.sampleRate);
+  });
+}
+
+
+
+function onLoaded(data, dataR, rate) {
+  SAMPLES_PER_PICK = rate / SAMPLES_PER_SECOND;
+  sampled = new Float32Array(data.length / SAMPLES_PER_PICK | 0);  
+
+  // for normailization
+  // peak = -Infinity;
+  // for (var i = 0; i < sampled.length; i++) {
+  //   var abs = sampled[i];
+  //   if (abs > peak) peak = abs;
+  // }
+
+
+  // for (var i = 0; i < sampled.length; i++) {
+  //   sampled[i] = Math.max(Math.abs(data[i * SAMPLES_PER_PICK]), Math.abs(data[i * SAMPLES_PER_PICK]));
+  // }
+
+
+  // Make Sample Data
+  for (var i = 0; i < sampled.length; i++) {
+    var max = -Infinity;
+    var min = Infinity;
+    var avg = 0;
+    var squaredSum = 0;
+    for (var j =0; j < SAMPLES_PER_PICK; j++ ) {
+      var s = Math.max(Math.abs(data[i * SAMPLES_PER_PICK + j]), Math.abs(data[i * SAMPLES_PER_PICK + j]));
+      max = Math.max(max, s);
+      min = Math.min(min, s);
+      avg += s;
+      squaredSum += s * s;
+    }
+    avg /= SAMPLES_PER_PICK;
+    // sampled[i] = avg;
+    // sampled[i] = max;
+    // sampled[i] = (max + min) / 2;
+    // sampled[i] = s;
+    sampled[i] = Math.sqrt(squaredSum / SAMPLES_PER_PICK);
+  }
+  animate();
+}
+
+function animate() {
+  // requestAnimationFrame(animate);
+  setTimeout(animate, 100);
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.save();
+  // ctx.fillText('Sq Avg + Sq Avg', 40, halfHeight * 2);
+  var whichPixel = audio.currentTime * SAMPLES_PER_SECOND / SAMPLES_PER_PIXEL;
+
+  ctx.strokeStyle = 'red';
+  ctx.beginPath();
+  ctx.moveTo(whichPixel, 0);
+  ctx.lineTo(whichPixel, canvas.height);
+  ctx.stroke();
+
+
+  ctx.strokeStyle = 'black';
+  ctx.translate(0, halfHeight)
+
+
+  var pointer = 0;
+  var x = 0;
+
+  ctx.lineWidth = 1 / SAMPLES_PER_PIXEL;
+  // interpolated version
+  for (var x = 0; x < sampled.length; x++) {
+
+    var val = sampled[x];
+    var h = val * halfHeight / peak;
+
+    ctx.beginPath();
+    ctx.moveTo(x / SAMPLES_PER_PIXEL, -h);
+    ctx.lineTo(x / SAMPLES_PER_PIXEL, h);
+    ctx.stroke();
+  }
+
+  ctx.lineWidth = 1;
+  ctx.translate(0, halfHeight * 2);
+  x = 0;
+  // averaging amplitudes
+  for (var pointer = 0; pointer < sampled.length;pointer ++) {
+    var point = sampled[pointer];
+    var min = point;
+    var max = point;
+    var sumSq = 0;
+
+    for (var i = 1; i < SAMPLES_PER_PIXEL; i++) {
+      pointer ++;
+      min = Math.min(sampled[pointer], min);
+      max = Math.max(sampled[pointer], max);
+      sumSq += sampled[pointer] * sampled[pointer];
+    }
+
+    // var val = (min + max) / 2 / peak;
+
+    // var val = point / peak;
+    var val = Math.sqrt(sumSq / SAMPLES_PER_PIXEL) / peak;
+    // var val = max / peak;
+    // var val = point / peak;
+
+
+    var h = val * halfHeight;
+
+    ctx.beginPath();
+    ctx.moveTo(x, -h);
+    ctx.lineTo(x, h);
+    ctx.stroke();
+
+    x++;
+
+  }
+
+  ctx.restore();
+}
+/*******************************************************************/
+
         var token = getCookie('token');
         var user = getCookie('username');
 
         var id = getParameterByName('id');
-        var song = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$(user).array_hd7ov6$_0[0];
+        var song = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$("Media").array_hd7ov6$_0[0];
 
-        if (song === null) {
+        if (null === song) {
             /* error */
         } else {
             console.log('hey');
             document.getElementById("h-titulo").innerHTML = song.name;
             document.getElementById("h-artista").innerHTML = song.album.creator.name;
             document.getElementById("h-album").innerHTML = song.album.name;
-            document.getElementById("play-button-container").innerHTML = "<img id=\"play-button\"  src=\"resources/imgs/play.gif\" alt=\"play button\" onclick=\"playSong('" +  song.locationUri + "')\">";
             document.getElementById("h-image").src = song.album.artLocationUri;
+            document.getElementById("enlace-album").href = "http://127.0.0.1:4000/playlist?type=album&id=" + song.album.id;
+            document.getElementById("play-button-container").innerHTML = "<img id=\"play-button\"  src=\"resources/imgs/play.gif\" alt=\"play button\" onclick=\"playSong('" +
+                song.locationUri +"','"+ song.album.artLocationUri +"','"+
+                song.name +"','"+ song.album.creator.name +
+                "')\">";
+
+
             /*wavesurfer.load(song.locationUri);*/
-            if (user !== null) {
+            if (  (user == undefined || user == "" || user.length == 0) ) {
+                /* no registrado */
+                console.log('heyy');
+                document.getElementById("song-content").innerHTML = "<h1>Login to add song to playlist</h1>";
+
+
+            } else {
+
                 var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
                 var playlist_len = playlist.array_hd7ov6$_0.length;
                 inner_html = "";
@@ -200,10 +455,6 @@ layout: general
                     document.getElementById("fav-button").class = "btn btn-outline-warning active";
                 }
 
-            } else {
-                /* no registrado */
-                console.log('heyy');
-                document.getElementById("song-content").innerHTML = "<h1>Login to add song to playlist</h1>";
             }
         }
         /* if song null*/
@@ -242,12 +493,14 @@ layout: general
 								<h2 id="h-album">Album</h2>
                             </div>
                         </div>
-                        <div id="waveform"></div>
                     </div>
                     <div class="col-4">
+                        <a href="" id="enlace-album">
                         <img src="/resources/imgs/album.jpg" id="h-image">
+                        </a>
                     </div>
                 </div>
+                <h1 id="lyrics"></h1>
             </div>
         </div>
 		<div id="counter"></div>
@@ -293,5 +546,9 @@ layout: general
 			</div>
 		</div>
     </div> <!-- song -->
+
+<div id="canvas-container">
+
+</div>
 	
 </body>

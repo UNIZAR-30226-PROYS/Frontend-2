@@ -3,6 +3,10 @@ layout: general
 ---
 
 <style>
+        #titulo-busqueda{
+            margin-left: 80px;
+            margin-top: 40px;
+        }
         .busqueda-canciones{
             margin: auto;
             width: 70%;
@@ -42,6 +46,7 @@ layout: general
 
         .columna-listas-contenido{
             border-top: 1px solid gray;
+            margin-top: 40px;
         }
 		.titulo-busqueda{
 			position: relative;
@@ -58,24 +63,38 @@ layout: general
 			margin-top:30px;
 		}
 		#primera-linea-izq{
-			margin-top:30px;
+			margin-top:10px;
 		}
 		#primera-linea-dec{
-			margin-top:30px;
+			margin-top:10px;
 		}
 		.elemento:hover{
 			background: #aaaaaa;
 		}
-		
-
+    .link-container{
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
+<script>
+    var term = getParameterByName('term');
+    $(document).ready( function () {
+        document.getElementById('titulo-busqueda').innerHTML = "Resultados de la búsqueda: " + term;
+        document.getElementById('ver-todas-canciones').href = "http://127.0.0.1:4000/busqueda-canciones?term=" + term;
+        document.getElementById('ver-todos-artistas').href = "http://127.0.0.1:4000/busqueda-artista?term=" + term;
+        document.getElementById('ver-todos-album').href = "http://127.0.0.1:4000/busqueda-listas?type=album&term=" + term;
+        document.getElementById('ver-todos-playlist').href = "http://127.0.0.1:4000/busqueda-listas?type=playlist&term=" + term;
+    });
+
+</script>
+
 <body>
-    <h1>Resultados de la busqueda ...</h1>
+<h1 id="titulo-busqueda"></h1>
     <div class="busqueda-canciones">
 		<div  style="clear: both;">
 			<h1 class="titulo-busqueda">Canciones</h1>
-        	<h1 class="ver-todo">Ver todas</h1>
+            <a id="ver-todas-canciones" href=""><div class="link-container"><h1 class="ver-todo">Ver todas</h1></div></a>
 		</div>
         <div class="playlist-content">
             <div class="container-fluid">
@@ -99,7 +118,7 @@ layout: general
                             <h5> <a href="">Titulo</a> </h5>
                         </div>
                         <div class="col-sm-3">
-                            <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
+                            <h5> <a href="">Artista1</a>
                         </div>
                         <div class="col-sm-2">
                             <h5> <a href="">Album</a> </h5>
@@ -108,28 +127,13 @@ layout: general
 
                 </div>
 
-                <div class="playlist-elem" style="background: #999999;">
+                <div class="playlist-elem" >
                     <div class="row">
                         <div class="col-sm-4">
                             <h5> <a href="">Titulo</a> </h5>
                         </div>
                         <div class="col-sm-3">
-                            <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
-                        </div>
-                        <div class="col-sm-2">
-                            <h5> <a href="">Album</a> </h5>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="playlist-elem">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <h5> <a href="">Titulo</a> </h5>
-                        </div>
-                        <div class="col-sm-3">
-                            <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
+                            <h5> <a href="">Artista1</a>
                         </div>
                         <div class="col-sm-2">
                             <h5> <a href="">Album</a> </h5>
@@ -144,7 +148,22 @@ layout: general
                             <h5> <a href="">Titulo</a> </h5>
                         </div>
                         <div class="col-sm-3">
-                            <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
+                            <h5> <a href="">Artista1</a>
+                        </div>
+                        <div class="col-sm-2">
+                            <h5> <a href="">Album</a> </h5>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="playlist-elem">
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h5> <a href="">Titulo</a> </h5>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5> <a href="">Artista1</a>
                         </div>
                         <div class="col-sm-2">
                             <h5> <a href="">Album</a> </h5>
@@ -158,7 +177,7 @@ layout: general
                             <h5> <a href="">Titulo</a> </h5>
                         </div>
                         <div class="col-sm-3">
-                            <h5> <a href="">Artista1</a> <a href="">Artista2</a> </h5>
+                            <h5> <a href="">Artista1</a>
                         </div>
                         <div class="col-sm-2">
                             <h5> <a href="">Album</a> </h5>
@@ -176,8 +195,8 @@ layout: general
                    <!-- artistas -->
                     <!-- primera linea -->
                     <div class="columna-artistas">
-                        <h1 class="titulo-busqueda">Canciones</h1>
-                        <h1 class="ver-todo">Ver todas</h1>
+                        <h1 class="titulo-busqueda">Artistas</h1>
+                        <a href="" id="ver-todos-artistas"><h1 class="ver-todo" >Ver todas</h1></a>
                         <div class="columna-artistas-contenido">
                             <div class="row" id="primera-linea-izq">
 								
@@ -242,8 +261,16 @@ layout: general
                     <!-- primera linea -->
                     <div class="columna-listas">
                         <h1 class="titulo-busqueda">Listas</h1>
-                        <h1 class="ver-todo">Ver todas</h1>
+
                         <div class="columna-listas-contenido">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <h1>Albumes</h1>
+                                </div>
+                                <div class="col-sm">
+                                    <h1>Playlist</h1>
+                                </div>
+                            </div>
                             <div class="row" id="primera-linea-dec">
                                 <div class="col-sm">
 									<div class="elemento">
@@ -297,6 +324,14 @@ layout: general
 										 </div><!-- elemento -->
 		                            </div>
 		                        </div>
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <a href="" id="ver-todos-album"><h1>Ver todas</h1></a>
+                                    </div>
+                                    <div class="col-sm">
+                                        <a href="" id="ver-todos-playlist"><h1>Ver todas</h1></a>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
