@@ -16,7 +16,8 @@ layout: general
         height:280px;
 
         /*filter: blur(5px);*/
-        background-color: black;
+        background: linear-gradient(to left, #516c79, #37474f); /* Standard syntax (must be last) */
+
     }
 
     #profile-main-image{
@@ -65,12 +66,12 @@ layout: general
         position: relative;
         top: -480px;
         left: -90px;
-        color: yellow;
+        color: black;
         border-width: 3px;
     }
 
     #seguir:hover{
-        color: black;
+        color: white;
     }
 
     #editar{
@@ -80,12 +81,13 @@ layout: general
         position: relative;
         top: -480px;
         left: -90px;
-        color: yellow;
+        color: black;
         border-width: 3px;
+
     }
 
     #editar:hover{
-        color: black;
+        color: white;
     }
 
      #col-follow{
@@ -224,10 +226,10 @@ layout: general
     #social-media{
         position: relative;
         top: -710px;
-        right: -74%;
+        right: -90%;
         color: white;
         background-color: transparent;
-        width: 10%;
+        width: 6%;
         padding-top: 5px;
         padding-right: 15px;
         padding-left: 10px;
@@ -386,9 +388,9 @@ layout: general
             <img id="verificado"  src="resources/imgs/ok.png">
             <h1 id="profile-name">Artist  </h1>
         </div>
-        <button id="seguir" type="button" class="btn btn-outline-warning"><strong>+ Seguir</strong></button>
+        <button id="seguir" type="button" class="btn btn-outline-success"><strong>+ Seguir</strong></button>
         <a href="http://127.0.0.1:4000/edit-profile">
-            <button id="editar" type="button" class="btn btn-outline-warning"><strong>Editar perfil</strong></button>
+            <button id="editar" type="button" class="btn btn-outline-success"><strong>Editar perfil</strong></button>
         </a>
         <div id="social-media">
             <a id="twitter-l" href=""><h1 id="twitter"><strong><i class="fa fa-link"></i>  <i class="fa fa-twitter" style="font-size: 25px"></i></strong></h1></a>

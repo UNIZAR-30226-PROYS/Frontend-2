@@ -91,6 +91,7 @@ function redirectToUser(touser) {
 }
 
 $(document).ready( function () {
+    /*
     var type = getParameterByName('type');
     var user = getCookie('username');
     var token = getCookie('token');
@@ -101,14 +102,15 @@ $(document).ready( function () {
         var user = getParameterByName('user');
         var token = getCookie('token');
         var registered_user = getCookie('username');
-        /* if(user === get parameter user)   (si es el perfil del usuario)*/
-        if(user === registered_user && !invitado) {   /* perfil del usuario */
+
+        if(user === registered_user && !invitado) {
             var followers = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
             var followers_len = followers.modCount;
             console.log(followers_len);
             var html_content = "";
             for (ind = 0; ind < followers_len; ind++) {
                 var follower = followers.array_hd7ov6$_0[ind];
+
                 html_content = "<div class=\"row\">\n" +
                     "            <div class=\"row-intern\">\n" +
                     "                <div class=\"col-xs-3\">\n" +
@@ -186,10 +188,11 @@ $(document).ready( function () {
                 "        </div>";
         }
         document.getElementById("container-followers").innerHTML = html_content;
-    }else{
-        /*error*/
-    }
 
+    }else{
+
+    }
+*/
 });
 
 </script>

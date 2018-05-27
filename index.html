@@ -445,10 +445,11 @@ layout: general
         /*******   generos  *******/
         var inner = "";
         var generos = KOTLINJS.apis.obtainGeneresServer();
+        var colorpal = ["#d5f4e6", "#80ced6", "#fefbd8", "#618685"];
         for( var i = 0; i < generos.modCount; i++ ){
             console.log( ((i % 5) + 1) );
             inner +=
-               "<div class=\"grid-s grid-item-" +  ((i % 5) + 1)  + " your-element\" data-tilt data-tilt-max=\"50\" data-tilt-speed=\"400\" data-tilt-perspective=\"500\" style=\"background-color: #d5" + i+ "4e6; padding-top: 50px\"  onclick=\"redirectToGen()\">\n" +
+               "<div class=\"grid-s grid-item-" +  ((i % 5) + 1)  + " your-element\" data-tilt data-tilt-max=\"50\" data-tilt-speed=\"400\" data-tilt-perspective=\"500\" style=\"background-color: "+ colorpal[i%4] +"; padding-top: 50px\"  onclick=\"redirectToGen()\">\n" +
                 "                <h5 style=\"margin: auto; width: 30%; font-size: 25px\">" + generos.array_hd7ov6$_0[i] + "</h5>\n" +
                 "            </div>";
         }
