@@ -8,34 +8,227 @@ layout: general
     background: black; /* For browsers that do not support gradients */
     background: linear-gradient(to left, #516c79, #37474f); /* Standard syntax (must be last) */
   }
-  .form-control{
+  #login-page .form-control{
     background-color: #999999;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
     border-radius: 30px;
   }
-  .register-button{
+  #login-page .register-button{
     background-color: white;
     color: black;
     border-radius: 30px;
   }
+    #login-page label{
+        font-size: 15px;
+    }
+    #login-page ul li{
+        font-size: 15px;
+    }
+    #login-page .tab-content{
+        padding-top: 30px;
+    }
+	#login-page{
+		padding-top: 5%;
+	}
 </style>
 
-<div class="login-page">
+
+<script type="text/javascript">
+    function handleClientLoad() {
+        // Loads the client library and the auth2 library together for efficiency.
+        // Loading the auth2 library is optional here since `gapi.client.init` function will load
+        // it if not already loaded. Loading it upfront can save one network request.
+        gapi.load('client:auth2', initClient);
+    }
+
+    function initClient() {
+        // Initialize the client with API key and People API, and initialize OAuth with an
+        // OAuth 2.0 client ID and scopes (space delimited string) to request access.
+        gapi.client.init({
+            apiKey: 'YOUR_API_KEY',
+            discoveryDocs: ["https://people.googleapis.com/$discovery/rest?version=v1"],
+            clientId: 'YOUR_WEB_CLIENT_ID.apps.googleusercontent.com',
+            scope: 'profile'
+        }).then(function () {
+            // Listen for sign-in state changes.
+            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+            // Handle the initial sign-in state.
+            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+        });
+    }
+
+    function updateSigninStatus(isSignedIn) {
+        // When signin status changes, this function is called.
+        // If the signin status is changed to signedIn, we make an API call.
+        if (isSignedIn) {
+            makeApiCall();
+        }
+    }
+
+    function handleSignInClick(event) {
+        // Ideally the button should only show up after gapi.client.init finishes, so that this
+        // handler won't be called before OAuth is initialized.
+        gapi.auth2.getAuthInstance().signIn();
+    }
+
+    function handleSignOutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+    }
+
+    function makeApiCall() {
+        // Make an API call to the People API, and print the user's given name.
+        gapi.client.people.people.get({
+            'resourceName': 'people/me',
+            'requestMask.includeField': 'person.names'
+        }).then(function(response) {
+            console.log('Hello, ' + response.result.names[0].givenName);
+        }, function(reason) {
+            console.log('Error: ' + reason.result.error.message);
+        });
+    }
+
+  /******************************************************************************************************************/
+  $(document).ready( function () {
+      $('#register-button').click(function () {
+          console.log('HEY');
+          var nick = $('input[id="nick-signup"]').val();
+          var user = $('input[id="user-signup"]').val();
+          var pass0 = $('input[id="pass1-signup"]').val();
+          var pass1 = $('input[id="pass2-signup"]').val();
+          var mail = $('input[id="mail-signup"]').val();
+          var country = $('input[id="country"]').val();
+          var birth = $('input[id="date"]').val();
+          resetRegisterInputs();
+          if (user === "" || pass0 === "" || pass1 === "" || mail === "" || nick === "" || country === "" || birth === "") {
+              if (user === "") {
+                  $('div[id="user-signup-container"]').addClass("has-error");
+                  $('span[id="user-signup-icon"]').removeClass("hidden");
+              }
+              if (pass0 === "") {
+                  $('div[id="pass1-signup-container"]').addClass("has-error");
+                  $('span[id="pass1-signup-icon"]').removeClass("hidden");
+              }
+              if (pass1 === "") {
+                  $('div[id="pass2-signup-container"]').addClass("has-error");
+                  $('span[id="pass2-signup-icon"]').removeClass("hidden");
+              }
+              if (mail === "") {
+                  $('div[id="mail-signup-container"]').addClass("has-error");
+                  $('span[id="mail-signup-icon"]').removeClass("hidden");
+              }
+              if (nick === "") {
+                  $('div[id="nick-signup-container"]').addClass("has-error");
+                  $('span[id="nick-signup-icon"]').removeClass("hidden");
+              }
+              if (country === "") {
+                  $('div[id="country-signup-container"]').addClass("has-error");
+                  $('span[id="country-signup-icon"]').removeClass("hidden");
+              }
+              if (date === "") {
+                  $('div[id="date-signup-container"]').addClass("has-error");
+                  $('span[id="date-signup-icon"]').removeClass("hidden");
+              }
+          } else {
+              /****** TODO *******/
+              document.cookie = "username=" + user + ";token=" + token;
+              setCookie("username", user);
+              setCookie("token", token);
+          }
+      });
+
+      $('#login-button').click(function () {
+          var user = $('input[id="user-login"]').val();
+          var pass = $('input[id="pass-login"]').val();
+          resetLoginInputs();
+          if (user === "" || pass === "" ) {
+              if (user === "") {
+                  $('div[id="user-login-container"]').addClass("has-error");
+                  $('span[id="user-login-icon"]').removeClass("hidden");
+              }
+              if (pass === "") {
+                  $('div[id="pass-login-container"]').addClass("has-error");
+                  $('span[id="pass-login-icon"]').removeClass("hidden");
+              }
+          } else {
+              try {
+                  var token = KOTLINJS.apis.doLoginServer_puj7f4$(user, pass);
+                  document.cookie = "username=" + user + ";token=" + token;
+                  setCookie("username", user);
+                  setCookie("token", token);
+				  window.location = "http://127.0.0.1:4000/profile?user=" + user;
+              }catch(error) {
+                  var x = document.getElementById("login-error-msg");
+                  var y = document.getElementById("login-error-msg-space");
+                  if (x.style.display === "none") {
+                      x.innerHTML = "<div class=\"alert alert-danger\">\n" +
+                          "                      <strong>Error!</strong> Usuario o contraseña incorrectos\n" +
+                          "                  </div>";
+                      x.style.display = "block";
+                      y.style.display = "block";
+                  } else {
+                      x.style.display = "none";
+                      y.style.display = "none";
+                  }
+              }
+          }
+      });
+  });
+
+  function resetRegisterInputs(){
+      $('div[id="user-signup-container"]').removeClass("has-error");
+      $('span[id="user-signup-icon"]').addClass("hidden");
+      $('div[id="mail-signup-container"]').removeClass("has-error");
+      $('span[id="mail-signup-icon"]').addClass("hidden");
+      $('div[id="pass1-signup-container"]').removeClass("has-error");
+      $('span[id="pass1-signup-icon"]').addClass("hidden");
+      $('div[id="pass2-signup-container"]').removeClass("has-error");
+      $('span[id="pass2-signup-icon"]').addClass("hidden");
+      $('div[id="nick-signup-container"]').removeClass("has-error");
+      $('span[id="nick-signup-icon"]').addClass("hidden");
+      $('div[id="country-signup-container"]').removeClass("has-error");
+      $('span[id="country-signup-icon"]').addClass("hidden");
+      $('div[id="date-signup-container"]').removeClass("has-error");
+      $('span[id="date-signup-icon"]').addClass("hidden");
+  }
+  function resetLoginInputs(){
+      $('div[id="user-login-container"]').removeClass("has-error");
+      $('span[id="user-login-icon"]').addClass("hidden");
+      $('div[id="pass-login-container"]').removeClass("has-error");
+      $('span[id="pass-login-icon"]').addClass("hidden");
+  }
+
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js"
+        onload="this.onload=function(){};handleClientLoad()"
+        onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script>
+
+
+<div id="login-page" >
 <div class="container-fluid">
   <div class="row">
     <div class="col-xs-offset-2 col-xs-8 col-sm-offset-2 col-sm-8 col-md-offset-2 col-md-8">
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#login">Login</a></li>
-        <li><a data-toggle="tab" href="#signup">SignUp</a></li>
+        <li class="active"><a data-toggle="tab" href="#login">LOGIN</a></li>
+        <li><a data-toggle="tab" href="#signup">SIGN UP</a></li>
       </ul>
+
+
 
       <div class="tab-content">
         <div id="login" class="tab-pane fade in active">
-          <h3>Login</h3>
             <div id="loading-icon-login" class="hidden" align="center"><img width="100" height="100" src="/resources/imgs/loading.gif"></div>
           <div id="login-alert" class="hidden alert"></div>
           <form class="form-horizontal" action="myprofile.html" method="post">
+              <label class="col-sm-3 control-label" style="display: none" id="login-error-msg-space"></label>
+              <div class="col-sm-9" id="login-error-msg" style="display: none">
+                  <div class="alert alert-danger">
+                      <strong>Error!</strong> Error msg
+                  </div>
+              </div>
             <div id="user-login-container" class="form-group has-feedback">
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-login" class="col-sm-3 control-label">Usuario</label>
@@ -54,16 +247,28 @@ layout: general
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-9">
                 <!--<button id="login-button" type="button" class="btn btn-default">Login</button>-->
-                <button type="button" id="login-button" class="register-button register-button-block">LogIn</button>
+                <button type="button" id="login-button" class="register-button register-button-block" style="margin-bottom: 30px">LogIn</button>
+                <hr style="border-top: 1px solid #ccc;">
+
+                <button type="button" id="signin-button" onclick="handleSignInClick()" class="register-button register-button-block" style="margin-top: 30px">LOGIN WITH <i class="fa fa-google"></i></button>
               </div>
             </div>
           </form>
         </div>
+
+
         <div id="signup" class="tab-pane fade">
-          <h3>SignUp</h3>
             <div id="loading-icon-signup" class="hidden" align="center"><img width="100" height="100" src="/resources/imgs/loading.gif"></div>
           <div id="signup-alert" class="hidden alert"></div>
           <form class="form-horizontal" action="">
+			<div id="nick-signup-container" class="form-group has-feedback">
+              <!-- Esto habrá que cambiarlo por un POST al autentificador -->
+              <label for="user-signup" class="col-sm-3 control-label">Nickname</label>
+              <div class="col-sm-9">
+                <input class="form-control" type="text" id="nick-signup" name="nickSignUp" placeholder="Nickname">
+                  <span id="nick-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+              </div>
+            </div>
             <div id="user-signup-container" class="form-group has-feedback">
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-signup" class="col-sm-3 control-label">Usuario</label>
@@ -72,6 +277,25 @@ layout: general
                   <span id="user-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
               </div>
             </div>
+
+			<div id="date-signup-container" class="form-group has-feedback">
+              <!-- Esto habrá que cambiarlo por un POST al autentificador -->
+              <label for="user-signup" class="col-sm-3 control-label">Fecha de nacimiento</label>
+              <div class="col-sm-9">
+					<input class="form-control" id="date" type="date">
+                  <span id="date-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+              </div>
+            </div>
+
+			<div id="country-signup-container" class="form-group has-feedback">
+              <!-- Esto habrá que cambiarlo por un POST al autentificador -->
+              <label for="user-signup" class="col-sm-3 control-label">País</label>
+              <div class="col-sm-9">
+					<input class="form-control" id="country" type="country" placeholder="País">
+                  <span id="country-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+              </div>
+            </div>
+
               <div id="mail-signup-container" class="form-group has-feedback">
               <label for="mail-signup" class="col-sm-3 control-label">Email</label>
               <div class="col-sm-9">

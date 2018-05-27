@@ -53,8 +53,18 @@ layout: general
 
 </style>
 
+
+<script>
+    $(document).ready( function () {
+        var type = getParameterByName('type');
+        var term = getParameterByName('term');
+        document.getElementById('titulo-busqueda').innerHTML = "<h1 id=\"titulo-busqueda\">Mostrando resultado de " + type + " de <span id=\"termino-busqueda\">" + term + "</span></h1>"
+    });
+</script>
+
 <body>
-    <h1>Mostrando resultado de artista de <span id="termino-busqueda"> termino </span></h1>
+<h1 id="titulo-busqueda"></h1>
+
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm">
@@ -190,7 +200,9 @@ layout: general
 
 
 
-    </div>
+
+    </div> <!-- container fluid -->
+
 
 
 </body>

@@ -1,72 +1,520 @@
 ---
-layout: users
-title: Perfil de usuario
+layout: general
 ---
 
-<script src="/resources/js/request.js"></script>
-<script src="/resources/js/product.js"></script>
-<script src="/resources/js/profile.js"></script>
-<script src="/resources/js/bars.js"></script>
-<script>
-window.onload = function() {
-    var user = getURLParameter("user");
-    if(user === null || user === undefined || user === ""){
-      redirectToPage("/404.html")
+<style>
+    a { color: inherit; }
+    body{
+        background-color: white;
     }
-    load_profile(user);
-};
+    #profile-header{
+        overflow: hidden;
+    }
+    #profile-back-back{
+
+        width: 100%;
+        height:280px;
+
+        /*filter: blur(5px);*/
+        background-color: black;
+    }
+
+    #profile-main-image{
+        border-radius: 50%;
+        border: 10px solid honeydew;
+        position: relative;
+        width: 400px;
+        height:400px;
+        top: -200px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #profile-id #verificado{
+        width: 50px;
+        height: 50px;
+    }
+
+    #profile-id #profile-name{
+        position: relative;
+        top: 4px;
+        left: 4px;
+        display: inline;
+        color: white;
+    }
+
+    #profile-id{
+        display: inline-block;
+        background-color: transparent;
+        position: relative;
+        top: -650px;
+        left: 80px;
+        padding-top: 5px;
+        padding-right: 15px;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        background: rgb(34,34,34); /* for IE */
+        background: rgba(34,34,34,0.75);
+    }
+
+    #seguir{
+        border-radius: 30px;
+        font-size: 30px;
+        width: 15%;
+        position: relative;
+        top: -480px;
+        left: -90px;
+        color: yellow;
+        border-width: 3px;
+    }
+
+    #seguir:hover{
+        color: black;
+    }
+
+    #editar{
+        border-radius: 30px;
+        font-size: 30px;
+        width: 15%;
+        position: relative;
+        top: -480px;
+        left: -90px;
+        color: yellow;
+        border-width: 3px;
+    }
+
+    #editar:hover{
+        color: black;
+    }
+
+     #col-follow{
+        border-left: 2px solid black;
+        padding-left: 50px;
+    }
+
+    #follow-info{
+        position: absolute;
+        top: 370px;
+    }
+
+    #follow-info .col-sm-1{
+        margin-left: 70px;
+        margin-right: 70px;
+    }
+
+     .follow-hover:hover{
+        background-color: #7c7c7c;
+        width: 130px;
+        color: black;
+    }
+
+    /************/
+
+    .profile-top-album{
+        width: 120%;
+        height: 120%;
+    }
+
+    .top-elem .profile-top-name{
+        line-height: 30px;
+        font-size: 200%;
+        position: relative;
+        top: 5px;
+        left: 40px;
+    }
+
+    .top-elem .profile-top-repro{
+        font-size: 200%;
+        position: relative;
+        float: right;
+        top: 7px;
+    }
+
+    .top-elem{
+        border-top: 1px solid gray;
+        background-color: transparent;
+        padding-bottom: 6px;
+    }
+
+    .top-elem:hover{
+        background-color: cadetblue;
+    }
+
+    #profile-top-canciones{
+        border-bottom: 1px solid gray;
+
+    }
+
+    #profile-top-canciones{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+
+
+    }
+
+    #profile-top{
+        position: relative;
+        top: -200px;
+    }
+
+    #profile-top-titulo{
+
+    }
+
+    /* lista albums  -------------------------------- */
+    .artista{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .card-img-top{
+        width:200px%;
+        height: 200px;
+        position: relative;
+    }
+
+    /* play button hover */
+    #down{
+        position: absolute;
+        height: 80%;
+        opacity: 0.5;
+        display:none;
+        top:0%;
+    }
+
+    .artista:hover #down{ display: block }
+    .artista h4{
+        text-align: center;
+        padding-top: 8px;
+    }
+    .artista p{
+        text-align: center;
+    }
+    .artista {
+        width: 80%;
+    }
+
+
+    #profile-content h1{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        border-bottom: 1px solid gray;
+    }
+
+    #profile-content-2 h1{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        border-bottom: 1px solid gray;
+    }
+
+
+    body{
+        background-color: white;
+    }
+
+
+
+    #social-media{
+        position: relative;
+        top: -710px;
+        right: -74%;
+        color: white;
+        background-color: transparent;
+        width: 10%;
+        padding-top: 5px;
+        padding-right: 15px;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        background: rgb(34,34,34); /* for IE */
+        background: rgba(34,34,34,0.75);
+    }
+
+</style>
+
+<script>
+    $(document).ready( function () {
+
+        var user = getParameterByName('user');
+
+        document.getElementById("following-link").href="http://127.0.0.1:4000/following?user=" + user + "&type=following";
+        document.getElementById("followers-link").href="http://127.0.0.1:4000/following?user=" + user + "&type=followers";
+
+        var token = getCookie('token');
+		var registered_user = getCookie('username');
+
+        if( (registered_user == undefined || registered_user == "" || registered_user.length == 0) ){
+            console.log("usuario sin login");
+            document.getElementById("seguir").style.display = "none";
+            document.getElementById("editar").style.display = "none";
+        }
+
+        if(user === registered_user){   /* perfil del usuario */
+            document.getElementById("seguir").style.display = "none";
+        }else{      /* otro artista */
+
+        }
+
+        /**************************************************************************************************************/
+        var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
+
+        document.getElementById("profile-name").innerHTML = usuario.username;
+        var imagen = document.getElementById('profile-main-image');
+        imagen.src = usuario.pictureLocationUri;
+        if( usuario.instagramAccount !== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-twitter\" style=\"font-size: 20px\"></i>  " + usuario.instagramAccount;
+        }
+        if( usuario.facebookAccount!== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-facebook\" style=\"font-size: 20px\"></i>  " + usuario.facebookAccount;
+        }
+        if( usuario.twitterAccount !== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-instagram\" style=\"font-size: 20px\"></i>  " + usuario.twitterAccount;
+        }
+        /* seguidores */
+        var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
+        var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
+        document.getElementById("num-followers").innerHTML = followers.modCount;
+        document.getElementById("num-following").innerHTML = following.modCount;
+
+        /* canciones */
+        /*var canciones = KOTLINJS.apis.get*/
+
+        /* albumes */
+        var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
+        var albums_len = albums.modCount;
+        var albums_row = albums_len/4;
+        var html_content = "";
+
+        for (row = 0; row < albums_row; row++) {
+            html_content = html_content + "<div class=\"row\">";
+            for (col = 0; col < 4; col++) {
+                if( typeof( albums.array_hd7ov6$_0[(row*4)+col] ) == 'undefined' ){
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "</div>";
+                }else {
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "<div class=\"artista\">\n" +
+                        "<a href='http://127.0.0.1:4000/playlist?type=album&id=" + albums.array_hd7ov6$_0[(row*4)+col].id + "'>"  +
+                        "<div class=\"card bg-light mb-3\" >\n" +
+                        "<img class=\"card-img-top\"  src=\"" + albums.array_hd7ov6$_0[(row*4)+col].artLocationUri + "\">\n" +
+                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                        "<div class=\"card-block\">\n" +
+                        "<h4 class=\"card-title\">" + albums.array_hd7ov6$_0[(row*4)+col].name + "</h4>\n" +
+                        "<p class=\"card-text\">" + albums.array_hd7ov6$_0[(row*4)+col].releaseDate.getFullYear() + "</p>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</a>" +
+                        "</div>\n" +
+                        "</div>";
+                }
+            }
+            html_content = html_content + "</div>";
+        }
+        document.getElementById('profile-content-album').innerHTML = html_content;
+
+        /* playlist */
+        var playlist = KOTLINJS.apis.obtainPlaylistsFromUserServer_61zpoe$(user);
+        var playlist_len = playlist.modCount;
+        var playlist_row = playlist_len/4;
+        var html_content = "";
+
+        for (row = 0; row < playlist_row; row++) {
+            html_content = html_content + "<div class=\"row\">";
+            for (col = 0; col < 4; col++) {
+                if(row == 0 && col == 0){
+                    html_content = html_content +
+                        "<div class=\"col-sm\">\n" +
+                        "<div class=\"artista\">\n" +
+                        "<a href='http://127.0.0.1:4000/playlist?type=favorite&id=0'>" +
+                        "<div class=\"card bg-light mb-3\" >\n" +
+                        "<img class=\"card-img-top\"  src=\"/resources/imgs/favs.jpeg\">\n" +
+                        "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                        "<div class=\"card-block\">\n" +
+                        "<h4 class=\"card-title\">Favoritos</h4>\n" +
+                        "<p class=\"card-text\">" + "~" + "</p>\n" +
+                        "</div>\n" +
+                        "</div>\n" +
+                        "</a>" +
+                        "</div>\n" +
+                        "</div>";
+                }else {
+                    if (typeof( playlist.array_hd7ov6$_0[(row * 4) + col-1] ) == 'undefined') {
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                            "</div>";
+                    } else {
+                        html_content = html_content +
+                            "<div class=\"col-sm\">\n" +
+                            "<div class=\"artista\">\n" +
+                            "<a href='http://127.0.0.1:4000/playlist?type=playlist&id=" + playlist.array_hd7ov6$_0[(row * 4) + col-1].id + "'>" +
+                            "<div class=\"card bg-light mb-3\" >\n" +
+                            "<img class=\"card-img-top\"  src=\"" + playlist.array_hd7ov6$_0[(row * 4) + col-1].artLocationUri + "\">\n" +
+                            "<img  id=\"down\" src=\"/resources/imgs/play.gif\">\n" +
+                            "<div class=\"card-block\">\n" +
+                            "<h4 class=\"card-title\">" + playlist.array_hd7ov6$_0[(row * 4) + col-1].name + "</h4>\n" +
+                            "<p class=\"card-text\">" + "~" + "</p>\n" +
+                            "</div>\n" +
+                            "</div>\n" +
+                            "</a>" +
+                            "</div>\n" +
+                            "</div>";
+                    }
+                }
+            }
+            html_content = html_content + "</div>";
+        }
+        document.getElementById('profile-content-playlist').innerHTML = html_content;
+        /*************************************************************************************************************/
+
+    });
 </script>
 
-<div class="container">
+<body>
+    <div id="profile-header">
+        <div id="profile-back-back"></div>
 
-  <div class="row">
-    <div id="username">DummyName</div>
-    <div id="bars">
-      <div id="public_rate" class="bar" data-percent="100">
-        <canvas class="bar-circle" width="70" height="70"></canvas>
-      </div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-4 col-xs-5 col-sm-5 col-lg-2">
-      <div id="mail_header"><h4>Email:</h4></div>
-    </div>
-    <div>
-      <div id="mail">random@random.com</div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div class="col-md-4 col-xs-5 col-sm-5 col-lg-2">
-      <div id="name_header"><h4>Nombre:</h4></div>
-    </div>
-    <div>
-      <div id="name">MyName</div>
-    </div>
-  </div>
-  
-  <div class="row">
-    <div>
-      <div id="desc_header"><h4>Descripci&oacute;n:</h4></div>
-    </div>
-    <div>
-      <blockquote id="description">SuperDescription</blockquote>
-    </div>
-  </div>
-  
-  <div class="row">
-    <h4>Rese&ntilde;as de productos</h4>
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-    <table id="product_table" class="table table-striped table-bordered table-hover">
-      <tr>
-        <td width="10%">Fecha</td>
-        <td width="20%">Producto</td>
-        <td width="10%">Puntuación</td>
-        <td>Descripci&oacute;n</td>
-      </tr>
-    </table>
-    </div>
-  </div>
+        <img id="profile-main-image"  src="resources/imgs/nas-illmatic.jpg">
+        <div id="profile-id">
+            <img id="verificado"  src="resources/imgs/ok.png">
+            <h1 id="profile-name">Artist  </h1>
+        </div>
+        <button id="seguir" type="button" class="btn btn-outline-warning"><strong>+ Seguir</strong></button>
+        <a href="http://127.0.0.1:4000/edit-profile">
+            <button id="editar" type="button" class="btn btn-outline-warning"><strong>Editar perfil</strong></button>
+        </a>
+        <div id="social-media">
+            <a id="twitter-l" href=""><h1 id="twitter"><strong><i class="fa fa-link"></i>  <i class="fa fa-twitter" style="font-size: 25px"></i></strong></h1></a>
+            <a id="ig-l" href=""><h1 id="instagram"><strong><i class="fa fa-link"></i>  <i class="fa fa-instagram" style="font-size: 25px"></i> </strong></h1></a>
+            <a id="fb-l" href=""><h1 id="facebook"><strong><i class="fa fa-link"></i>  <i class="fa fa-facebook" style="font-size: 25px"></i></strong></h1></a>
+        </div>
 
-</div>
+
+    </div>
+
+
+
+    <div  id="profile-top">
+        <div id="profile-top-canciones">
+            <h1 id="profile-top-titulo">Canciones populares</h1>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-5">
+                        <h5 class="profile-top-name">Titulo vdzfbsbdfbsb</h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro">100.000</h5>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="containter-fluid" id="follow-info">
+        <div class="row">
+            <div class="col-sm-1" >
+                <a id="following-link" >
+                    <div class="follow-hover">
+                        <h1>Siguiendo</h1>
+                        <h1 id="num-following">10000000</h1>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-1" id="col-follow">
+                <a id="followers-link">
+                    <div class="follow-hover">
+                        <h1>Sequidores</h1>
+                        <h1 id="num-followers">0</h1>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="profile-content">
+        <h1>Albums</h1>
+        <div class="container-fluid" id="profile-content-album" style="padding-left: 70px">
+
+
+        </div> <!-- container fluid -->
+    </div>
+
+
+    <div id="profile-content-2">
+        <h1>Playlist</h1>
+        <div class="container-fluid" id="profile-content-playlist" style="padding-left: 70px;">
+
+        </div>
+    </div>
+
+
+</body>

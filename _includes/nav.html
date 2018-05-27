@@ -1,44 +1,77 @@
 <style>
-    #top-navbar {
-        margin-bottom: 0;
+    #navbar ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #333;
     }
+
+    #navbar li {
+        float: left;
+    }
+
+    #navbar li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    #navbar li a:hover:not(.active) {
+        background-color: #111;
+    }
+
 </style>
 
+<script>
+    $(document).ready( function () {
+        var user = getCookie('username');
+        console.log("'" + user + "'");
+        var token = getCookie('token');
+        if( user == undefined || user == "" || user.length == 0 ){
+            document.getElementById('nav-logout').style.display = "none";
+            document.getElementById('nav-profile').style.display = "none";
+        }else{
+            document.getElementById('nav-login').style.display = "none";
+        }
+
+        $('#nav-home').click(function () {
+            window.location = "http://127.0.0.1:4000/index";
+        });
+        $('#nav-logout').click(function () {
+            console.log('log out');
+            unsetCookie('username');
+            unsetCookie('token');
+            window.location = "http://127.0.0.1:4000/index";
+        });
+        $('#nav-login').click(function () {
+            //window.location = "http://127.0.0.1:4000/profile?user=" + user;
+            window.location = "http://127.0.0.1:4000/login";
+        });
+        $('#nav-profile').click(function () {
+            window.location = "http://127.0.0.1:4000/profile?user=" + user;
+        });
+
+    });
+</script>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="top-navbar">
+<div id="navbar">
+    <ul>
+        <li id="nav-home"><a href="#home">Home</a></li>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+        <li style="margin-top: 4px">
+            <form class="form-inline my-2 my-lg-0" action="http://127.0.0.1:4000/busqueda">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="term">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </li>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-        <a id="nav-brand" href="#">Navbar</a>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
+        <li style="float: right;" id="nav-logout"><a href=""> <i class="fa fa-sign-out" style="font-size: 14px; "></i> Sign Out</a></li>
+        <li style="float: right;" id="nav-login"><a href="#"> <i class="fa fa-sign-out" style="font-size: 14px; "></i>Login</a></li>
+        <li style="float: right;" id="nav-profile"><a href="#"> <i class="fa fa-user-circle" style="font-size: 14px; "></i> Perfil</a></li>
+    </ul>
+</div>
 </body>

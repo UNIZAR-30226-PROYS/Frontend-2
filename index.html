@@ -6,83 +6,808 @@ layout: general
 
 <script src="ajax.js" type="text/javascript"></script>
 <script src="responseHTML.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<div id="storage" style="display:none;">
-</div>
-
-<!-- https://www.xul.fr/ajax/responseHTML-attribute.php -->
-
-<h1>Ajax Demo - Getting Data From a HTML Page</h1>
-<hr>
-Load the <b><a href="playlist.html" target="_parent">anotherpage.html</a></b>
-file, get the content of the BODY section and write it into this page, below...
-<FORM name="ajax" method="POST" action="">
-    <p>
-
-        <INPUT type="BUTTON" value="Load HTML and get data"  ONCLICK="loadWholePage('playlist.html')">
-    </p>
-
-</FORM>
-
-<div id="displayed">
-</div>
+<style>
 
 
-<section class="novedades">
-    <div class="novedades-class">
-        <h1 class="w3-hide-large w3-hide-medium">Novedades</h1>
+    /******************************************************************************************************************/
+    /* centrado del icono en la barra de navegacion */
+    #nav-brand{
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%);
+    }
+    /******************************************************************************************************************/
+    /* seccion novedades-circle */
+    .novedades-circle h1{
+        margin: 0;
+        padding-top: 40px;
+        text-align: center;
+    }
+    .novedades-circle h3{
+        margin: 0;
+        text-align: center;
+        padding-bottom: 20px;
+        font-family: Junicode ;
+    }
+    .novedades-circle h2{
+        text-align: right;
+        position: relative;
+        top: -30px ;
+        right: +60px;
+    }
+    .novedades-circle{
+        margin: 0;
+        background: url("/resources/imgs/wall2.jpg");
+    }
+
+    .novedades-circle img{
+        width:100%;
+        height: 100%;
+    }
+    .novedades-circle .grid-images{
+        border:10px solid white;
+        border-radius: 50%;
+    }
+    /* grid circulos recomendaciones */
+    #izq-abj-dec{
+        position:relative;
+        top:+20px;
+        left: +40px;
+    }
+
+    #izq-abj-izq{
+        position: relative;
+        top:-25px;
+        left: +30px;
+    }
+
+    #dec-abj-izq{
+        position: relative;
+        left:-15px;
+    }
+
+    #dec-abj-dec{
+        position: relative;
+        left:-15px;
+        top: +40px;
+    }
+
+    #dec-arr-izq{
+        position: relative;
+        top:+40px;
+        left:-15px;
+    }
+
+    #dec-arr-dec{
+        position: relative;
+        top:20px;
+        left: -20px;
+    }
+
+    .circle{
+        position: relative;
+    }
+
+    /* play button hover */
+    .circle:hover .play-over{ display: block }
+    .play-over{
+        position: absolute;
+        opacity: 0.5;
+        display:none;
+        top:0%;
+    }
+
+    /******************************************************************************************************************/
+    /* seccion novedades */
+    .novedades{
+        background-color: black;
+        color: white;
+    }
+
+    .novedades h1{
+        margin: 0;  /*colapsa margen*/
+        padding-top: 40px;
+        text-align: center;
+    }
+    .novedades h3{
+        text-align: center;
+        padding-bottom: 20px;
+        font-family: Junicode ;
+    }
+    .novedades h2{
+        text-align: right;
+        position: relative;
+        top: -30px ;
+        right: +60px;
+    }
+    .novedades img{
+        width:100%;
+        height: 100%;
+    }
+
+/*******************************************************************************************************************/
+    /* destacados */
+
+    .songs{
+        margin-bottom: 50px;
+    }
+
+    .song-chart-image{
+        display: inline-block;
+        width: 55px;
+        height: 55px;
+    }
+    .song-chart-content{
+        display: inline-block;
+        height:55px;
+        background: darkslategrey;
+        position: relative;
+        top: +3px;
+        left: -2px;
+    }
+
+    .song-chart-content p{
+        color: white;
+        margin: 0;
+        position: relative;
+        top: +7px;
+        left: +20px;
+    }
+    .song-chart-content .song-chart-content-titulo{
+        font-size: 15px;
+        font-weight: bold;
+   }
+
+    .song-chart :hover{
+        box-shadow: 8px 8px white;
+    }
+    #song-chart-content-1{
+        width: 400px;
+        border-right: solid 6px red;
+    }
+    #song-chart-content-2{
+        width: 300px;
+        border-right: solid 6px blueviolet;
+    }
+    #song-chart-content-3{
+        width: 250px;
+        border-right: solid 6px white;
+    }
+    #song-chart-content-4{
+        width: 200px;
+        border-right: solid 6px darkred;
+    }
+    #song-chart-content-5{
+        width: 180px;
+        border-right: solid 6px dodgerblue;
+    }
+
+    /************************************/
+    .album-chart-image{
+		display: inline-block;
+        width: 55px;
+        height: 55px;
+    }
+    .album-chart-content{
+	
+		display: inline-block;
+        height:55px;
+        background: darkslategrey;
+        position: relative;
+        top: +3px;
+        left: -2px;
+    }
+    .album-chart-content p{
+        color: white;
+        margin: 0;
+        position: relative;
+        top: +7px;
+		left: -15px
+    }
+    .album-chart-content .album-chart-content-titulo{
+        font-size: 15px;
+        font-weight: bold;
+    }
+	
+    #album-chart-content-1{
+        width: 400px;
+        border-left: solid 6px red;
+    }
+    #album-chart-content-2{
+        width: 320px;
+        border-left: solid 6px white;
+    }
+    #album-chart-content-3{
+        width: 220px;
+        border-left: solid 6px white;
+    }
+    #album-chart-content-4{
+        width: 200px;
+        border-left: solid 6px white;
+    }
+    #album-chart-content-5{
+        width: 120px;
+        border-left: solid 6px white;
+    }
+    #album-chart-container{
+		position:relative;
+		top: -290px;
+        width: 50%;
+        float: right;
+    }
+
+    #artists-chart img{
+        border:10px solid white;
+        border-radius: 50%;
+        width: 100%;
+        height: 100%;
+    }
+    #artists-chart-fis img{
+        width: 170px;
+        height: 170px;
+    }
+    #artist-chart-sec{
+        position: relative;
+        top: -25px;
+        right: -1%;
+    }
+    #artists-chart-sec img{
+        width: 170px;
+        height: 170px;
+    }
+    #artist-chart-thr{
+        position: relative;
+        top: -70px;
+        left: -1%;
+    }
+    #artists-chart{
+        position: relative;
+        left: 34%;
+        top: -240px;
+        margin: auto;
+    }
+    #artists-chart img:hover{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 2px 4px 0 blue;
+    }
+
+    #populares{
+
+    }
+
+    /************************************/
+     h1{
+        margin: 0;
+        padding-top: 40px;
+        text-align: center;
+    }
+     h3{
+        margin: 0;
+        text-align: center;
+        padding-bottom: 20px;
+        font-family: Junicode ;
+    }
+
+    .lista-exitos-titulo{
+        padding-top: 10px;
+        text-align: center;
+        text-
+    }
+
+    /********************************/
+    #populares-content{
+        position: relative;
+        left: 25%;
+    }
+
+    /********************************/
+    #generos .col-sm-2{
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #generos img{
+
+    }
+
+
+/**********************************************************************************************************************/
+
+
+    .carousel-inner{
+        height: 300px;
+        overflow: hidden;
+    }
+
+    #carousel .back-image-carousel{
+        filter: blur(10px);
+        z-index: -1; position:relative;
+    }
+
+    .carousel-content{
+        margin-bottom: -300px;
+        padding-top: 30px;
+
+    }
+    .carousel-content img{
+        width: 250px;
+        height: 250px;
+    }
+    .carousel-content .info-carousel{
+        font-size: 40px;
+        font-weight: 900;
+        color: white;
+    }
+    .carousel-content .info-carousel-artista{
+        font-size: 30px;
+        color: white;
+    }
+
+    #titulo-carousel{
+        margin-bottom: 40px;
+    }
+
+    .carousel-novedades{
+        margin-bottom: 120px;
+        margin-top: 60px;
+    }
+
+/********************************************************************************************************************/
+    .populares-3{
+        margin-bottom: 120px;
+    }
+
+    .populares-3 #populares-content{
+        margin-top: 0px;
+    }
+
+    /********************************************************************************************************************/
+
+    .grid-container {
+        display: grid;
+    }
+    .grid-item-1 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+    }
+    .grid-item-2 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+    }
+    .grid-item-3 {
+        grid-column-start: 3;
+        grid-column-end: 3;
+    }
+    .grid-item-4 {
+        grid-column-start: 4;
+        grid-column-end: 4;
+    }
+    .grid-item-5 {
+        grid-column-start: 5;
+        grid-column-end: 5;
+    }
+    #generos .grid-s{
+        height: 150px;
+    }
+    #recomendaciones-grid .grid-s{
+
+    }
+
+
+    body{
+        background-color: black;
+    }
+</style>
+
+
+<script>
+    
+    function redirectToGen() {
+        
+    }
+
+    $(document).ready(function() {
+        var token = getCookie('token');
+        var user = getCookie('username');
+
+        /******** canciones *********/
+        var inner = "";
+        var songs = KOTLINJS.apis.obtainPopularSongsServer_s8cxhz$(5);
+        for( var i = 0; i < songs.modCount; i++ ){
+            inner +=
+                "<div class=\"song-chart\">\n" +
+                "        <a href='http://127.0.0.1:4000/song?id=" + songs.array_hd7ov6$_0[i].id + "'>\n" +
+                "        <img class=\"song-chart-image\" src=\"resources/imgs/wu.jpg\">\n" +
+                "        <div class=\"song-chart-content\" id=\"song-chart-content-" + (i+1) + "\">\n" +
+                "            <p class=\"song-chart-content-titulo\">" + songs.array_hd7ov6$_0[i].name + "</p>\n" +
+                "            <p>" + songs.array_hd7ov6$_0[i].album.creator.name + "</p>\n" +
+                "        </div>\n" +
+                "        </a>\n" +
+                "    </div>";
+        }
+        for( var i = 5-songs.modCount-1; i < 5; i++ ){
+            inner +=
+                "<div class=\"song-chart\">\n" +
+                "        <img class=\"song-chart-image\" src=\"resources/imgs/wu.jpg\">\n" +
+                "        <div class=\"song-chart-content\" id=\"song-chart-content-" + (i+1) + "\" style='width: 30px;' >\n" +
+            "            <p class=\"song-chart-content-titulo\" style='color: transparent'>Titulo</p>\n" +
+            "            <p style='color: transparent'>Artista</p>\n" +
+            "        </div>\n" +
+            "    </div>";
+        }
+        document.getElementById("container-song-chart").innerHTML = inner;
+
+        /*******   generos  *******/
+        var inner = "";
+        var generos = KOTLINJS.apis.obtainGeneresServer();
+        for( var i = 0; i < generos.modCount; i++ ){
+            console.log( ((i % 5) + 1) );
+            inner +=
+               "<div class=\"grid-s grid-item-" +  ((i % 5) + 1)  + " your-element\" data-tilt data-tilt-max=\"50\" data-tilt-speed=\"400\" data-tilt-perspective=\"500\" style=\"background-color: #d5" + i+ "4e6; padding-top: 50px\"  onclick=\"redirectToGen()\">\n" +
+                "                <h5 style=\"margin: auto; width: 30%; font-size: 25px\">" + generos.array_hd7ov6$_0[i] + "</h5>\n" +
+                "            </div>";
+        }
+        $("#generos-container").append(inner);
+
+
+        if( ( user == undefined || user == "" || user.length == 0 ) ){
+
+        }else {
+            /*******   recomendaciones   *******/
+            var container_r = document.getElementById("containerrecomendacionesaux");
+            var recom = KOTLINJS.apis.obtainRecomendationsForUserServer_18v4st$('abelcht', token, 8);
+            var inner = "";
+            console.log(recom);
+            for (var i = 0; i < recom.modCount; i++) {
+                var elem = recom.array_hd7ov6$_0[i];
+                if (elem.username == null) {
+                    var pic = ""
+                    if( elem.album == null ){
+                        pic = elem.artLocationUri;
+                    }else{
+                        pic = elem.album.artLocationUri;
+                    }
+                    inner +=
+                        "<div class=\"grid-s grid-item-" + ((i % 4) + 1) + " your-element\" >\n" +
+                        "        <figure class=\"imghvr-fade\">\n" +
+                        "            <img  src=\'" + pic + "' style=\" min-width: 100%; height: 330px; \">\n" +
+                        "            <figcaption style=\"background-color: #aaaaaa; ; text-align: center; padding-top: 35%;\">\n" +
+                        "                <h5  style=\"color: black; font-size:50px; \">" + elem.username + "</h5>\n" +
+                        "            </figcaption>\n" +
+                        "            <a href=\"#\"></a>\n" +
+                        "        </figure>\n" +
+                        "    </div>";
+                } else {
+
+                    inner +=
+                        "<div class=\"grid-s grid-item-" + ((i % 4) + 1) + " your-element\"  >\n" +
+                        "            <figure class=\"imghvr-fade\" style=\"  border-radius: 50%;\">\n" +
+                        "                <img  src=\"" + elem.pictureLocationUri + "\" style=\" min-width: 100%; height:330px;   border-radius: 50%; border:10px solid white;  \">\n" +
+                        "                <figcaption style=\"background-color: #aaaaaa; text-align: center; padding-top: 35%;   border-radius: 50%; border:10px solid white;\">\n" +
+                        "                    <h5  style=\"color: black; font-size:50px; \">" + elem.username + "</h5>\n" +
+                        "                </figcaption>\n" +
+                        "                <a href=\"#\"></a>\n" +
+                        "            </figure>\n" +
+                        "        </div>";
+                }
+                container_r.innerHTML = inner;
+            }
+        }
+
+    });
+
+</script>
+
+
+<body>
+
+<section class="novedades-circle">
+    <div class="recom-class">
+        <h1>Novedades</h1>
+        <h3>Nuevos artistas.</h3>
+        {% include circle-grid.html %}
+
+    </div>
+</section>
+
+
+<section class="carousel-novedades">
+    <div class="container" id="carousel">
+        <h1 id="titulo-carousel">Nuevas listas.</h1>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="info-carousel">TITULO</h1>
+                                <h1 class="info-carousel-artista">TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                </div>
+
+                <div class="item">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="info-carousel">TITULO</h1>
+                                <h1 class="info-carousel-artista">TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <a href="">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                </div>
+
+                <div class="item">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1>TITULO</h1>
+                                <h1>TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                </div>
+            </div>
+
+            <!-- Left and right controls -->
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="songs" >
+
+  <div id="populares">
+    <div class="container-fluid"><div class="row">
+        <div class="col">
+            <h1>Canciones populares</h1>
+            <h3>Top canciones ahora.</h3>
+        </div>
+        <div class="col">
+            <h1>Artistas populares</h1>
+            <h3>Top artistas ahora.</h3>
+        </div>
+        <div class="col">
+            <h1>Albumes populares</h1>
+            <h3>Top albumes ahora.</h3>
+        </div>
+    </div></div>
+      <div id="container-song-chart">
+            <!--
+            <div class="song-chart">
+                <a href="">
+                <img class="song-chart-image" src="resources/imgs/wu.jpg">
+                <div class="song-chart-content" id="song-chart-content-1">
+                    <p class="song-chart-content-titulo">Titulo</p>
+                    <p>Artista</p>
+                </div>
+                </a>
+            </div>
+
+            <div class="song-chart">
+                <a href="">
+                <img class="song-chart-image" src="resources/imgs/wu.jpg">
+                <div class="song-chart-content" id="song-chart-content-2">
+                    <p class="song-chart-content-titulo">Titulo</p>
+                    <p>Artista</p>
+                </div>
+                </a>
+            </div>
+            <div class="song-chart">
+                <img class="song-chart-image" src="resources/imgs/wu.jpg">
+                <div class="song-chart-content" id="song-chart-content-3">
+                    <p class="song-chart-content-titulo">Titulo</p>
+                    <p>Artista</p>
+                </div>
+            </div>
+            <div class="song-chart">
+                <img class="song-chart-image" src="resources/imgs/wu.jpg">
+                <div class="song-chart-content" id="song-chart-content-4">
+                    <p class="song-chart-content-titulo">Titulo</p>
+                    <p>Artista</p>
+                </div>
+            </div>
+            <div class="song-chart">
+                <img class="song-chart-image" src="resources/imgs/wu.jpg">
+                <div class="song-chart-content" id="song-chart-content-5">
+                    <p class="song-chart-content-titulo">Titulo</p>
+                    <p>Artista</p>
+                </div>
+            </div>
+            -->
+      </div>
+
+    <div id="album-chart-container" align='right'>
+        <div class="album-chart">
+            <a href="">
+            <div class="album-chart-content" id="album-chart-content-1">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+            </a>
+        </div>
+
+        <div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-2">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+
+		<div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-3">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+
+		<div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-4">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+
+		<div class="album-chart">
+            <div class="album-chart-content" id="album-chart-content-5">
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
+            </div>
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
+        </div>
+    </div>
+
+
+    <div id="artists-chart">
+        <div class="container-fluid">
+            <div class="row" id="artists-chart-fis">
+                <div class="col-sm-2"></div>
+                <a href="">
+                <div class="col-sm-3"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                </a>
+                <div class="col-sm-2"></div>
+            </div>
+            <div class="row" id="artist-chart-sec">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+            </div>
+            <div class="row" id="artist-chart-thr">
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+                <div class="col-sm-1"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
+
+            </div>
+        </div>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="populares-3" style="margin-top: -200px">
+    <div style="position: relative; left: 25%">
+    <h1>Populares</h1>
+    <h3>Listas de exitos.</h3>
+    </div>
+    <div id="populares-content">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
+                    <a href="">
+                    <img class="card-img-top" src="resources/imgs/wu.jpg">
+                    </a>
+                    <p class="lista-exitos-titulo" >Populares ahora</p>
                 </div>
                 <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
+                    <a href="">
+                    <img class="card-img-top" src="resources/imgs/wu.jpg">
+                    </a>
+                    <p class="lista-exitos-titulo" >Populares en mi pais</p>
                 </div>
                 <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2">
-                    <div class="card bg-primary text-white" style="width: 20rem;">
-                        <img class="card-img-top" src="resources/imgs/wu.jpg">
-                        <div class="card-block">
-                            <h4 class="card-title">Album</h4>
-                            <p class="card-text">Artista</p>
-                        </div>
-                    </div>
+                    <a href="">
+                    <img class="card-img-top" src="resources/imgs/wu.jpg">
+                    </a>
+                    <p class="lista-exitos-titulo">Populares en el mundo</p>
                 </div>
 
             </div>
         </div>
-        <h2>Mas recomendaciones >></h2>
     </div>
 </section>
 
 
 
-<section class="recomendaciones">
-    <div class="recom-class">
-        <h1>Recomendaciones</h1>
-        <h3>Never miss a neew release.</h3>
-        {% include circle-grid.html %}
-        <h2>Mas recomendaciones >></h2>
+
+<section id="generos" style="margin-bottom: 200px">
+    <h1>Generos</h1>
+    <h3>Never miss a neew release.</h3>
+    <div id="generos-content">
+        <div class="grid-container" id="generos-container">
+
+<!--
+            <div class="grid-s grid-item-1 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px"  onclick="redirectToGen()">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-2 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px" onclick="redirectToGen()">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-3 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px" onclick="redirectToGen()">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+
+            <div class="grid-s grid-item-4 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #80ced6">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class="grid-s grid-item-5 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #fefbd8">
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
+            </div>
+            <div class=" grid-item">6</div>
+            <div class="grid-item">7</div>
+            <div class="grid-item">8</div>
+            <div class="grid-item">9</div>
+            -->
+        </div>
+
     </div>
 </section>
+
+
+
+<section id="recomendaciones-grid">
+    <h1>Recomendaciones</h1>
+    <h3>Recomendaciones personalizadas de artistas y canciones.</h3>
+
+    <div id="containerrecomendacionesaux" class="grid-container" >
+
+    <h5 style="font-size: 40px; margin-left: 10%">LOGIN/REGISTRAR PARA OBTENER RECOMENDACIONES.</h5>
+
+
+    </div>
+
+</section>
+
+
+
+<script src="resources/js/tilt.jquery.min.js"></script>
+
+</body>
