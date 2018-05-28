@@ -17,6 +17,10 @@ var KOTLINJS = function (_, Kotlin) {
   var L2 = Kotlin.Long.fromInt(2);
   var L103000 = Kotlin.Long.fromInt(103000);
   var L132000 = Kotlin.Long.fromInt(132000);
+  var L3 = Kotlin.Long.fromInt(3);
+  var L5 = Kotlin.Long.fromInt(5);
+  var L6 = Kotlin.Long.fromInt(6);
+  var L7 = Kotlin.Long.fromInt(7);
   var Pair = Kotlin.kotlin.Pair;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   function isServerOnline() {
@@ -160,7 +164,7 @@ var KOTLINJS = function (_, Kotlin) {
   function uploadSongServer(username, sessionToken, song) {
   }
   function obtainFavouriteSongsByUserServer(username, sessionToken) {
-    return ServerEmulator_getInstance().cancionesFavoritas.get_11rb$(username);
+    return ServerEmulator_getInstance().songsVarious;
   }
   function obtainRecomendationsForUserServer(username, sessionToken, cantidad) {
     return ServerEmulator_getInstance().recomendaciones.get_11rb$(username);
@@ -211,6 +215,24 @@ var KOTLINJS = function (_, Kotlin) {
   }
   function deleteAlbumsServer(username, sessionToken, album) {
   }
+  function obtainAlbum() {
+    return ServerEmulator_getInstance().albumaux;
+  }
+  function obtainArtist() {
+    return ServerEmulator_getInstance().artistas;
+  }
+  function obtainAlbumList() {
+    return ServerEmulator_getInstance().albumes;
+  }
+  function obtainPlaylistList() {
+    return ServerEmulator_getInstance().songsVarious;
+  }
+  function obtainAlbumDataServer(id) {
+    return ServerEmulator_getInstance().albumList.get_za3lpa$(id);
+  }
+  function obtainSongDataServer(id) {
+    return ServerEmulator_getInstance().songList2.get_za3lpa$(id);
+  }
   function isServerOnline2() {
     return true;
   }
@@ -250,7 +272,7 @@ var KOTLINJS = function (_, Kotlin) {
     simpleName: 'Recommendation',
     interfaces: []
   };
-  function Song(id, name, locationUri, duration, album, genere, lyricsPath){
+  function Song(id, name, locationUri, duration, album, genere, lyricsPath) {
     this.id = id;
     this.name = name;
     this.locationUri = locationUri;
@@ -326,13 +348,21 @@ var KOTLINJS = function (_, Kotlin) {
     this.playlistList = HashMap_init();
     this.generesList = ArrayList_init();
     this.albumList = ArrayList_init();
+    this.albumaux = ArrayList_init();
+    this.artistas = ArrayList_init();
+    this.albumes = ArrayList_init();
+    this.songsVarious = ArrayList_init();
+    this.songList2 = ArrayList_init();
     this.cancionesFavoritas = HashMap_init();
     this.artistasSeguidos = HashMap_init();
     this.playlistSeguidos = HashMap_init();
     this.recomendaciones = HashMap_init();
     this.trends = ArrayList_init();
     this.generos = ArrayList_init();
-    var autor1 = User_init_1('Media', 'Media', 'Right', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
+    var autor1 = User_init_1('Kendrick', 'kendrick', 'Right', '/resources/imgs/albumkendr.jpg');
+    autor1.twitterAccount = 'https://twitter.com/kendricklamar?lang=es';
+    autor1.facebookAccount = 'https://es-la.facebook.com/kendricklamar/';
+    autor1.instagramAccount = 'https://www.instagram.com/kendricklamar/?hl=es';
     var autor2 = User_init_1('Silent', 'Silent', 'Partner', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
     var autor3 = User_init_1('abelcht', 'Abel ChT', 'Lion', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
     var autor4 = User_init_1('Prueba', 'PRU', 'sdfdsfd', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
@@ -340,6 +370,43 @@ var KOTLINJS = function (_, Kotlin) {
     var album2 = new Album(L2, 'Blues', autor2, new Date(2017, 6, 27), 'http://storage.googleapis.com/automotive-media/album_art_2.jpg');
     var cancion1 = new Song(L1, 'Jazz in Paris', 'http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3', L103000, album1, null, null);
     var cancion2 = new Song(L2, 'The Messenger', 'http://storage.googleapis.com/automotive-media/The_Messenger.mp3', L132000, album2, null, null);
+    var album3 = new Album(L3, 'good kid, m.A.A.d city', autor1, new Date(2018, 3, 22), 'https://is1-ssl.mzstatic.com/image/thumb/Music/v4/70/95/78/7095785b-ddae-fa56-cd1e-b263345e2e3b/UMG_cvrart_00602537362769_01_RGB72_1426x1426_12UMGIM52990.jpg/268x0w.jpg');
+    var album4 = new Album(L4, 'Enter the 36 chamber', autor1, new Date(2018, 3, 22), '/resources/imgs/wu.jpg');
+    var album5 = new Album(L5, 'Beerbongs & Bentleys', autor1, new Date(2018, 3, 22), '/resources/imgs/albumpost.jpg');
+    var cancion3 = new Song(L3, '4 AM', '/resources/music/4AM.mp3', L132000, album3, null, '/resources/example.srt');
+    var cancion4 = new Song(L4, 'Sherane a.k.a Master Splinter\u2019s Daughter', '/resources/music/4AM.mp3', L132000, album3, null, '/resources/example.srt');
+    var cancion5 = new Song(L5, "Bitch, Don't Kill My Vibe", '/resources/music/4AM.mp3', L132000, album3, null, '/resources/example.srt');
+    var cancion6 = new Song(L6, 'Backseat Freestyle', '/resources/music/4AM.mp3', L132000, album3, null, '/resources/example.srt');
+    var cancion7 = new Song(L7, 'The Art of Peer Pressure', '/resources/music/4AM.mp3', L132000, album3, null, '/resources/example.srt');
+    this.songList2.add_11rb$(cancion1);
+    this.songList2.add_11rb$(cancion2);
+    this.songList2.add_11rb$(cancion3);
+    this.songList2.add_11rb$(cancion4);
+    this.songList2.add_11rb$(cancion5);
+    this.songList2.add_11rb$(cancion6);
+    this.songList2.add_11rb$(cancion7);
+    this.albumaux.add_11rb$(cancion3);
+    this.albumaux.add_11rb$(cancion4);
+    this.albumaux.add_11rb$(cancion5);
+    this.albumaux.add_11rb$(cancion6);
+    this.albumaux.add_11rb$(cancion7);
+    this.albumes.add_11rb$(album3);
+    this.albumes.add_11rb$(album4);
+    this.albumes.add_11rb$(album5);
+    this.artistas.add_11rb$(autor1);
+    this.artistas.add_11rb$(autor2);
+    this.artistas.add_11rb$(autor3);
+    this.artistas.add_11rb$(autor4);
+    this.songsVarious.add_11rb$(cancion3);
+    this.songsVarious.add_11rb$(cancion1);
+    this.songsVarious.add_11rb$(cancion5);
+    this.songsVarious.add_11rb$(cancion2);
+    this.songsVarious.add_11rb$(cancion6);
+    this.albumList.add_11rb$(album1);
+    this.albumList.add_11rb$(album2);
+    this.albumList.add_11rb$(album3);
+    this.albumList.add_11rb$(album4);
+    this.albumList.add_11rb$(album5);
     var list1 = ArrayList_init();
     list1.add_11rb$(cancion1);
     list1.add_11rb$(cancion2);
@@ -403,8 +470,6 @@ var KOTLINJS = function (_, Kotlin) {
     this.generesList.add_11rb$('Rock');
     this.generesList.add_11rb$('Rap');
     this.generesList.add_11rb$('Trap');
-    this.albumList.add_11rb$(album1);
-    this.albumList.add_11rb$(album2);
   }
   ServerEmulator.$metadata$ = {
     kind: Kind_OBJECT,
@@ -464,6 +529,12 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.createAlbumsServer_xdras9$ = createAlbumsServer;
   package$apis.updateAlbumsServer_xdras9$ = updateAlbumsServer;
   package$apis.deleteAlbumsServer_xdras9$ = deleteAlbumsServer;
+  package$apis.obtainAlbum = obtainAlbum;
+  package$apis.obtainArtist = obtainArtist;
+  package$apis.obtainAlbumList = obtainAlbumList;
+  package$apis.obtainPlaylistList = obtainPlaylistList;
+  package$apis.obtainAlbumDataServer_za3lpa$ = obtainAlbumDataServer;
+  package$apis.obtainSongDataServer_za3lpa$ = obtainSongDataServer;
   package$apis.isServerOnline2 = isServerOnline2;
   var package$controller = _.controller || (_.controller = {});
   package$controller.main_kand9s$ = main;

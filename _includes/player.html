@@ -67,7 +67,11 @@
         if( (registered_user == undefined || registered_user == "" || registered_user.length == 0) ){
 
         }else{
-            var last_song = KOTLINJS.obtainLastSongListenedServer_puj7f4$(registered_user, token);
+            var last_song = KOTLINJS.apis.obtainLastSongListenedServer_puj7f4$(registered_user, token);
+            document.getElementById("player-icon").src = last_song.album.artLocationUri;
+            document.getElementById("player-songname").innerHTML = last_song.name;
+            document.getElementById("player-songartist").innerHTML = last_song.album.creator.name;
+
             audioElement.setAttribute('src', last_song.locationUri);
         }
         //audioElement.setAttribute('src', 'http://155.210.13.105:7480/TEST/malabar.mp3');

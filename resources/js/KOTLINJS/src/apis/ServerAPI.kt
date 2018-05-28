@@ -287,7 +287,7 @@ fun uploadSongServer(username: String, sessionToken: String, song: Song) {
 //@Throws(Exception::class)
 fun obtainFavouriteSongsByUserServer(username: String, sessionToken: String): List<Song>? {
 //TODO:
-    return ServerEmulator.cancionesFavoritas[username]
+    return ServerEmulator.songsVarious
 }
 
 /**
@@ -436,9 +436,48 @@ fun deleteAlbumsServer(username: String, sessionToken: String, album: Album){
     //TODO:
 }
 
+/*******************************************************************************************************************/
+/**
+ */
+//@Throws(Exception::class)
+fun obtainAlbum(): List<Song>? {
+//TODO:
+    return ServerEmulator.albumaux;
+}
 
+//@Throws(Exception::class)
+fun obtainArtist(): List<User>? {
+//TODO:
+    return ServerEmulator.artistas;
+}
 
+//@Throws(Exception::class)
+fun obtainAlbumList(): List<Album>? {
+//TODO:
+    return ServerEmulator.albumes;
+}
 
+//@Throws(Exception::class)
+fun obtainPlaylistList(): List<Song>? {
+//TODO:
+    return ServerEmulator.songsVarious;
+}
+/**
+ * Obtiene la información asociada a la playlist con id @id
+ * Warning: esta operación puede ser costosa en tiempo
+ */
+//@Throws(Exception::class)
+fun obtainAlbumDataServer(id: Int): Album? {
+    //TODO:
+    return ServerEmulator.albumList[id]
+}
 
-
-
+/**
+ * Obtiene la información asociada a la playlist con id @id
+ * Warning: esta operación puede ser costosa en tiempo
+ */
+//@Throws(Exception::class)
+fun obtainSongDataServer(id: Int): Song? {
+    //TODO:
+    return ServerEmulator.songList2[id]
+}

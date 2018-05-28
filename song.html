@@ -417,7 +417,7 @@ function animate() {
         var user = getCookie('username');
 
         var id = getParameterByName('id');
-        var song = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$("Media").array_hd7ov6$_0[0];
+        var song = KOTLINJS.apis.obtainSongDataServer_za3lpa$(id-1);
 
         if (null === song) {
             /* error */
