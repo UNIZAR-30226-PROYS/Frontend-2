@@ -4,9 +4,15 @@ if (typeof kotlin === 'undefined') {
 var KOTLINJS = function (_, Kotlin) {
   'use strict';
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
+  var String_0 = String;
   var toString = Kotlin.toString;
+  var Exception = Kotlin.kotlin.Exception;
+  var to = Kotlin.kotlin.to_ujzrz7$;
+  var mapOf = Kotlin.kotlin.collections.mapOf_x2b85n$;
   var equals = Kotlin.equals;
+  var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
+  var mapOf_0 = Kotlin.kotlin.collections.mapOf_qfcya0$;
   var ensureNotNull = Kotlin.ensureNotNull;
   var split = Kotlin.kotlin.text.split_o64adg$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
@@ -21,6 +27,99 @@ var KOTLINJS = function (_, Kotlin) {
   var L132000 = Kotlin.Long.fromInt(132000);
   var Pair = Kotlin.kotlin.Pair;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  function Data2(A) {
+    this.A = A;
+  }
+  Data2.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data2',
+    interfaces: []
+  };
+  Data2.prototype.component1 = function () {
+    return this.A;
+  };
+  Data2.prototype.copy_61zpoe$ = function (A) {
+    return new Data2(A === void 0 ? this.A : A);
+  };
+  Data2.prototype.toString = function () {
+    return 'Data2(A=' + Kotlin.toString(this.A) + ')';
+  };
+  Data2.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.A) | 0;
+    return result;
+  };
+  Data2.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.A, other.A))));
+  };
+  function Data(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+  Data.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data',
+    interfaces: []
+  };
+  Data.prototype.component1 = function () {
+    return this.a;
+  };
+  Data.prototype.component2 = function () {
+    return this.b;
+  };
+  Data.prototype.copy_jxyw2u$ = function (a, b) {
+    return new Data(a === void 0 ? this.a : a, b === void 0 ? this.b : b);
+  };
+  Data.prototype.toString = function () {
+    return 'Data(a=' + Kotlin.toString(this.a) + (', b=' + Kotlin.toString(this.b)) + ')';
+  };
+  Data.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.a) | 0;
+    result = result * 31 + Kotlin.hashCode(this.b) | 0;
+    return result;
+  };
+  Data.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.a, other.a) && Kotlin.equals(this.b, other.b)))));
+  };
+  function test_signup() {
+    var user = User_init('test1', '1234567');
+    user.name = 'Test1';
+    user.email = 'test@test.com';
+    var result = doSignUpServer(user);
+    println(result);
+  }
+  function test_login() {
+    var result = doLoginServer('test1', '1234567');
+    println(result);
+  }
+  function test_detelete() {
+    var result = doDeleteAccountServer('test1', 'w2cigv17h2q6w6ly');
+    println(result);
+  }
+  function main(args) {
+    test_detelete();
+  }
+  function createForm(mapa) {
+    var tmp$;
+    var result = new String_0();
+    tmp$ = mapa.entries.iterator();
+    while (tmp$.hasNext()) {
+      var i = tmp$.next();
+      println(i);
+      if (i.value != null) {
+        if (result.length === 0) {
+          result = i.key + '=' + toString(i.value);
+        }
+         else {
+          var $receiver = result;
+          var str = '&' + i.key + '=' + toString(i.value);
+          result = $receiver.concat(str);
+        }
+      }
+    }
+    return result;
+  }
   var server;
   var dataServerAdress;
   var songLocationUploadPrefix;
@@ -44,10 +143,25 @@ var KOTLINJS = function (_, Kotlin) {
     return dataServerAdress + '/' + albumUploadPrefix + albumId;
   }
   function isServerOnline() {
-    var req = new XMLHttpRequest();
-    req.open('GET', server + '/users/lAngelP', false);
-    req.send(null);
-    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
+    try {
+      var req = new XMLHttpRequest();
+      req.open('GET', server + '/users/lAngelP', false);
+      println(req.status);
+      if (req.status !== 200) {
+        println('error');
+        return false;
+      }
+       else {
+        return true;
+      }
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        return false;
+      }
+       else
+        throw e;
+    }
   }
   function doLoginServer$Data(user, token, error) {
     this.user = user;
@@ -68,7 +182,7 @@ var KOTLINJS = function (_, Kotlin) {
   doLoginServer$Data.prototype.component3 = function () {
     return this.error;
   };
-  doLoginServer$Data.prototype.copy_qz9155$ = function (user, token, error) {
+  doLoginServer$Data.prototype.copy_6hosri$ = function (user, token, error) {
     return new doLoginServer$Data(user === void 0 ? this.user : user, token === void 0 ? this.token : token, error === void 0 ? this.error : error);
   };
   doLoginServer$Data.prototype.toString = function () {
@@ -85,15 +199,22 @@ var KOTLINJS = function (_, Kotlin) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.user, other.user) && Kotlin.equals(this.token, other.token) && Kotlin.equals(this.error, other.error)))));
   };
   function doLoginServer(username, password) {
+    println('sending  request');
     var req = new XMLHttpRequest();
-    req.open('POST', server + '/users/' + username + '?pass=' + password, false);
-    req.send(null);
+    req.open('POST', server + '/users/' + username + '/login', false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    var data = createForm(mapOf(to('pass', password)));
+    req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
       var json = JSON.parse(req.responseText);
+      if (!equals(json.error, 'ok')) {
+        throw Exception_init(json.error);
+      }
       return json.token;
     }
      else {
-      throw Exception_init('Error');
+      throw Exception_init('Error ' + req.status);
     }
   }
   function doSignUpServer$Data(user, token, error) {
@@ -115,7 +236,7 @@ var KOTLINJS = function (_, Kotlin) {
   doSignUpServer$Data.prototype.component3 = function () {
     return this.error;
   };
-  doSignUpServer$Data.prototype.copy_qz9155$ = function (user, token, error) {
+  doSignUpServer$Data.prototype.copy_6hosri$ = function (user, token, error) {
     return new doSignUpServer$Data(user === void 0 ? this.user : user, token === void 0 ? this.token : token, error === void 0 ? this.error : error);
   };
   doSignUpServer$Data.prototype.toString = function () {
@@ -137,16 +258,23 @@ var KOTLINJS = function (_, Kotlin) {
     var pass = user.password;
     var email = user.email;
     var user_0 = user.name;
-    var birth = 0;
+    var birth = null;
+    var data = createForm(mapOf_0([to('mail', email), to('pass0', pass), to('pass1', pass), to('user', user_0), to('birth', birth)]));
     var req = new XMLHttpRequest();
-    req.open('POST', server + '/users/' + nick + '?mail=' + email + '&pass0=' + pass + '&pass1=' + pass + '&user=' + user_0 + '&birth=' + toString(birth), false);
-    req.send(null);
+    req.open('POST', server + '/users/' + toString(nick) + '/signup?', false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
       var json = JSON.parse(req.responseText);
+      if (!equals(json.error, 'ok')) {
+        throw Exception_init(json.error);
+      }
       return json.token;
     }
      else {
-      throw Exception_init('Error');
+      println('Error');
+      throw Exception_init('Error ' + req.status);
     }
   }
   function doDeleteAccountServer$Data(error) {
@@ -176,13 +304,22 @@ var KOTLINJS = function (_, Kotlin) {
   };
   function doDeleteAccountServer(user, sessionToken) {
     var req = new XMLHttpRequest();
-    req.open('GET', server + '/users/' + user + '?token=' + sessionToken, false);
-    req.send(null);
+    req.open('DELETE', server + '/users/' + user + '?token=' + sessionToken, false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send();
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
-      return equals(json.error, 'ok');
+      if (equals(json.error, 'ok')) {
+        return true;
+      }
+       else {
+        throw Exception_init(json.error);
+      }
     }
-    return false;
+     else {
+      println('Error');
+      throw Exception_init('Error ' + req.status);
+    }
   }
   function doLogoutServer$Data(error) {
     this.error = error;
@@ -1670,65 +1807,7 @@ var KOTLINJS = function (_, Kotlin) {
   function isServerOnline2() {
     return true;
   }
-  function main(args) {
-  }
-  function Data2(A) {
-    this.A = A;
-  }
-  Data2.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Data2',
-    interfaces: []
-  };
-  Data2.prototype.component1 = function () {
-    return this.A;
-  };
-  Data2.prototype.copy_61zpoe$ = function (A) {
-    return new Data2(A === void 0 ? this.A : A);
-  };
-  Data2.prototype.toString = function () {
-    return 'Data2(A=' + Kotlin.toString(this.A) + ')';
-  };
-  Data2.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.A) | 0;
-    return result;
-  };
-  Data2.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.A, other.A))));
-  };
-  function Data(a, b) {
-    this.a = a;
-    this.b = b;
-  }
-  Data.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Data',
-    interfaces: []
-  };
-  Data.prototype.component1 = function () {
-    return this.a;
-  };
-  Data.prototype.component2 = function () {
-    return this.b;
-  };
-  Data.prototype.copy_jxyw2u$ = function (a, b) {
-    return new Data(a === void 0 ? this.a : a, b === void 0 ? this.b : b);
-  };
-  Data.prototype.toString = function () {
-    return 'Data(a=' + Kotlin.toString(this.a) + (', b=' + Kotlin.toString(this.b)) + ')';
-  };
-  Data.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.a) | 0;
-    result = result * 31 + Kotlin.hashCode(this.b) | 0;
-    return result;
-  };
-  Data.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.a, other.a) && Kotlin.equals(this.b, other.b)))));
-  };
   function main_0(args) {
-    obtainUserDataServer('lAngelP', '0svskl6burhffiai');
   }
   function Album(id, name, creator, releaseDate, artLocationUri) {
     this.id = id;
@@ -1939,7 +2018,14 @@ var KOTLINJS = function (_, Kotlin) {
     }
     return ServerEmulator_instance;
   }
+  _.Data2 = Data2;
+  _.Data = Data;
+  _.test_signup = test_signup;
+  _.test_login = test_login;
+  _.test_detelete = test_detelete;
+  _.main_kand9s$ = main;
   var package$apis = _.apis || (_.apis = {});
+  package$apis.createForm_alv746$ = createForm;
   Object.defineProperty(package$apis, 'server', {
     get: function () {
       return server;
@@ -1999,10 +2085,7 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.deleteAlbumsServer_xdras9$ = deleteAlbumsServer;
   package$apis.isServerOnline2 = isServerOnline2;
   var package$controller = _.controller || (_.controller = {});
-  package$controller.main_kand9s$ = main;
-  _.Data2 = Data2;
-  _.Data = Data;
-  _.main_kand9s$ = main_0;
+  package$controller.main_kand9s$ = main_0;
   var package$models = _.models || (_.models = {});
   package$models.Album = Album;
   package$models.Playlist = Playlist;
@@ -2024,7 +2107,7 @@ var KOTLINJS = function (_, Kotlin) {
   userUploadPrefix = 'user_';
   albumUploadPrefix = 'album_';
   playlistUploadPrefix = 'playlist_';
-  main_0([]);
+  main([]);
   Kotlin.defineModule('KOTLINJS', _);
   return _;
 }(typeof KOTLINJS === 'undefined' ? {} : KOTLINJS, kotlin);

@@ -6,6 +6,22 @@ import test.*
 import org.w3c.xhr.*
 import kotlin.js.Date
 import kotlin.js.Json
+import kotlin.js.iterator
+
+fun createForm(mapa: Map<String, String?>): String{
+    var result = String()
+    for(i in mapa){
+        println(i)
+        if (i.value != null) {
+            if (result.isEmpty()){
+                result = "${i.key}=${i.value}"
+            }else {
+                result = result.concat("&${i.key}=${i.value}")
+            }
+        }
+    }
+    return result
+}
 
 /**
  * Created by abel on 26/04/18.
@@ -187,32 +203,53 @@ private fun uploadAlbumCover(albumId: Long, filePath: String, context: Context):
 }
 */
 fun isServerOnline(): Boolean {
-    var req = XMLHttpRequest()
-    req.open("GET", "$server/users/lAngelP", false)
-    req.send(null)
-    return req.status.compareTo(200) == 0
+    try {
+        var req = XMLHttpRequest()
+        req.open("GET", "$server/users/lAngelP", false)
+        println(req.status)
+        if(req.status.toInt() != 200){
+            println("error")
+            return false
+        }else{
+            return true
+        }
+    }catch (e: Exception){
+        return false
+    }
+
 }
 
 /**
  * Realiza un login en el servidor y devuelve el token de sesión
  */
+//TESTED
 //@Throws(Exception::class)
 fun doLoginServer(username: String, password: String): String {
+    println("sending  request")
     var req = XMLHttpRequest()
-    req.open("POST", server+"/users/"+username+"?pass="+password, false)
-    req.send(null)
+    req.open("POST", "$server/users/$username/login", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    var data = createForm(mapOf("pass" to password))
+    req.send(data)
     if (req.status.compareTo(200) == 0) {
-        data class Data(val user: String, val token: String, val error: Boolean)
+        println(req.responseText)
+        data class Data(val user: String, val token: String, val error: String)
         val json = JSON.parse<Data>(req.responseText)
+        if (json.error != "ok"){
+            throw Exception(json.error)
+        }
         return json.token
     } else {
-        throw Exception("Error")
+        throw Exception("Error ${req.status}")
     }
 }
+
+
 
 /**
  * Realiza una creación de usuario en el servidor y devuelve el token de sesión
  */
+//TESTED
 //@Throws(Exception::class)
 fun doSignUpServer(user: User): String {
 
@@ -221,17 +258,24 @@ fun doSignUpServer(user: User): String {
     var pass = user.password
     var email = user.email
     var user = user.name
-    var birth = 0
+    var birth = null
+
+    var data = createForm(mapOf("mail" to email, "pass0" to pass, "pass1" to pass, "user" to user, "birth" to birth))
     var req = XMLHttpRequest()
-    req.open("POST", server+"/users/"+nick+"?mail="+email+
-            "&pass0="+pass+"&pass1="+pass+"&user="+user+"&birth="+birth, false)
-    req.send(null)
+    req.open("POST", "$server/users/$nick/signup?", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send(data)
     if (req.status.compareTo(200) == 0) {
-        data class Data(val user: String, val token: String, val error: Boolean)
+        println(req.responseText)
+        data class Data(val user: String, val token: String, val error: String)
         val json = JSON.parse<Data>(req.responseText)
+        if (json.error != "ok"){
+            throw Exception(json.error)
+        }
         return json.token
     } else {
-        throw Exception("Error")
+        println("Error")
+        throw Exception("Error ${req.status}")
     }
 }
 
@@ -241,12 +285,20 @@ fun doSignUpServer(user: User): String {
 //@Throws(Exception::class)
 fun doDeleteAccountServer(user: String, sessionToken: String): Boolean {
     var req = XMLHttpRequest()
-    req.open("GET", "$server/users/$user?token=$sessionToken", false)
-    req.send(null)
+    req.open("DELETE", "$server/users/$user?token=$sessionToken", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send()
     if (req.status.compareTo(200) == 0) {
         data class Data(val error: String)
         val json = JSON.parse<Data>(req.responseText)
-        return json.error == "ok"
+        if (json.error == "ok"){
+            return true
+        }else{
+            throw Exception(json.error)
+        }
+    }else{
+        println("Error")
+        throw Exception("Error ${req.status}")
     }
     return false
 }
