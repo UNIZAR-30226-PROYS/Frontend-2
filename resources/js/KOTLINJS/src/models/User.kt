@@ -18,6 +18,7 @@ class User() : Recommendation {
     var twitterAccount: String? = null
     var facebookAccount: String? = null
     var instagramAccount: String? = null
+    var id: Long? = null
 
     constructor(username: String, password: String): this(){
         this.username = username
@@ -26,6 +27,9 @@ class User() : Recommendation {
 
     constructor(username: String): this(){
         this.username = username
+    }
+    constructor(id: Long): this(){
+        this.id = id
     }
 
     constructor(username: String, name: String, email: String, pictureLocationUri: String): this(){

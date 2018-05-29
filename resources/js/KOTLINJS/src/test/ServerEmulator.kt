@@ -11,13 +11,6 @@ object ServerEmulator {
     val generesList = ArrayList<String>()
     val albumList = ArrayList<Album>()
 
-    val albumaux = ArrayList<Song>()
-    val artistas = ArrayList<User>()
-    val albumes = ArrayList<Album>()
-    val songsVarious = ArrayList<Song>()
-    val songList2 = ArrayList<Song>()
-
-
     val cancionesFavoritas = HashMap<String, ArrayList<Song>>()
     val artistasSeguidos = HashMap<String, ArrayList<User>>()
     val playlistSeguidos = HashMap<String, ArrayList<Playlist>>()
@@ -29,10 +22,7 @@ object ServerEmulator {
 
     init {
         // TODO: HACER
-        val autor1 = User("Kendrick", "kendrick", "Right", "/resources/imgs/albumkendr.jpg")
-        autor1.twitterAccount = "https://twitter.com/kendricklamar?lang=es"
-        autor1.facebookAccount = "https://es-la.facebook.com/kendricklamar/"
-        autor1.instagramAccount = "https://www.instagram.com/kendricklamar/?hl=es"
+        val autor1 = User("Media", "Media", "Right", "http://storage.googleapis.com/automotive-media/album_art.jpg")
         val autor2 = User("Silent", "Silent", "Partner", "http://storage.googleapis.com/automotive-media/album_art.jpg")
         val autor3 = User("abelcht", "Abel ChT", "Lion", "http://storage.googleapis.com/automotive-media/album_art.jpg")
         val autor4 = User("Prueba", "PRU", "sdfdsfd", "http://storage.googleapis.com/automotive-media/album_art.jpg")
@@ -42,57 +32,6 @@ object ServerEmulator {
 
         val cancion1 = Song(album = album1, id = 1, name = "Jazz in Paris",duration = 103000L, locationUri = "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3", lyricsPath = null, genere = null)
         val cancion2 = Song(album = album2, id = 2, name = "The Messenger",  duration = 132000L, locationUri = "http://storage.googleapis.com/automotive-media/The_Messenger.mp3", lyricsPath = null, genere = null)
-
-        /************************************************************************************************************************/
-        val album3 = Album(3,"good kid, m.A.A.d city", autor1, Date(2018, 3, 22), "https://is1-ssl.mzstatic.com/image/thumb/Music/v4/70/95/78/7095785b-ddae-fa56-cd1e-b263345e2e3b/UMG_cvrart_00602537362769_01_RGB72_1426x1426_12UMGIM52990.jpg/268x0w.jpg")
-        val album4 = Album(4,"Enter the 36 chamber", autor1, Date(2018, 3, 22), "/resources/imgs/wu.jpg")
-        val album5 = Album(5,"Beerbongs & Bentleys", autor1, Date(2018, 3, 22), "/resources/imgs/albumpost.jpg")
-
-        val cancion3 = Song(album = album3, id = 3, name = "4 AM",  duration = 132000L, locationUri = "/resources/music/4AM.mp3", lyricsPath = "/resources/example.srt", genere = null)
-        val cancion4 = Song(album = album3, id = 4, name = "Sherane a.k.a Master Splinter’s Daughter",  duration = 132000L, locationUri = "/resources/music/4AM.mp3", lyricsPath = "/resources/example.srt", genere = null)
-        val cancion5 = Song(album = album3, id = 5, name = "Bitch, Don't Kill My Vibe",  duration = 132000L, locationUri = "/resources/music/4AM.mp3", lyricsPath = "/resources/example.srt", genere = null)
-        val cancion6 = Song(album = album3, id = 6, name = "Backseat Freestyle",  duration = 132000L, locationUri = "/resources/music/4AM.mp3", lyricsPath = "/resources/example.srt", genere = null)
-        val cancion7 = Song(album = album3, id = 7, name = "The Art of Peer Pressure",  duration = 132000L, locationUri = "/resources/music/4AM.mp3", lyricsPath = "/resources/example.srt", genere = null)
-
-        songList2.add( cancion1 )
-        songList2.add( cancion2 )
-        songList2.add( cancion3 )
-        songList2.add( cancion4 )
-        songList2.add( cancion5 )
-        songList2.add( cancion6 )
-        songList2.add( cancion7 )
-
-        albumaux.add( cancion3 )
-        albumaux.add( cancion4 )
-        albumaux.add( cancion5 )
-        albumaux.add( cancion6 )
-        albumaux.add( cancion7 )
-
-        albumes.add( album3 )
-        albumes.add( album4 )
-        albumes.add( album5 )
-
-        artistas.add( autor1 )
-        artistas.add( autor2 )
-        artistas.add( autor3 )
-        artistas.add( autor4 )
-
-        songsVarious.add( cancion3 )
-        songsVarious.add( cancion1 )
-        songsVarious.add( cancion5 )
-        songsVarious.add( cancion2 )
-        songsVarious.add( cancion6 )
-
-        albumList.add(album1)
-        albumList.add(album2)
-        albumList.add(album3)
-        albumList.add(album4)
-        albumList.add(album5)
-
-
-
-
-        /************************************************************************************************************************/
 
         val list1 = ArrayList<Song>()
         list1.add(cancion1)
@@ -145,7 +84,8 @@ object ServerEmulator {
         generesList.add("Rap")
         generesList.add("Trap")
 
-
+        albumList.add(album1)
+        albumList.add(album2)
 
     }
 

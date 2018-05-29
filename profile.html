@@ -257,12 +257,9 @@ layout: general
             document.getElementById("editar").style.display = "none";
         }
 
-        console.log(user + "---" + registered_user);
-
         if(user === registered_user){   /* perfil del usuario */
             document.getElementById("seguir").style.display = "none";
         }else{      /* otro artista */
-            document.getElementById("editar").style.display = "none";
 
         }
 
@@ -272,13 +269,15 @@ layout: general
         document.getElementById("profile-name").innerHTML = usuario.username;
         var imagen = document.getElementById('profile-main-image');
         imagen.src = usuario.pictureLocationUri;
-
-
-        document.getElementById("social-media").innerHTML =
-            "            <a id=\"twitter-l\" href=\"" + usuario.twitterAccount + "\"><h1 id=\"twitter\"><strong><i class=\"fa fa-link\"></i>  <i class=\"fa fa-twitter\" style=\"font-size: 25px\"></i></strong></h1></a>\n" +
-            "            <a id=\"ig-l\" href=\"" + usuario.instagramAccount +"\"><h1 id=\"instagram\"><strong><i class=\"fa fa-link\"></i>  <i class=\"fa fa-instagram\" style=\"font-size: 25px\"></i> </strong></h1></a>\n" +
-            "            <a id=\"fb-l\" href=\"" + usuario.facebookAccount + "\"><h1 id=\"facebook\"><strong><i class=\"fa fa-link\"></i>  <i class=\"fa fa-facebook\" style=\"font-size: 25px\"></i></strong></h1></a>";
-
+        if( usuario.instagramAccount !== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-twitter\" style=\"font-size: 20px\"></i>  " + usuario.instagramAccount;
+        }
+        if( usuario.facebookAccount!== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-facebook\" style=\"font-size: 20px\"></i>  " + usuario.facebookAccount;
+        }
+        if( usuario.twitterAccount !== null ){
+            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-instagram\" style=\"font-size: 20px\"></i>  " + usuario.twitterAccount;
+        }
         /* seguidores */
         var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
         var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
@@ -287,25 +286,6 @@ layout: general
 
         /* canciones */
         /*var canciones = KOTLINJS.apis.get*/
-        var canciones = KOTLINJS.apis.obtainPlaylistList();
-        var inner = "";
-        for( var i = 0; i < 5; i++ ){
-            var song = canciones.array_hd7ov6$_0[i];
-            inner +=
-                "<div class=\"top-elem\">\n" +
-                "                        <div class=\"row\">\n" +
-                "                            <div class=\"col-sm-1\">\n" +
-                "                                <img class=\"profile-top-album\" src=\"" + song.album.artLocationUri + "\">\n" +
-                "                            </div>\n" +
-                "                            <div class=\"col-sm-1\"></div>\n" +
-                "                            <div class=\"col-sm-6\">\n" +
-                "                                <h5 class=\"profile-top-name\"> <a href=\"http://127.0.0.1:4000/song?id=" + song.id + "\">" + song.name + "</a> </h5>\n" +
-                "                            </div>\n" +
-                "\n" +
-                "                        </div>\n" +
-                "                    </div>";
-        }
-        document.getElementById("container-popular-songs").innerHTML = inner;
 
         /* albumes */
         var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
@@ -351,7 +331,7 @@ layout: general
         for (row = 0; row < playlist_row; row++) {
             html_content = html_content + "<div class=\"row\">";
             for (col = 0; col < 4; col++) {
-                if(row == 0 && col == 0 && registered_user == user){
+                if(row == 0 && col == 0){
                     html_content = html_content +
                         "<div class=\"col-sm\">\n" +
                         "<div class=\"artista\">\n" +
@@ -427,22 +407,76 @@ layout: general
         <div id="profile-top-canciones">
             <h1 id="profile-top-titulo">Canciones populares</h1>
 
-                <div id="container-popular-songs">
-
-                    <div class="top-elem">
-                        <div class="row">
-                            <div class="col-sm-1">
-                                <img class="profile-top-album" src="resources/imgs/wu.jpg">
-                            </div>
-                            <div class="col-sm-1"></div>
-                            <div class="col-sm-4">
-                                <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
-                            </div>
-
-                        </div>
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
                     </div>
-
+                    <div class="col-sm-5">
+                        <h5 class="profile-top-name">Titulo vdzfbsbdfbsb</h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro">100.000</h5>
+                    </div>
                 </div>
+            </div>
+
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="top-elem">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                    </div>
+                    <div class="col-sm-4">
+                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
