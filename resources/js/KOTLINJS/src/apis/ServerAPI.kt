@@ -481,3 +481,14 @@ fun obtainSongDataServer(id: Int): Song? {
     //TODO:
     return ServerEmulator.songList2[id]
 }
+
+
+/**
+ * Obtiene la información asociada a la playlist con id @id
+ * Warning: esta operación puede ser costosa en tiempo
+ */
+//@Throws(Exception::class)
+fun isUserAdmin(username: String): Boolean? {
+    //TODO:
+    return username.equals("admin")
+}

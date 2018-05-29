@@ -55,6 +55,7 @@ layout: general
 <script>
 function changeText(id)
 	{
+	    console.log(id);
 		document.getElementById(id).innerHTML='Dejar de seguir';
 		//$('#seguir-content').text('rand');
 	}
@@ -111,29 +112,30 @@ $(document).ready( function () {
             for (ind = 0; ind < followers_len; ind++) {
                 var follower = followers.array_hd7ov6$_0[ind];
 
-                html_content = "<div class=\"row\">\n" +
+                html_content +=
+                    "<div class=\"row\">\n" +
                     "            <div class=\"row-intern\">\n" +
-                    "                <div class=\"col-xs-3\">\n" +
-                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
-                    "                    <img src=\" " + follower.artLocationUri + ">\n" +
-                    "                    </a>" +
+                    "                <div class=\"col-sm-1\">\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">\n" +
+                    "                        <img style='width:110px; height:110px;' src=\"" + follower.pictureLocationUri + "\">\n" +
+                    "                    </a>\n" +
                     "                </div>\n" +
-                    "                <div class=\"col-xs-6 nombre-followed\">\n" +
-                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
-                    "                    <h1>" + follower.name + "</h1>" +
-                    "                    </a>" +
+                    "                <div class=\"col-sm-1 nombre-followed\" style='padding-left: 150px'>\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=Media\">\n" +
+                    "                        <h1 onclick=\"redirectToUser(" + follower.name + ")\">" + follower.name + "</h1>\n" +
+                    "                    </a>\n" +
                     "                </div>\n" +
-                    "                <div class=\"col-xs-1 button-followed\">\n" +
-                    "                    <button id=\"button-siguiendo-" + ind + "\" onclick=\"clickUnfollow(" + follower.username + ", 'button-seguir-" + ind + "' ,'button-siguiendo-" + ind + "')\"\n" +
-                    "                            onmouseover=\"changeText('seguir-content-" + ind + " ')\" onmouseout=\"changeTextOut('seguir-content-" + ind + "')\"\n" +
-                    "                            type=\"button\" class=\"btn btn-outline-warning siguiendo\">\n" +
-                    "                        <strong> <span  id=\"seguir-content-" + ind + "\"> Siguiendo </span> </strong>\n" +
-                    "                    </button>\n" +
-                    "                    <button id=\"button-seguir-" + ind + "\" onclick=\"clickFollow(" + follower.username + ", 'button-siguiendo-" + ind + "', 'button-seguir-" + ind + "')\"\n" +
-                    "                            onmouseover=\"changeText2('seguir-content-" + ind + "2')\" onmouseout=\"changeTextOut2('seguir-content-" + ind + "2')\"\n" +
-                    "                            type=\"button\" class=\"btn btn-outline-warning no-siguiendo\" style=\"display: none;\">\n" +
-                    "                        <strong> <span  id=\"seguir-content-" + ind + "2\"> Seguir </span> </strong>\n" +
-                    "                    </button>\n" +
+                    "                <div class=\"col-sm-1 button-followed\" style='padding-left: 300px'>\n" +
+                    "<button id=\"button-siguiendo-" + ind + "\" onclick=\"clickUnfollow('" + follower.name + "', 'button-seguir-" + ind + "' ,'button-siguiendo-" + ind + "')\"\n" +
+                "                            onmouseover=\"changeText('seguir-content-" + ind + "')\" onmouseout=\"changeTextOut('seguir-content-" + ind + "')\"\n" +
+                "                            type=\"button\" class=\"btn btn-outline-warning siguiendo\">\n" +
+                "                        <strong> <span  id=\"seguir-content-" + ind + "\"> Siguiendo </span> </strong>\n" +
+                "                    </button>\n" +
+                "                    <button id=\"button-seguir-" + ind + "\" onclick=\"clickFollow('" + follower.name + "', 'button-siguiendo-" + ind + "', 'button-seguir-" + ind + "')\"\n" +
+                "                            onmouseover=\"changeText2('seguir-content-" + ind + "2')\" onmouseout=\"changeTextOut2('seguir-content-" + ind + "2')\"\n" +
+                "                            type=\"button\" class=\"btn btn-outline-warning no-siguiendo\" style=\"display: none;\">\n" +
+                "                        <strong> <span  id=\"seguir-content-" + ind + "2\"> Seguir </span> </strong>\n" +
+                "                    </button>\n" +
                     "                </div>\n" +
                     "            </div>\n" +
                     "        </div>";
@@ -146,17 +148,20 @@ $(document).ready( function () {
             var html_content = "";
             for (ind = 0; ind < followers_len; ind++) {
                 var follower = followers.array_hd7ov6$_0[ind];
-                html_content += "<div class=\"row\">\n" +
+                html_content +=
+                    "<div class=\"row\">\n" +
                     "            <div class=\"row-intern\">\n" +
                     "                <div class=\"col-xs-3\">\n" +
-                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
-                    "                    <img src=\" " + follower.artLocationUri + ">\n" +
-                    "                    </a>" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">\n" +
+                    "                        <img style='width:110px; height:110px;' src=\"" + follower.pictureLocationUri + "\">\n" +
+                    "                    </a>\n" +
                     "                </div>\n" +
-                    "                <div class=\"col-xs-6 nombre-followed\">\n" +
-                    "                    <a href=\"http://127.0.0.1:4000/profile?user=" + follower.name + "\">" +
-                    "                    <h1>" + follower.name + "</h1>" +
-                    "                    </a>" +
+                    "                <div class=\"col-xs-8 nombre-followed\" style='padding-left: 100px'>\n" +
+                    "                    <a href=\"http://127.0.0.1:4000/profile?user=Media\">\n" +
+                    "                        <h1 onclick=\"redirectToUser(" + follower.name + ")\">" + follower.name + "</h1>\n" +
+                    "                    </a>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"col-xs-1 button-followed\">\n" +
                     "                </div>\n" +
                     "            </div>\n" +
                     "        </div>";

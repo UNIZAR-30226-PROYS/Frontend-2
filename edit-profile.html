@@ -43,8 +43,12 @@ layout: general
         }else{
             var user = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
             $('input[id="user-signup"]').val( user.name );
-            $('input[id="country"]').val( user.country );
+            $('input[id="country"]').val( "Spain" );
             $('input[id="mail-signup"]').val( user.email );
+            $('input[id="facebook-signup"]').val( user.facebookAccount );
+            $('input[id="twitter-signup"]').val( user.twitterAccount );
+            $('input[id="ig-signup"]').val( user.instagramAccount );
+
         }
 
         $('#register-button').click(function () {
@@ -55,7 +59,7 @@ layout: general
             var mail = $('input[id="mail-signup"]').val();
             var country = $('input[id="country"]').val();
             resetRegisterInputs();
-            if (user === "" || pass0 != pass1 || mail === "" || country === "" || birth === "") {
+            if (user === "" || pass0 != pass1 || mail === "" || country === "" ) {
                 if (user === "") {
                     $('div[id="user-signup-container"]').addClass("has-error");
                     $('span[id="user-signup-icon"]').removeClass("hidden");
@@ -80,9 +84,9 @@ layout: general
                     $('div[id="mail-signup-container"]').addClass("has-error");
                     $('span[id="mail-signup-icon"]').removeClass("hidden");
                 }
-                if (nick === "") {
-                    $('div[id="nick-signup-container"]').addClass("has-error");
-                    $('span[id="nick-signup-icon"]').removeClass("hidden");
+                if (user === "") {
+                    $('div[id="user-signup-container"]').addClass("has-error");
+                    $('span[id="user-signup-icon"]').removeClass("hidden");
                 }
                 if (country === "") {
                     $('div[id="country-signup-container"]').addClass("has-error");
@@ -90,7 +94,7 @@ layout: general
                 }
 
             } else {
-                window.location = "http://127.0.0.1:4000/index;
+                window.location = "http://127.0.0.1:4000/index";
             }
         });
 

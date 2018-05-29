@@ -33,7 +33,7 @@ object ServerEmulator {
         autor1.twitterAccount = "https://twitter.com/kendricklamar?lang=es"
         autor1.facebookAccount = "https://es-la.facebook.com/kendricklamar/"
         autor1.instagramAccount = "https://www.instagram.com/kendricklamar/?hl=es"
-        val autor2 = User("Silent", "Silent", "Partner", "http://storage.googleapis.com/automotive-media/album_art.jpg")
+        val autor2 = User("Silent", "Silent", "Partner", "/resources/imgs/artistasap.jpeg")
         val autor3 = User("abelcht", "Abel ChT", "Lion", "http://storage.googleapis.com/automotive-media/album_art.jpg")
         val autor4 = User("Prueba", "PRU", "sdfdsfd", "http://storage.googleapis.com/automotive-media/album_art.jpg")
 
@@ -89,7 +89,10 @@ object ServerEmulator {
         albumList.add(album4)
         albumList.add(album5)
 
-
+        artistasSeguidos[autor1.username!!] = ArrayList()
+        artistasSeguidos[autor1.username!!]!!.add(autor2)
+        artistasSeguidos[autor1.username!!]!!.add(autor3)
+        artistasSeguidos[autor1.username!!]!!.add(autor4)
 
 
         /************************************************************************************************************************/
@@ -103,6 +106,7 @@ object ServerEmulator {
 
         val playlist1 = Playlist(1, "dfsdfdsfd", autor1, "http://storage.googleapis.com/automotive-media/album_art_2.jpg", list1)
         val playlist2 = Playlist(2, "dfsdfdsfd", autor1, "http://storage.googleapis.com/automotive-media/album_art_2.jpg", list2)
+        val playlist3 = Playlist(3, "Playlist User", autor1, "/resources/imgs/albumasap.jpeg", songList2)
 
         userList[autor1.username!!] = autor1
         userList[autor2.username!!] = autor2
@@ -113,6 +117,7 @@ object ServerEmulator {
 
         playlistList[playlist1.id] = playlist1
         playlistList[playlist2.id] = playlist2
+        playlistList[playlist3.id] = playlist3
 
 
         artistasSeguidos[autor3.username!!] = ArrayList()

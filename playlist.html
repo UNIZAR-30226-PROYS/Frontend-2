@@ -205,6 +205,40 @@ layout: general
                 document.getElementById("follow").style.display = "none";
                 document.getElementById("editlist").style.display = "none";
                 document.getElementById("playlist-name").innerHTML = id;
+            var genre = getParameterByName('name');
+            document.getElementById("playlist-name").innerHTML = genre;
+
+            var playlist = KOTLINJS.apis.obtainPlaylistDataServer_s8cxhz$( kotlin.Long.fromInt( 3 ) );
+
+            var playlist_len = playlist.content.array_hd7ov6$_0.length;
+            console.log('jjjj');
+            var inner_html = "";
+            for( i=0; i<playlist_len; i++){
+                var playlist_elem = playlist.content.array_hd7ov6$_0[ i ];
+                console.log(playlist_elem.locationUri);
+                inner_html = inner_html + "<div class=\"playlist-elem\">\n" +
+                    "                    <div class=\"row\">\n" +
+                    "                        <img class=\"play-img\" src=\"resources/imgs/play.gif\" onclick=\"playSong('" +
+                    playlist_elem.locationUri +"','"+ playlist_elem.album.artLocationUri +"','"+
+                    playlist_elem.name +"','"+ playlist_elem.album.creator.name +
+                    "')\">" +
+                    "    \n" +
+                    "                        <div class=\"col-sm-4\">\n" +
+                    "                            <h5> <a href=\"http://127.0.0.1:4000/song?id=" + playlist_elem.id + "\">" + playlist_elem.name + "</a> </h5>\n" +
+                    "                        </div>\n" +
+                    "                        <div class=\"col-sm-4\">\n" +
+                    "                            <h5> <a href=\"http://127.0.0.1:4000/profile?user=" + playlist_elem.album.creator.username + "\">" + playlist_elem.album.creator.name + "</a></a>  </h5>\n" +
+                    "                        </div>\n" +
+                    "                        <div class=\"col-sm-2\">\n" +
+                    "                            <h5> <a href=\"http://127.0.0.1:4000/playlist?type=album&id=" + playlist_elem.album.id + "\">" + playlist_elem.album.name + "</a> </h5>\n" +
+                    "                        </div>\n" +
+
+                    "                    </div>\n" +
+                    "                </div>";
+            }
+            document.getElementById("playlist-container-elem").innerHTML = inner_html;
+
+
         }else if(type==='favorite'){
             var favs = KOTLINJS.apis.obtainFavouriteSongsByUserServer_puj7f4$(user, token);
             document.getElementById("playlist-type").innerHTML = "LISTA FAVORITOS";

@@ -153,6 +153,9 @@ layout: general
               }
           } else {
               try {
+                  if( KOTLINJS.apis.isUserAdmin_61zpoe$(user) ){
+                      window.location = "http://127.0.0.1:4000/admin";
+                  }
                   var token = KOTLINJS.apis.doLoginServer_puj7f4$(user, pass);
                   document.cookie = "username=" + user + ";token=" + token;
                   setCookie("username", user);
