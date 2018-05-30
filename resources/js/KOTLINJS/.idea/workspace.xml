@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="97275222-527c-4570-9213-abc11b36262c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../launch.sh" beforeDir="false" afterPath="$PROJECT_DIR$/../../../launch.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/KOTLINJS.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.meta.js" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.meta.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS/apis/apis.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS/apis/apis.kjsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS/root-package.kjsm" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS/root-package.kjsm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/apis/ServerAPI.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/apis/ServerAPI.kt" afterDir="false" />
-    </list>
+    <list default="true" id="1e51f085-213a-43c6-98ea-485cf8e2c294" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +20,57 @@
     <option name="HIDDEN_KINDS">
       <set />
     </option>
-    <expand />
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="postgres: database" type="6d9b600a:PostgresImplModel$Database" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="postgres: database" type="6d9b600a:PostgresImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="postgres: database" type="6d9b600a:PostgresImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="public: schema" type="a16502c0:PostgresImplModel$Schema" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="postgres: database" type="6d9b600a:PostgresImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="public: schema" type="a16502c0:PostgresImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="SpredYourMusic" type="feb32156:DbDataSourceImpl" />
+        <item name="databases" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="postgres: database" type="6d9b600a:PostgresImplModel$Database" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="public: schema" type="a16502c0:PostgresImplModel$Schema" />
+        <item name="tables" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="users: table" type="a93d6ac6:PostgresImplModel$LocalTable" />
+      </path>
+    </expand>
     <select />
   </component>
   <component name="FileEditorManager">
@@ -39,26 +78,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="36" column="4" lean-forward="true" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+            <state relative-caret-position="357">
+              <caret line="104" selection-start-line="104" selection-end-line="104" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/Recommendation.kt">
+        <entry file="file://$PROJECT_DIR$/src/test/ServerEmulator.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/html/Test.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+            <state relative-caret-position="193">
+              <caret line="33" column="88" selection-start-line="33" selection-start-column="88" selection-end-line="33" selection-end-column="88" />
             </state>
           </provider>
         </entry>
@@ -66,8 +96,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/apis/ServerAPI.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="287" column="43" selection-start-line="287" selection-start-column="43" selection-end-line="287" selection-end-column="43" />
+            <state relative-caret-position="156">
+              <caret line="580" column="14" selection-start-line="580" selection-start-column="14" selection-end-line="580" selection-end-column="14" />
               <folding>
                 <element signature="e#15#135#0" expanded="true" />
               </folding>
@@ -76,46 +106,52 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/KOTLINJS.iml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="38" lean-forward="true" selection-start-column="38" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/Album.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/Playlist.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="14" selection-start-column="14" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/models/User.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="720">
-              <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+            <state relative-caret-position="-374">
+              <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/models/Song.kt">
+        <entry file="http://localhost:63342/KOTLINJS/out/production/KOTLINJS/collections/Collections.kt">
+          <provider selected="true" editor-type-id="httpFileEditor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/apis/ServerAPI2.kt">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="mock:///Test.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+            <state>
+              <caret selection-end-line="6" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e2c0a535-8d8a-4f07-ade7-5e372622706e/console.sql">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="das://e2c0a535-8d8a-4f07-ade7-5e372622706e/database/postgres/schema/public/table/users">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/html/Test.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -125,38 +161,26 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin File" />
         <option value="HTML File" />
       </list>
     </option>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>isServ</find>
-      <find>obtainUs</find>
-      <find>main</find>
-      <find>err</find>
-      <find>popular</find>
+      <find>UpdateA</find>
+      <find>followedUsers</find>
+      <find>GET</find>
+      <find>getFo</find>
+      <find>follow</find>
+      <find>getFollowers</find>
+      <find>getFoll</find>
+      <find>getN</find>
     </findStrings>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/out/production/KOTLINJS/lib/kotlin.js" />
-        <option value="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js" />
-        <option value="$PROJECT_DIR$/src/apis/ServerAPI2.kt" />
-        <option value="$PROJECT_DIR$/src/models/Album.kt" />
-        <option value="$PROJECT_DIR$/src/models/Playlist.kt" />
-        <option value="$PROJECT_DIR$/src/models/Recommendation.kt" />
-        <option value="$PROJECT_DIR$/src/controller/Index.kt" />
-        <option value="$PROJECT_DIR$/src/test/ServerEmulator.kt" />
-        <option value="$PROJECT_DIR$/src/html/Test.html" />
-        <option value="$PROJECT_DIR$/src/models/User.kt" />
-        <option value="$PROJECT_DIR$/src/models/Song.kt" />
-        <option value="$PROJECT_DIR$/KOTLINJS.iml" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/src/Main.kt" />
         <option value="$PROJECT_DIR$/src/apis/ServerAPI.kt" />
       </list>
@@ -169,293 +193,305 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="142" />
-    <option name="width" value="1395" />
-    <option name="height" value="859" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectUserFactors">
     <factor id="binaryFeature:liftShorter">
-      <dailyData date="29-5-2018">
-        <observation name="false" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="false" value="233,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:liftShorterClasses">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:middleMatching">
-      <dailyData date="29-5-2018">
-        <observation name="false" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="false" value="233,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:nonGeneric">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:prox_inResolveScope">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="true" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="true" value="66,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:prox_openedInEditor">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="true" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="false" value="4,0" />
+        <observation name="true" value="62,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:prox_sameDirectory">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="true" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="false" value="10,0" />
+        <observation name="true" value="56,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:prox_sameLogicalRoot">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="true" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="true" value="66,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:prox_sdkOrLibrary">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="false" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="false" value="66,0" />
       </dailyData>
     </factor>
     <factor id="binaryFeature:templates">
-      <dailyData date="29-5-2018">
-        <observation name="false" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="false" value="233,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:accessible">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:expectedType">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:kind">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:prox_groovyReferenceListWeigher">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="unknown" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="unknown" value="66,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:prox_javaInheritance">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="null" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="null" value="66,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:prox_referenceList">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="unknown" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="unknown" value="66,0" />
       </dailyData>
     </factor>
     <factor id="categoricalFeature:recursion">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="completionFinishedType">
-      <dailyData date="29-5-2018">
-        <observation name="cancelled" value="5,0" />
-        <observation name="explicitSelect" value="2,0" />
-        <observation name="typedSelect" value="1,0" />
+      <dailyData date="30-5-2018">
+        <observation name="cancelled" value="514,0" />
+        <observation name="explicitSelect" value="76,0" />
+        <observation name="typedSelect" value="157,0" />
       </dailyData>
     </factor>
     <factor id="completionType">
-      <dailyData date="29-5-2018">
-        <observation name="BASIC" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="BASIC" value="337,0" />
       </dailyData>
     </factor>
     <factor id="completionUsage">
-      <dailyData date="29-5-2018">
-        <observation name="count" value="8,0" />
+      <dailyData date="30-5-2018">
+        <observation name="count" value="747,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:explicitProximity">
-      <dailyData date="29-5-2018">
+      <dailyData date="30-5-2018">
         <observation name="average" value="0,0" />
-        <observation name="count" value="5,0" />
+        <observation name="count" value="465,0" />
         <observation name="max" value="0,0" />
         <observation name="min" value="0,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:grouping">
-      <dailyData date="29-5-2018">
+      <dailyData date="30-5-2018">
         <observation name="average" value="0,0" />
-        <observation name="count" value="5,0" />
+        <observation name="count" value="465,0" />
         <observation name="max" value="0,0" />
         <observation name="min" value="0,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:mostUsed">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:nameEnd">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:position">
-      <dailyData date="29-5-2018">
-        <observation name="average" value="0,0" />
-        <observation name="count" value="5,0" />
-        <observation name="max" value="0,0" />
+      <dailyData date="30-5-2018">
+        <observation name="average" value="0,064516" />
+        <observation name="count" value="465,0" />
+        <observation name="max" value="3,0" />
         <observation name="min" value="0,0" />
-        <observation name="variance" value="0,0" />
+        <observation name="variance" value="0,116027" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:prefix">
-      <dailyData date="29-5-2018">
-        <observation name="average" value="-1153,4" />
-        <observation name="count" value="5,0" />
-        <observation name="max" value="-1152,0" />
-        <observation name="min" value="-1155,0" />
-        <observation name="variance" value="0,667778" />
+      <dailyData date="30-5-2018">
+        <observation name="average" value="-1131,017204" />
+        <observation name="count" value="465,0" />
+        <observation name="max" value="0,0" />
+        <observation name="min" value="-1203,0" />
+        <observation name="variance" value="14391,384491" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:priority">
-      <dailyData date="29-5-2018">
+      <dailyData date="30-5-2018">
         <observation name="average" value="0,0" />
-        <observation name="count" value="5,0" />
+        <observation name="count" value="465,0" />
         <observation name="max" value="0,0" />
         <observation name="min" value="0,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:prox_explicitlyImported">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
-        <observation name="average" value="300,0" />
-        <observation name="count" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
+        <observation name="average" value="254,198473" />
+        <observation name="count" value="131,0" />
         <observation name="max" value="300,0" />
-        <observation name="min" value="300,0" />
-        <observation name="variance" value="0,0" />
+        <observation name="min" value="0,0" />
+        <observation name="variance" value="9562,341753" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:prox_knownElement">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
         <observation name="average" value="0,0" />
-        <observation name="count" value="3,0" />
+        <observation name="count" value="131,0" />
         <observation name="max" value="0,0" />
         <observation name="min" value="0,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:prox_sameModule">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
         <observation name="average" value="2,0" />
-        <observation name="count" value="3,0" />
+        <observation name="count" value="131,0" />
         <observation name="max" value="2,0" />
         <observation name="min" value="2,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:prox_samePsiMember">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="1,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="167,0" />
         <observation name="average" value="0,0" />
-        <observation name="count" value="3,0" />
+        <observation name="count" value="131,0" />
         <observation name="max" value="0,0" />
         <observation name="min" value="0,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:query_length">
-      <dailyData date="29-5-2018">
+      <dailyData date="30-5-2018">
         <observation name="average" value="0,0" />
-        <observation name="count" value="5,0" />
+        <observation name="count" value="465,0" />
         <observation name="max" value="0,0" />
         <observation name="min" value="0,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:result_length">
-      <dailyData date="29-5-2018">
-        <observation name="average" value="9,6" />
-        <observation name="count" value="5,0" />
-        <observation name="max" value="12,0" />
-        <observation name="min" value="4,0" />
-        <observation name="variance" value="3,04" />
+      <dailyData date="30-5-2018">
+        <observation name="average" value="5,43871" />
+        <observation name="count" value="465,0" />
+        <observation name="max" value="26,0" />
+        <observation name="min" value="1,0" />
+        <observation name="variance" value="8,999584" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:sameWords">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:shorter">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:simple">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:sorter">
-      <dailyData date="29-5-2018">
+      <dailyData date="30-5-2018">
         <observation name="average" value="1,0" />
-        <observation name="count" value="5,0" />
+        <observation name="count" value="465,0" />
         <observation name="max" value="1,0" />
         <observation name="min" value="1,0" />
         <observation name="variance" value="0,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:statics">
-      <dailyData date="29-5-2018">
-        <observation name="UNDEFINED" value="3,0" />
+      <dailyData date="30-5-2018">
+        <observation name="UNDEFINED" value="233,0" />
       </dailyData>
     </factor>
     <factor id="doubleFeature:stats">
-      <dailyData date="29-5-2018">
-        <observation name="average" value="0,0" />
-        <observation name="count" value="5,0" />
-        <observation name="max" value="0,0" />
+      <dailyData date="30-5-2018">
+        <observation name="average" value="3179,070968" />
+        <observation name="count" value="465,0" />
+        <observation name="max" value="10000,0" />
         <observation name="min" value="0,0" />
-        <observation name="variance" value="0,0" />
+        <observation name="variance" value="20701247,246863" />
       </dailyData>
     </factor>
     <factor id="itemPosition">
-      <dailyData date="29-5-2018">
-        <observation name="0" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="0" value="67,0" />
+        <observation name="1" value="5,0" />
+        <observation name="2" value="2,0" />
+        <observation name="3" value="2,0" />
       </dailyData>
     </factor>
     <factor id="mnemonicsUsage">
-      <dailyData date="29-5-2018">
-        <observation name="total" value="2,0" />
+      <dailyData date="30-5-2018">
+        <observation name="total" value="68,0" />
         <observation name="withMnemonics" value="0,0" />
       </dailyData>
     </factor>
     <factor id="prefixLength">
-      <dailyData date="29-5-2018">
+      <dailyData date="30-5-2018">
+        <observation name="0" value="2,0" />
+        <observation name="1" value="6,0" />
         <observation name="10" value="1,0" />
-        <observation name="2" value="1,0" />
+        <observation name="2" value="23,0" />
+        <observation name="3" value="23,0" />
+        <observation name="4" value="16,0" />
+        <observation name="5" value="3,0" />
+        <observation name="7" value="2,0" />
       </dailyData>
     </factor>
     <factor id="timeBetweenTyping">
-      <dailyData date="29-5-2018">
-        <observation name="average" value="261,153846" />
-        <observation name="count" value="13,0" />
+      <dailyData date="30-5-2018">
+        <observation name="average" value="240,753546" />
+        <observation name="count" value="564,0" />
       </dailyData>
     </factor>
   </component>
@@ -464,6 +500,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -488,57 +525,18 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="html" type="462c0819:PsiDirectoryNode" />
             </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Production">
-          <expand>
             <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="KOTLINJS" type="cbb8eebc:String" user="KOTLINJS" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="KOTLINJS" type="cbb8eebc:String" user="KOTLINJS" />
-              <item name="src" type="cbb8eebc:String" user="src" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="KOTLINJS" type="cbb8eebc:String" user="KOTLINJS" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="KOTLINJS" type="cbb8eebc:String" user="KOTLINJS" />
-              <item name=".idea" type="cbb8eebc:String" user=".idea" />
-            </path>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="KOTLINJS" type="cbb8eebc:String" user="KOTLINJS" />
-              <item name="src" type="cbb8eebc:String" user="src" />
+              <item name="KOTLINJS" type="b2602c69:ProjectViewProjectNode" />
+              <item name="KOTLINJS" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="KOTLINJS" type="58d84e3e:PackageViewProjectNode" />
-              <item name="KOTLINJS" type="616d4139:PackageViewModuleNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -546,16 +544,18 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js" />
-    <property name="nodejs_interpreter_path" value="node" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="database.console.LAST_STATE" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../.." />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="gradle.experimental" />
+    <property name="settings.editor.selected.configurable" value="project.kotlinCompiler" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/apis" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Jorge\github\SpreadYourMusic\Frontend\resources\js\KOTLINJS\src\html" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -570,7 +570,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JavaScript Debug.Test.html">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android App">
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
@@ -593,7 +593,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1527626799664" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1527684069079" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -617,13 +617,7 @@
       </Profilers>
       <method v="2">
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1527626799666" />
-      </method>
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <method v="2">
-        <option name="Make" enabled="true" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1527684069080" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -633,93 +627,90 @@
       </method>
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Test.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/KOTLINJS/html/Test.html">
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="index.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/KOTLINJS/index.html">
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
-      <option name="VM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
       <properties />
       <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+    <list>
+      <item itemvalue="JavaScript Debug.index.html" />
+      <item itemvalue="JavaScript Debug.Test.html" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.Test.html" />
+        <item itemvalue="JavaScript Debug.index.html" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="97275222-527c-4570-9213-abc11b36262c" name="Default" comment="" />
-      <created>1524770837532</created>
+      <changelist id="1e51f085-213a-43c6-98ea-485cf8e2c294" name="Default" comment="" />
+      <created>1527674857311</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1524770837532</updated>
-      <workItem from="1524770841590" duration="702000" />
-      <workItem from="1524771591051" duration="221000" />
-      <workItem from="1524814596352" duration="232000" />
-      <workItem from="1524815939941" duration="1306000" />
-      <workItem from="1524820262146" duration="492000" />
-      <workItem from="1524820798244" duration="2128000" />
-      <workItem from="1524823067743" duration="321000" />
-      <workItem from="1524838269362" duration="268000" />
-      <workItem from="1524949088032" duration="80000" />
-      <workItem from="1527542884353" duration="15293000" />
-      <workItem from="1527577194371" duration="1836000" />
-      <workItem from="1527582189691" duration="7707000" />
-      <workItem from="1527592606440" duration="2338000" />
-      <workItem from="1527616332561" duration="1466000" />
-      <workItem from="1527618738568" duration="506000" />
+      <updated>1527674857311</updated>
+      <workItem from="1527674858550" duration="93000" />
+      <workItem from="1527674969284" duration="838000" />
+      <workItem from="1527675917006" duration="340000" />
+      <workItem from="1527676291432" duration="7755000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="34896000" />
+    <option name="totallyTimeSpent" value="9026000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1600" height="864" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15701416" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25799572" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Image Layers" order="2" />
-      <window_info id="Designer" order="3" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
       <window_info id="Capture Tool" order="4" />
       <window_info id="UI Designer" order="5" />
       <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Database Console" weight="0.329718" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.33104396" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.28416485" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Floobits" order="8" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.329718" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" visible="true" weight="0.32108843" />
+      <window_info anchor="bottom" id="Database Changes" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.3286334" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
       <window_info anchor="right" id="Theme Preview" order="5" />
-      <window_info anchor="right" id="Database" order="6" weight="0.50133336" />
+      <window_info anchor="right" id="Database" order="6" visible="true" weight="0.27558637" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" />
     </layout>
@@ -730,121 +721,80 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/Main.kt</url>
+          <line>90</line>
+          <properties />
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/Main.kt</url>
+          <line>69</line>
+          <properties />
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/Main.kt</url>
+          <line>68</line>
+          <properties />
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$KOTLIN_BUNDLED$/lib/kotlin-stdlib-js.jar!/kotlin-experimental.js">
+    <entry file="file://$PROJECT_DIR$/index.html" />
+    <entry file="file://$PROJECT_DIR$/src/html/Test.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1674" />
+        <state relative-caret-position="51">
+          <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/KOTLINJS/html/index.html">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e2c0a535-8d8a-4f07-ade7-5e372622706e/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS/com/spreadyourmusic/spreadyourmusic/apis/apis.kjsm" />
-    <entry file="file://$PROJECT_DIR$/out/production/KOTLINJS/lib/kotlin.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/ServerEmulator.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-          <folding>
-            <element signature="e#14#87#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/apis/ServerAPI2.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" selection-start-line="15" selection-end-line="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/controller/Index.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="1" selection-start-line="6" selection-start-column="1" selection-end-line="6" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/html/index.html">
-      <provider selected="true" editor-type-id="text-editor">
+    <entry file="das://e2c0a535-8d8a-4f07-ade7-5e372622706e/database/postgres/schema/public/table/users">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
         <state>
-          <caret selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS.js" />
-    <entry file="file://$PROJECT_DIR$/out/production/KOTLINJS/html/Test.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/out/production/KOTLINJS/KOTLINJS/apis/apis.kjsm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" selection-start-line="22" selection-end-line="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Recommendation.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="10" selection-start-line="6" selection-start-column="10" selection-end-line="6" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Album.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="56" selection-start-line="8" selection-start-column="56" selection-end-line="8" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Playlist.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="14" selection-start-column="14" selection-end-column="14" />
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/models/User.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="48" column="5" selection-start-line="48" selection-start-column="5" selection-end-line="48" selection-end-column="5" />
+        <state relative-caret-position="-374">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/models/Song.kt">
+    <entry file="file://$PROJECT_DIR$/src/test/ServerEmulator.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+        <state relative-caret-position="193">
+          <caret line="33" column="88" selection-start-line="33" selection-start-column="88" selection-end-line="33" selection-end-column="88" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/KOTLINJS.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="38" lean-forward="true" selection-start-column="38" selection-end-column="38" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/apis/ServerAPI2.kt">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/html/Test.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="7" lean-forward="true" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
-        </state>
-      </provider>
+    <entry file="http://localhost:63342/KOTLINJS/out/production/KOTLINJS/collections/Collections.kt">
+      <provider selected="true" editor-type-id="httpFileEditor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="36" column="4" lean-forward="true" selection-start-line="36" selection-start-column="4" selection-end-line="36" selection-end-column="4" />
+        <state relative-caret-position="357">
+          <caret line="104" selection-start-line="104" selection-end-line="104" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/apis/ServerAPI.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="287" column="43" selection-start-line="287" selection-start-column="43" selection-end-line="287" selection-end-column="43" />
+        <state relative-caret-position="156">
+          <caret line="580" column="14" selection-start-line="580" selection-start-column="14" selection-end-line="580" selection-end-column="14" />
           <folding>
             <element signature="e#15#135#0" expanded="true" />
           </folding>
@@ -854,30 +804,6 @@
   </component>
   <component name="masterDetails">
     <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
           <splitter-proportions>
@@ -891,19 +817,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>KOTLINJS</last-edited>
+          <last-edited>Erlang for Elixir 20</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -927,7 +841,6 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>KotlinJavaScript</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

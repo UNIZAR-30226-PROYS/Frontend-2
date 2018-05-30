@@ -3,13 +3,13 @@ if (typeof kotlin === 'undefined') {
 }
 var KOTLINJS = function (_, Kotlin) {
   'use strict';
-  var Kind_CLASS = Kotlin.Kind.CLASS;
-  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var String_0 = String;
+  var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
   var Exception = Kotlin.kotlin.Exception;
   var to = Kotlin.kotlin.to_ujzrz7$;
   var mapOf = Kotlin.kotlin.collections.mapOf_x2b85n$;
+  var Kind_CLASS = Kotlin.Kind.CLASS;
   var equals = Kotlin.equals;
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
   var mapOf_0 = Kotlin.kotlin.collections.mapOf_qfcya0$;
@@ -17,89 +17,17 @@ var KOTLINJS = function (_, Kotlin) {
   var split = Kotlin.kotlin.text.split_o64adg$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
   var L0 = Kotlin.Long.ZERO;
-  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
-  var L4 = Kotlin.Long.fromInt(4);
+  var toList = Kotlin.kotlin.collections.toList_se6h4x$;
   var L1 = Kotlin.Long.ONE;
+  var print = Kotlin.kotlin.io.print_s8jyv4$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   var HashMap_init = Kotlin.kotlin.collections.HashMap_init_q3lmfv$;
+  var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var L2 = Kotlin.Long.fromInt(2);
   var L103000 = Kotlin.Long.fromInt(103000);
   var L132000 = Kotlin.Long.fromInt(132000);
   var Pair = Kotlin.kotlin.Pair;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
-  function Data2(A) {
-    this.A = A;
-  }
-  Data2.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Data2',
-    interfaces: []
-  };
-  Data2.prototype.component1 = function () {
-    return this.A;
-  };
-  Data2.prototype.copy_61zpoe$ = function (A) {
-    return new Data2(A === void 0 ? this.A : A);
-  };
-  Data2.prototype.toString = function () {
-    return 'Data2(A=' + Kotlin.toString(this.A) + ')';
-  };
-  Data2.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.A) | 0;
-    return result;
-  };
-  Data2.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.A, other.A))));
-  };
-  function Data(a, b) {
-    this.a = a;
-    this.b = b;
-  }
-  Data.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Data',
-    interfaces: []
-  };
-  Data.prototype.component1 = function () {
-    return this.a;
-  };
-  Data.prototype.component2 = function () {
-    return this.b;
-  };
-  Data.prototype.copy_jxyw2u$ = function (a, b) {
-    return new Data(a === void 0 ? this.a : a, b === void 0 ? this.b : b);
-  };
-  Data.prototype.toString = function () {
-    return 'Data(a=' + Kotlin.toString(this.a) + (', b=' + Kotlin.toString(this.b)) + ')';
-  };
-  Data.prototype.hashCode = function () {
-    var result = 0;
-    result = result * 31 + Kotlin.hashCode(this.a) | 0;
-    result = result * 31 + Kotlin.hashCode(this.b) | 0;
-    return result;
-  };
-  Data.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.a, other.a) && Kotlin.equals(this.b, other.b)))));
-  };
-  function test_signup() {
-    var user = User_init('test1', '1234567');
-    user.name = 'Test1';
-    user.email = 'test@test.com';
-    var result = doSignUpServer(user);
-    println(result);
-  }
-  function test_login() {
-    var result = doLoginServer('test1', '1234567');
-    println(result);
-  }
-  function test_detelete() {
-    var result = doDeleteAccountServer('test1', 'w2cigv17h2q6w6ly');
-    println(result);
-  }
-  function main(args) {
-    test_detelete();
-  }
   function createForm(mapa) {
     var tmp$;
     var result = new String_0();
@@ -199,6 +127,7 @@ var KOTLINJS = function (_, Kotlin) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.user, other.user) && Kotlin.equals(this.token, other.token) && Kotlin.equals(this.error, other.error)))));
   };
   function doLoginServer(username, password) {
+    println('LoginServer');
     println('sending  request');
     var req = new XMLHttpRequest();
     req.open('POST', server + '/users/' + username + '/login', false);
@@ -253,6 +182,7 @@ var KOTLINJS = function (_, Kotlin) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.user, other.user) && Kotlin.equals(this.token, other.token) && Kotlin.equals(this.error, other.error)))));
   };
   function doSignUpServer(user) {
+    println('SignUpServer');
     var id = user.id;
     var nick = user.username;
     var pass = user.password;
@@ -303,16 +233,19 @@ var KOTLINJS = function (_, Kotlin) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.error, other.error))));
   };
   function doDeleteAccountServer(user, sessionToken) {
+    println('DeleteAccountServer');
     var req = new XMLHttpRequest();
     req.open('DELETE', server + '/users/' + user + '?token=' + sessionToken, false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.send();
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
       var json = JSON.parse(req.responseText);
       if (equals(json.error, 'ok')) {
         return true;
       }
        else {
+        println('Exception ' + json.error);
         throw Exception_init(json.error);
       }
     }
@@ -348,14 +281,18 @@ var KOTLINJS = function (_, Kotlin) {
   };
   function doLogoutServer(username, sessionToken) {
     var req = new XMLHttpRequest();
-    req.open('DELETE', server + '/users/' + username + '?token=' + sessionToken, false);
+    req.open('DELETE', server + '/users/' + username + '/login?token=' + sessionToken, false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
       var json = JSON.parse(req.responseText);
       if (!equals(json.error, 'ok')) {
         Exception_init(json.error);
       }
+      return true;
     }
+    return false;
   }
   function obtainUserDataServer$UserData(nick, mail_visible, country, mail, birth_date, verified, bio, register_date, id, user, facebook, twitter, intragram) {
     this.nick = nick;
@@ -485,8 +422,10 @@ var KOTLINJS = function (_, Kotlin) {
       var json = JSON.parse(req.responseText);
       var user = User_init_2(json.profile.nick, json.profile.user, ensureNotNull(json.profile.mail), getUserProfilePicturePath(json.profile.bio));
       user.biography = json.profile.bio;
-      var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
-      user.birthDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
+      if (!equals(json.profile.birth_date.toString(), '-1')) {
+        var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
+        user.birthDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
+      }
       user.country = json.profile.country;
       user.country = json.profile.country;
       user.facebookAccount = json.profile.facebook;
@@ -772,8 +711,10 @@ var KOTLINJS = function (_, Kotlin) {
       var json = JSON.parse(req.responseText);
       var user = User_init_2(json.profile.nick, json.profile.user, ensureNotNull(json.profile.mail), getUserProfilePicturePath(json.profile.bio));
       user.biography = json.profile.bio;
-      var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
-      user.birthDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
+      if (!equals(json.profile.birth_date.toString(), '-1')) {
+        var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
+        user.birthDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
+      }
       user.country = json.profile.country;
       user.facebookAccount = json.profile.facebook;
       user.twitterAccount = json.profile.twitter;
@@ -930,12 +871,71 @@ var KOTLINJS = function (_, Kotlin) {
     }
     return result;
   }
+  function getFollowedUsersServer$Data(error, size, users) {
+    this.error = error;
+    this.size = size;
+    this.users = users;
+  }
+  getFollowedUsersServer$Data.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data',
+    interfaces: []
+  };
+  getFollowedUsersServer$Data.prototype.component1 = function () {
+    return this.error;
+  };
+  getFollowedUsersServer$Data.prototype.component2 = function () {
+    return this.size;
+  };
+  getFollowedUsersServer$Data.prototype.component3 = function () {
+    return this.users;
+  };
+  getFollowedUsersServer$Data.prototype.copy_74krkc$ = function (error, size, users) {
+    return new getFollowedUsersServer$Data(error === void 0 ? this.error : error, size === void 0 ? this.size : size, users === void 0 ? this.users : users);
+  };
+  getFollowedUsersServer$Data.prototype.toString = function () {
+    return 'Data(error=' + Kotlin.toString(this.error) + (', size=' + Kotlin.toString(this.size)) + (', users=' + Kotlin.toString(this.users)) + ')';
+  };
+  getFollowedUsersServer$Data.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.error) | 0;
+    result = result * 31 + Kotlin.hashCode(this.size) | 0;
+    result = result * 31 + Kotlin.hashCode(this.users) | 0;
+    return result;
+  };
+  getFollowedUsersServer$Data.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.error, other.error) && Kotlin.equals(this.size, other.size) && Kotlin.equals(this.users, other.users)))));
+  };
   function getFollowedUsersServer(username) {
-    if (ServerEmulator_getInstance().artistasSeguidos.containsKey_11rb$(username)) {
-      return ensureNotNull(ServerEmulator_getInstance().artistasSeguidos.get_11rb$(username));
+    var tmp$;
+    println('FollowedUsersServer');
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/users/' + username + '/follows', false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send();
+    var result = ArrayList_init();
+    if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
+      var json = JSON.parse(req.responseText);
+      if (equals(json.error, 'ok')) {
+        tmp$ = toList(json.users).iterator();
+        while (tmp$.hasNext()) {
+          var users_id = tmp$.next();
+          var user = getUser(users_id);
+          if (user != null) {
+            result.add_11rb$(user);
+          }
+        }
+        return result;
+      }
+       else {
+        println('Exception ' + json.error);
+        throw Exception_init(json.error);
+      }
     }
      else {
-      return ArrayList_init();
+      println('Error');
+      throw Exception_init('Error ' + req.status);
     }
   }
   function isUserFollowedByUserServer(username, user) {
@@ -953,19 +953,219 @@ var KOTLINJS = function (_, Kotlin) {
       return false;
     }
   }
+  function getFollowersOfUserServer$Data(error, size, users) {
+    this.error = error;
+    this.size = size;
+    this.users = users;
+  }
+  getFollowersOfUserServer$Data.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data',
+    interfaces: []
+  };
+  getFollowersOfUserServer$Data.prototype.component1 = function () {
+    return this.error;
+  };
+  getFollowersOfUserServer$Data.prototype.component2 = function () {
+    return this.size;
+  };
+  getFollowersOfUserServer$Data.prototype.component3 = function () {
+    return this.users;
+  };
+  getFollowersOfUserServer$Data.prototype.copy_74krkc$ = function (error, size, users) {
+    return new getFollowersOfUserServer$Data(error === void 0 ? this.error : error, size === void 0 ? this.size : size, users === void 0 ? this.users : users);
+  };
+  getFollowersOfUserServer$Data.prototype.toString = function () {
+    return 'Data(error=' + Kotlin.toString(this.error) + (', size=' + Kotlin.toString(this.size)) + (', users=' + Kotlin.toString(this.users)) + ')';
+  };
+  getFollowersOfUserServer$Data.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.error) | 0;
+    result = result * 31 + Kotlin.hashCode(this.size) | 0;
+    result = result * 31 + Kotlin.hashCode(this.users) | 0;
+    return result;
+  };
+  getFollowersOfUserServer$Data.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.error, other.error) && Kotlin.equals(this.size, other.size) && Kotlin.equals(this.users, other.users)))));
+  };
   function getFollowersOfUserServer(username) {
-    return ArrayList_init();
+    var tmp$;
+    println('FollowedUsersServer');
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/users/' + username + '/followers', false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send();
+    var result = ArrayList_init();
+    if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
+      var json = JSON.parse(req.responseText);
+      if (equals(json.error, 'ok')) {
+        tmp$ = toList(json.users).iterator();
+        while (tmp$.hasNext()) {
+          var users_id = tmp$.next();
+          var user = getUser(users_id);
+          if (user != null) {
+            result.add_11rb$(user);
+          }
+        }
+        return result;
+      }
+       else {
+        println('Exception ' + json.error);
+        throw Exception_init(json.error);
+      }
+    }
+     else {
+      println('Error');
+      throw Exception_init('Error ' + req.status);
+    }
   }
+  function getNumberOfFollowersOfUserServer$Data(error, size, users) {
+    this.error = error;
+    this.size = size;
+    this.users = users;
+  }
+  getNumberOfFollowersOfUserServer$Data.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data',
+    interfaces: []
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.component1 = function () {
+    return this.error;
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.component2 = function () {
+    return this.size;
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.component3 = function () {
+    return this.users;
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.copy_pnxegv$ = function (error, size, users) {
+    return new getNumberOfFollowersOfUserServer$Data(error === void 0 ? this.error : error, size === void 0 ? this.size : size, users === void 0 ? this.users : users);
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.toString = function () {
+    return 'Data(error=' + Kotlin.toString(this.error) + (', size=' + Kotlin.toString(this.size)) + (', users=' + Kotlin.toString(this.users)) + ')';
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.error) | 0;
+    result = result * 31 + Kotlin.hashCode(this.size) | 0;
+    result = result * 31 + Kotlin.hashCode(this.users) | 0;
+    return result;
+  };
+  getNumberOfFollowersOfUserServer$Data.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.error, other.error) && Kotlin.equals(this.size, other.size) && Kotlin.equals(this.users, other.users)))));
+  };
   function getNumberOfFollowersOfUserServer(username) {
-    return L4;
+    println('FollowedUsersServer');
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/users/' + username + '/followers', false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send();
+    if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
+      var json = JSON.parse(req.responseText);
+      if (equals(json.error, 'ok')) {
+        return json.size;
+      }
+       else {
+        println('Exception ' + json.error);
+        throw Exception_init(json.error);
+      }
+    }
+     else {
+      println('Error');
+      throw Exception_init('Error ' + req.status);
+    }
   }
+  function addFollowerToUserServer$Data(error) {
+    this.error = error;
+  }
+  addFollowerToUserServer$Data.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data',
+    interfaces: []
+  };
+  addFollowerToUserServer$Data.prototype.component1 = function () {
+    return this.error;
+  };
+  addFollowerToUserServer$Data.prototype.copy_61zpoe$ = function (error) {
+    return new addFollowerToUserServer$Data(error === void 0 ? this.error : error);
+  };
+  addFollowerToUserServer$Data.prototype.toString = function () {
+    return 'Data(error=' + Kotlin.toString(this.error) + ')';
+  };
+  addFollowerToUserServer$Data.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.error) | 0;
+    return result;
+  };
+  addFollowerToUserServer$Data.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.error, other.error))));
+  };
   function addFollowerToUserServer(username, sessionToken, followed) {
-    var seguido = ServerEmulator_getInstance().userList.get_11rb$(followed);
-    ensureNotNull(ServerEmulator_getInstance().artistasSeguidos.get_11rb$(username)).add_11rb$(ensureNotNull(seguido));
+    var req = new XMLHttpRequest();
+    req.open('POST', server + '/users/' + username + '/follow/' + followed, false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send(null);
+    if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
+      var json = JSON.parse(req.responseText);
+      if (equals(json.error, 'ok')) {
+        return true;
+      }
+       else {
+        throw Exception_init(json.error);
+      }
+    }
+     else {
+      println('Error');
+      throw Exception_init('Error ' + req.status);
+    }
   }
+  function deleteFollowerToUserServer$Data(error) {
+    this.error = error;
+  }
+  deleteFollowerToUserServer$Data.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Data',
+    interfaces: []
+  };
+  deleteFollowerToUserServer$Data.prototype.component1 = function () {
+    return this.error;
+  };
+  deleteFollowerToUserServer$Data.prototype.copy_61zpoe$ = function (error) {
+    return new deleteFollowerToUserServer$Data(error === void 0 ? this.error : error);
+  };
+  deleteFollowerToUserServer$Data.prototype.toString = function () {
+    return 'Data(error=' + Kotlin.toString(this.error) + ')';
+  };
+  deleteFollowerToUserServer$Data.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.error) | 0;
+    return result;
+  };
+  deleteFollowerToUserServer$Data.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && Kotlin.equals(this.error, other.error))));
+  };
   function deleteFollowerToUserServer(username, sessionToken, followed) {
-    var seguido = ServerEmulator_getInstance().userList.get_11rb$(followed);
-    ensureNotNull(ServerEmulator_getInstance().artistasSeguidos.get_11rb$(username)).remove_11rb$(ensureNotNull(seguido));
+    var req = new XMLHttpRequest();
+    req.open('POST', server + '/users/' + username + '/unfollow/' + followed, false);
+    req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    req.send(null);
+    if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
+      var json = JSON.parse(req.responseText);
+      if (equals(json.error, 'ok')) {
+        return true;
+      }
+       else {
+        throw Exception_init(json.error);
+      }
+    }
+     else {
+      println('Error');
+      throw Exception_init('Error ' + req.status);
+    }
   }
   function getFollowedPlaylistsServer$Data(id, error) {
     this.id = id;
@@ -1807,7 +2007,133 @@ var KOTLINJS = function (_, Kotlin) {
   function isServerOnline2() {
     return true;
   }
+  function main(args) {
+  }
+  function test_user() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      var token2 = doLoginServer('testJS', '1234567');
+      println('Check if equals ' + equals(token, token2).toString());
+      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_logout() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      doLogoutServer('testJS', token);
+      try {
+        if (doDeleteAccountServer('testJS', token)) {
+          println('Test Error');
+        }
+      }
+       catch (e) {
+        if (Kotlin.isType(e, Exception)) {
+          println(e);
+          println('Test ' + equals(e.message, 'invalidToken').toString());
+        }
+         else
+          throw e;
+      }
+      var token2 = doLoginServer('testJS', '1234567');
+      if (doDeleteAccountServer('testJS', token2)) {
+        println('PASSED');
+        return true;
+      }
+       else {
+        return false;
+      }
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        var token_0 = doLoginServer('testJS', '1234567');
+        doDeleteAccountServer('testJS', token_0);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_following() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var following = getFollowedUsersServer('testJS');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      var user2 = User_init('testJS2', '1234567');
+      user2.name = 'Test2';
+      user2.email = 'test2@test.com';
+      var token = doSignUpServer(user2);
+      if (!addFollowerToUserServer('testJS', '', 'testJS2')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS');
+      var number = getNumberOfFollowersOfUserServer('testJS');
+      if (number.toInt() !== 1) {
+        return false;
+      }
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
+        return false;
+      }
+      following = getFollowersOfUserServer('testJS2');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS')) {
+        return false;
+      }
+      if (!deleteFollowerToUserServer('testJS', '', 'testJS2')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      token = doLoginServer('testJS', '1234567');
+      doDeleteAccountServer('testJS', token);
+      token = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+        var token_0 = doLoginServer('testJS', '1234567');
+        doDeleteAccountServer('testJS', token_0);
+        token_0 = doLoginServer('testJS2', '1234567');
+        doDeleteAccountServer('testJS2', token_0);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
   function main_0(args) {
+    try {
+      test_following();
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        print(e);
+      }
+       else
+        throw e;
+    }
   }
   function Album(id, name, creator, releaseDate, artLocationUri) {
     this.id = id;
@@ -2018,12 +2344,6 @@ var KOTLINJS = function (_, Kotlin) {
     }
     return ServerEmulator_instance;
   }
-  _.Data2 = Data2;
-  _.Data = Data;
-  _.test_signup = test_signup;
-  _.test_login = test_login;
-  _.test_detelete = test_detelete;
-  _.main_kand9s$ = main;
   var package$apis = _.apis || (_.apis = {});
   package$apis.createForm_alv746$ = createForm;
   Object.defineProperty(package$apis, 'server', {
@@ -2085,7 +2405,11 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.deleteAlbumsServer_xdras9$ = deleteAlbumsServer;
   package$apis.isServerOnline2 = isServerOnline2;
   var package$controller = _.controller || (_.controller = {});
-  package$controller.main_kand9s$ = main_0;
+  package$controller.main_kand9s$ = main;
+  _.test_user = test_user;
+  _.test_logout = test_logout;
+  _.test_following = test_following;
+  _.main_kand9s$ = main_0;
   var package$models = _.models || (_.models = {});
   package$models.Album = Album;
   package$models.Playlist = Playlist;
@@ -2107,7 +2431,7 @@ var KOTLINJS = function (_, Kotlin) {
   userUploadPrefix = 'user_';
   albumUploadPrefix = 'album_';
   playlistUploadPrefix = 'playlist_';
-  main([]);
+  main_0([]);
   Kotlin.defineModule('KOTLINJS', _);
   return _;
 }(typeof KOTLINJS === 'undefined' ? {} : KOTLINJS, kotlin);

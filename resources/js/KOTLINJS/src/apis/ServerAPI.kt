@@ -225,6 +225,7 @@ fun isServerOnline(): Boolean {
 //TESTED
 //@Throws(Exception::class)
 fun doLoginServer(username: String, password: String): String {
+    println("LoginServer")
     println("sending  request")
     var req = XMLHttpRequest()
     req.open("POST", "$server/users/$username/login", false)
@@ -252,7 +253,7 @@ fun doLoginServer(username: String, password: String): String {
 //TESTED
 //@Throws(Exception::class)
 fun doSignUpServer(user: User): String {
-
+    println("SignUpServer")
     var id = user.id
     var nick = user.username
     var pass = user.password
@@ -282,18 +283,22 @@ fun doSignUpServer(user: User): String {
 /**
  * Elimina cuenta servidor
  */
+//TESTED
 //@Throws(Exception::class)
 fun doDeleteAccountServer(user: String, sessionToken: String): Boolean {
+    println("DeleteAccountServer")
     var req = XMLHttpRequest()
     req.open("DELETE", "$server/users/$user?token=$sessionToken", false)
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     req.send()
     if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
         data class Data(val error: String)
         val json = JSON.parse<Data>(req.responseText)
         if (json.error == "ok"){
             return true
         }else{
+            println("Exception "+json.error)
             throw Exception(json.error)
         }
     }else{
@@ -306,23 +311,29 @@ fun doDeleteAccountServer(user: String, sessionToken: String): Boolean {
 /**
  * Realiza un logout en el servidor
  */
+//TESTED
 //@Throws(Exception::class)
-fun doLogoutServer(username: String, sessionToken: String) {
+fun doLogoutServer(username: String, sessionToken: String):Boolean {
     var req = XMLHttpRequest()
-    req.open("DELETE", "$server/users/$username?token=$sessionToken", false)
+    req.open("DELETE", "$server/users/$username/login?token=$sessionToken", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     req.send(null)
     if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
         data class Data(val error: String)
         val json = JSON.parse<Data>(req.responseText)
         if (json.error != "ok"){
-                    Exception(json.error)
-                }
+            Exception(json.error)
+         }
+        return true
     }
+    return false
 }
 
 /**
  * Obtiene la información asociada al usuario con nick @username
  */
+//TESTED
 //@Throws(Exception::class)
 fun obtainUserDataServer(username: String, sessionToken: String?): User? {
     var req = XMLHttpRequest()
@@ -341,8 +352,10 @@ fun obtainUserDataServer(username: String, sessionToken: String?): User? {
         val json = JSON.parse<Data>(req.responseText)
         var user = User(json.profile.nick,json.profile.user, json.profile.mail!!, getUserProfilePicturePath(json.profile.bio))
         user.biography = json.profile.bio
-        var date = json.profile.birth_date.split('-')
-        user.birthDate = Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
+        if (json.profile.birth_date.toString() != "-1") {
+            var date = json.profile.birth_date.split('-')
+            user.birthDate = Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
+        }
         user.country = json.profile.country
         user.country = json.profile.country
         user.facebookAccount = json.profile.facebook
@@ -396,6 +409,7 @@ fun obtainSongsFromUserServer(username: String): List<Song> {
     }
     return result
 }
+//TESTED
 fun getUser(userid: Long): User?{
     var req = XMLHttpRequest()
 
@@ -411,8 +425,10 @@ fun getUser(userid: Long): User?{
         val json = JSON.parse<Data>(req.responseText)
         var user = User(json.profile.nick,json.profile.user, json.profile.mail!!, getUserProfilePicturePath(json.profile.bio))
         user.biography = json.profile.bio
-        var date = json.profile.birth_date.split('-')
-        user.birthDate = Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
+        if (json.profile.birth_date.toString() != "-1") {
+            var date = json.profile.birth_date.split('-')
+            user.birthDate = Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
+        }
         user.country = json.profile.country
         user.facebookAccount = json.profile.facebook
         user.twitterAccount = json.profile.twitter
@@ -477,13 +493,34 @@ fun obtainPlaylistsFromUserServer(username: String): List<Playlist> {
 /**
  * Devuelve una lista con los usuarios a los que sigue el usuario @username
  */
+//TESTED
 //@Throws(Exception::class)
 fun getFollowedUsersServer(username: String): List<User> {
-    //TODO:
-    if (ServerEmulator.artistasSeguidos.containsKey(username)) {
-        return ServerEmulator.artistasSeguidos[username]!!
-    } else {
-        return ArrayList()
+    println("FollowedUsersServer")
+    var req = XMLHttpRequest()
+    req.open("GET", "$server/users/$username/follows", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send()
+    var result = mutableListOf<User>()
+    if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
+        data class Data(val error: String, val size: Int, val users: LongArray)
+        val json = JSON.parse<Data>(req.responseText)
+        if (json.error == "ok"){
+            for (users_id in json.users.toList()) {
+                var user = getUser(users_id)
+                if (user != null) {
+                    result.add(user)
+                }
+            }
+            return result
+        }else{
+            println("Exception "+json.error)
+            throw Exception(json.error)
+        }
+    }else{
+        println("Error")
+        throw Exception("Error ${req.status}")
     }
 }
 
@@ -506,39 +543,113 @@ fun isUserFollowedByUserServer(username: String, user: String): Boolean {
 /**
  * Devuelve una lista con los usuarios que siguen al usuario @username
  */
+//TESTED
 //@Throws(Exception::class)
 fun getFollowersOfUserServer(username: String): List<User> {
-    //TODO:
-    return ArrayList()
+    println("FollowedUsersServer")
+    var req = XMLHttpRequest()
+    req.open("GET", "$server/users/$username/followers", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send()
+    var result = mutableListOf<User>()
+    if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
+        data class Data(val error: String, val size: Int, val users: LongArray)
+        val json = JSON.parse<Data>(req.responseText)
+        if (json.error == "ok"){
+            for (users_id in json.users.toList()) {
+                var user = getUser(users_id)
+                if (user != null) {
+                    result.add(user)
+                }
+            }
+            return result
+        }else{
+            println("Exception "+json.error)
+            throw Exception(json.error)
+        }
+    }else{
+        println("Error")
+        throw Exception("Error ${req.status}")
+    }
 }
 
 /**
  * Devuelve el numero de seguidores del usuario @username
  */
+
+// NOT WORKING
 //@Throws(Exception::class)
 fun getNumberOfFollowersOfUserServer(username: String): Long {
-    //TODO:
-    return 4
+    println("FollowedUsersServer")
+    var req = XMLHttpRequest()
+    req.open("GET", "$server/users/$username/followers", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send()
+    if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
+        data class Data(val error: String, val size: Long, val users: LongArray)
+        val json = JSON.parse<Data>(req.responseText)
+        if (json.error == "ok"){
+            return json.size
+        }else{
+            println("Exception "+json.error)
+            throw Exception(json.error)
+        }
+    }else{
+        println("Error")
+        throw Exception("Error ${req.status}")
+    }
 }
 
 /**
  * Añade el usuario @username como seguidor del usuario @followed
  */
 //@Throws(Exception::class)
-fun addFollowerToUserServer(username: String, sessionToken: String, followed: String) {
-    //TODO:
-    val seguido = ServerEmulator.userList[followed]
-    ServerEmulator.artistasSeguidos[username]!!.add(seguido!!)
+fun addFollowerToUserServer(username: String, sessionToken: String, followed: String): Boolean {
+
+    var req = XMLHttpRequest()
+    req.open("POST", "$server/users/$username/follow/$followed", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send(null)
+    if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
+        data class Data(val error: String)
+        val json = JSON.parse<Data>(req.responseText)
+        if (json.error == "ok"){
+            return true
+
+        }else{
+            throw Exception(json.error)
+        }
+    } else {
+        println("Error")
+        throw Exception("Error ${req.status}")
+    }
 }
 
 /**
  * Elimina el usuario @username como seguidor del usuario @followed
  */
 //@Throws(Exception::class)
-fun deleteFollowerToUserServer(username: String, sessionToken: String, followed: String) {
-//TODO:
-    val seguido = ServerEmulator.userList[followed]
-    ServerEmulator.artistasSeguidos[username]!!.remove(seguido!!)
+fun deleteFollowerToUserServer(username: String, sessionToken: String, followed: String): Boolean {
+    var req = XMLHttpRequest()
+    req.open("POST", "$server/users/$username/unfollow/$followed", false)
+    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
+    req.send(null)
+    if (req.status.compareTo(200) == 0) {
+        println(req.responseText)
+        data class Data(val error: String)
+        val json = JSON.parse<Data>(req.responseText)
+        if (json.error == "ok"){
+            return true
+        }else{
+            throw Exception(json.error)
+        }
+    } else {
+        println("Error")
+        throw Exception("Error ${req.status}")
+    }
 }
 
 /**
