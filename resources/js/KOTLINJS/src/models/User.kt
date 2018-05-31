@@ -18,6 +18,7 @@ class User() : Recommendation {
     var twitterAccount: String? = null
     var facebookAccount: String? = null
     var instagramAccount: String? = null
+    var admin: Boolean? = null
     var id: Long? = null
 
     constructor(username: String, password: String): this(){

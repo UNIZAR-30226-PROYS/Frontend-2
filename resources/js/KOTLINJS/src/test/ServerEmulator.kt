@@ -27,11 +27,11 @@ object ServerEmulator {
         val autor3 = User("abelcht", "Abel ChT", "Lion", "http://storage.googleapis.com/automotive-media/album_art.jpg")
         val autor4 = User("Prueba", "PRU", "sdfdsfd", "http://storage.googleapis.com/automotive-media/album_art.jpg")
 
-        val album1 = Album(1,"Jazz", autor1, Date(2018, 3, 22), "http://storage.googleapis.com/automotive-media/album_art.jpg")
-        val album2 = Album(2,"Blues", autor2, Date(2017, 6, 27), "http://storage.googleapis.com/automotive-media/album_art_2.jpg")
+        val album1 = Album(1,"Jazz", autor1, Date(2018, 3, 22), "http://storage.googleapis.com/automotive-media/album_art.jpg", mutableListOf())
+        val album2 = Album(2,"Blues", autor2, Date(2017, 6, 27), "http://storage.googleapis.com/automotive-media/album_art_2.jpg", mutableListOf())
 
-        val cancion1 = Song(album = album1, id = 1, name = "Jazz in Paris",duration = 103000L, locationUri = "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3", lyricsPath = null, genere = null)
-        val cancion2 = Song(album = album2, id = 2, name = "The Messenger",  duration = 132000L, locationUri = "http://storage.googleapis.com/automotive-media/The_Messenger.mp3", lyricsPath = null, genere = null)
+        val cancion1 = Song(album = album1, id = 1, name = "Jazz in Paris",duration = 103000L, locationUri = "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3", lyricsPath = null, genere = null, country= "")
+        val cancion2 = Song(album = album2, id = 2, name = "The Messenger",  duration = 132000L, locationUri = "http://storage.googleapis.com/automotive-media/The_Messenger.mp3", lyricsPath = null, genere = null, country = "")
 
         val list1 = ArrayList<Song>()
         list1.add(cancion1)
@@ -40,8 +40,8 @@ object ServerEmulator {
         val list2 = ArrayList<Song>()
         list2.add(cancion1)
 
-        val playlist1 = Playlist(1, "dfsdfdsfd", autor1, "http://storage.googleapis.com/automotive-media/album_art_2.jpg", list1)
-        val playlist2 = Playlist(2, "dfsdfdsfd", autor1, "http://storage.googleapis.com/automotive-media/album_art_2.jpg", list2)
+        val playlist1 = Playlist(1, "dfsdfdsfd", autor1, "http://storage.googleapis.com/automotive-media/album_art_2.jpg", list1, mutableListOf())
+        val playlist2 = Playlist(2, "dfsdfdsfd", autor1, "http://storage.googleapis.com/automotive-media/album_art_2.jpg", list2, mutableListOf())
 
         userList[autor1.username!!] = autor1
         userList[autor2.username!!] = autor2
