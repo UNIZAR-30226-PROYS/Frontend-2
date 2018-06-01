@@ -283,13 +283,10 @@ layout: general
         if(user === registered_user){   /* perfil del usuario */
             document.getElementById("seguir").style.display = "none";
         }else{      /* otro artista */
-<<<<<<< HEAD
             document.getElementById("editar").style.display = "none";
             if( KOTLINJS.apis.isUserFollowedByUserServer_puj7f4$(registered_user, user) ){
                 document.getElementById("seguir").innerHTML = "Dejar de seguir";
             }
-=======
->>>>>>> backend
 
         }
 
@@ -299,7 +296,6 @@ layout: general
         document.getElementById("profile-name").innerHTML = usuario.username;
         var imagen = document.getElementById('profile-main-image');
         imagen.src = usuario.pictureLocationUri;
-<<<<<<< HEAD
         console.log("imagen:" + usuario.pictureLocationUri);
 
 
@@ -308,17 +304,6 @@ layout: general
             "            <a id=\"ig-l\" href=\"" + usuario.instagramAccount +"\"><h1 id=\"instagram\"><strong><i class=\"fa fa-link\"></i>  <i class=\"fa fa-instagram\" style=\"font-size: 25px\"></i> </strong></h1></a>\n" +
             "            <a id=\"fb-l\" href=\"" + usuario.facebookAccount + "\"><h1 id=\"facebook\"><strong><i class=\"fa fa-link\"></i>  <i class=\"fa fa-facebook\" style=\"font-size: 25px\"></i></strong></h1></a>";
 
-=======
-        if( usuario.instagramAccount !== null ){
-            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-twitter\" style=\"font-size: 20px\"></i>  " + usuario.instagramAccount;
-        }
-        if( usuario.facebookAccount!== null ){
-            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-facebook\" style=\"font-size: 20px\"></i>  " + usuario.facebookAccount;
-        }
-        if( usuario.twitterAccount !== null ){
-            document.getElementById("instagram").innerHTML = "<i class=\"fa fa-instagram\" style=\"font-size: 20px\"></i>  " + usuario.twitterAccount;
-        }
->>>>>>> backend
         /* seguidores */
         var followers = KOTLINJS.apis.getFollowersOfUserServer_61zpoe$(user);
         var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
@@ -327,7 +312,6 @@ layout: general
         console.log("DEBUG");
 
         /* canciones */
-<<<<<<< HEAD
         /*var canciones = KOTLINJS.apis.obtainPlaylistList();*/
         var canciones = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$(user);
         console.log(canciones);
@@ -349,9 +333,6 @@ layout: general
                 "                    </div>";
         }
         document.getElementById("container-popular-songs").innerHTML = inner;
-=======
-        /*var canciones = KOTLINJS.apis.get*/
->>>>>>> backend
 
         /* albumes */
         var albums = KOTLINJS.apis.obtainAlbumsFromUserServer_61zpoe$(user);
@@ -504,7 +485,6 @@ layout: general
                 </div>
             </div>
 
-<<<<<<< HEAD
                     <div class="top-elem">
                         <div class="row">
                             <div class="col-sm-1">
@@ -514,21 +494,6 @@ layout: general
                             <div class="col-sm-4">
                                 <h5 class="profile-top-name"> <a href="">No hay canciones</a> </h5>
                             </div>
-=======
-            <div class="top-elem">
-                <div class="row">
-                    <div class="col-sm-1">
-                        <img class="profile-top-album" src="resources/imgs/wu.jpg">
-                    </div>
-                    <div class="col-sm-4">
-                        <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
-                    </div>
-                    <div class="col-sm-4">
-                        <h5 class="profile-top-repro"> <a href="">100.000</a> </h5>
-                    </div>
-                </div>
-            </div>
->>>>>>> backend
 
             <div class="top-elem">
                 <div class="row">
