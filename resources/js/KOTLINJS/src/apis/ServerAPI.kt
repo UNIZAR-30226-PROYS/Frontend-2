@@ -428,7 +428,7 @@ fun obtainSongsFromUserServer(username: String): List<Song> {
 //@Throws(Exception::class)
 fun obtainPlaylistDataServer(id: Long): Playlist? {
     val req = XMLHttpRequest()
-    req.open("GET", "$server/users-lists/$id", false)
+    req.open("GET", "$server/user-lists/$id", false)
     req.send(null)
     if (req.status.compareTo(200) == 0) {
         //val id: Long, val name: String, val creator: User, val artLocationUri: String, val content: List<Song>
