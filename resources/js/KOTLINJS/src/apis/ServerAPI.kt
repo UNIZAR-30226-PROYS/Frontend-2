@@ -333,7 +333,7 @@ fun obtainUserDataServerFromID(userID: Long, sessionToken: String? = null): User
             val date = json.profile.birth_date.split('-')
             userDate= Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
         }
-        val user = User(json.profile.nick,json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified,json.profile.mail!!,json.profile.bio,userDate)
+        val user = User(json.profile.nick,json.profile.user, getUserProfilePicturePath(json.profile.nick), json.profile.verified,json.profile.mail!!,json.profile.bio,userDate)
         user.country = json.profile.country
         user.facebookAccount = json.profile.facebook
         user.twitterAccount = json.profile.twitter
@@ -374,7 +374,7 @@ fun obtainUserDataServer(username: String, sessionToken: String?): User? {
             val date = json.profile.birth_date.split('-')
             userDate= Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
         }
-        val user = User(json.profile.nick,json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified,json.profile.mail!!,json.profile.bio,userDate)
+        val user = User(json.profile.nick,json.profile.user, getUserProfilePicturePath(json.profile.nick), json.profile.verified,json.profile.mail!!,json.profile.bio,userDate)
         user.country = json.profile.country
         user.country = json.profile.country
         user.facebookAccount = json.profile.facebook

@@ -239,8 +239,9 @@ fun test_songs():Boolean{
 
 
 fun main(args: Array<String>) {
+    println(obtainUserDataServer("abelfff")!!.pictureLocationUri)
     //isUserAdmin("abel","bmckb8sp5afrrjdz")
-    uploadFile("mykey","")
+    //uploadFile("mykey","")
     /*
     val Test = InstrumentedTestBackEndSpreadYoutMusic()
     //Test.UserRequestTest() //PASSED

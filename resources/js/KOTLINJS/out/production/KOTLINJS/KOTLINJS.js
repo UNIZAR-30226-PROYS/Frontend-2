@@ -3,18 +3,19 @@ if (typeof kotlin === 'undefined') {
 }
 var KOTLINJS = function (_, Kotlin) {
   'use strict';
-  var String_0 = String;
+  var equals = Kotlin.equals;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
+  var Exception = Kotlin.kotlin.Exception;
+  var L0 = Kotlin.Long.ZERO;
   var ensureNotNull = Kotlin.ensureNotNull;
+  var L_1 = Kotlin.Long.NEG_ONE;
+  var String_0 = String;
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  var equals = Kotlin.equals;
   var toList = Kotlin.kotlin.collections.toList_se6h4x$;
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
-  var L0 = Kotlin.Long.ZERO;
   var split = Kotlin.kotlin.text.split_o64adg$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
-  var Exception = Kotlin.kotlin.Exception;
   var to = Kotlin.kotlin.to_ujzrz7$;
   var mapOf = Kotlin.kotlin.collections.mapOf_x2b85n$;
   var mapOf_0 = Kotlin.kotlin.collections.mapOf_qfcya0$;
@@ -22,7 +23,6 @@ var KOTLINJS = function (_, Kotlin) {
   var toLong = Kotlin.kotlin.text.toLong_pdl1vz$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
   var get_lastIndex = Kotlin.kotlin.collections.get_lastIndex_55thoc$;
-  var L_1 = Kotlin.Long.NEG_ONE;
   var iterator = Kotlin.kotlin.js.iterator_s8jyvk$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
@@ -30,6 +30,251 @@ var KOTLINJS = function (_, Kotlin) {
   var L1 = Kotlin.Long.ONE;
   var L30 = Kotlin.Long.fromInt(30);
   var L20 = Kotlin.Long.fromInt(20);
+  function test_user() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      var token2 = doLoginServer('testJS', '1234567');
+      println('Check if equals ' + equals(token, token2).toString());
+      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_logout() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      doLogoutServer('testJS', token);
+      try {
+        if (doDeleteAccountServer('testJS', token)) {
+          println('Test Error');
+        }
+      }
+       catch (e) {
+        if (Kotlin.isType(e, Exception)) {
+          println(e);
+          println('Test ' + equals(e.message, 'invalidToken').toString());
+        }
+         else
+          throw e;
+      }
+      var token2 = doLoginServer('testJS', '1234567');
+      if (doDeleteAccountServer('testJS', token2)) {
+        println('PASSED');
+        return true;
+      }
+       else {
+        return false;
+      }
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        var token_0 = doLoginServer('testJS', '1234567');
+        doDeleteAccountServer('testJS', token_0);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_following() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var following = getFollowedUsersServer('testJS1');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      var user2 = User_init('testJS2', '1234567');
+      user2.name = 'Test2';
+      user2.email = 'test2@test.com';
+      var token = doSignUpServer(user2);
+      if (!addFollowerToUserServer('testJS1', token1, 'testJS2')) {
+        return false;
+      }
+      if (!isUserFollowedByUserServer('testJS1', 'testJS2')) {
+        return false;
+      }
+      if (isUserFollowedByUserServer('testJS2', 'testJS1')) {
+        return false;
+      }
+      var number = getNumberOfFollowersOfUserServer('testJS2');
+      if (number.toInt() !== 1) {
+        return false;
+      }
+      following = getFollowersOfUserServer('testJS2');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS1')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS1');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
+        return false;
+      }
+      if (!deleteFollowerToUserServer('testJS1', '', 'testJS2')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS1');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+      token = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token_0 = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token_0);
+      token_0 = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token_0);
+    }
+    return false;
+  }
+  function test_album() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var albums = obtainAlbumsFromUserServer('testJS1');
+      if (!albums.isEmpty()) {
+        return false;
+      }
+      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
+      createAlbumsServer('testJS1', token1, album);
+      albums = obtainAlbumsFromUserServer('testJS1');
+      if (albums.size === 0 || !equals(albums.get_za3lpa$(0).name, 'testJSAlbum')) {
+        return false;
+      }
+      if (!deleteAlbumsServer('testJS1', token1, album)) {
+        return false;
+      }
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function testfav() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var albums = obtainAlbumsFromUserServer('testJS1');
+      if (!albums.isEmpty()) {
+        return false;
+      }
+      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
+      uploadSongServer('testJS1', token1, song);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
+  function test_songlist() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var songlist = getFollowedPlaylistsServer('testJS1');
+      if (!songlist.isEmpty()) {
+        return false;
+      }
+      var playlist = new Playlist(L_1, 'myPlaylist', user, '', emptyList(), emptyList());
+      createPlaylistServer('testJS1', token1, playlist);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function test_songs() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var songs = obtainSongsFromUserServer('testJS1');
+      if (!songs.isEmpty()) {
+        return false;
+      }
+      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
+      uploadSongServer('testJS1', token1, song);
+      songs = obtainSongsFromUserServer('testJS1');
+      if (songs.size !== 1 || !equals(songs.get_za3lpa$(0).name, 'TestJSSong')) {
+        return false;
+      }
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function main(args) {
+    println(ensureNotNull(obtainUserDataServer('abelfff')).pictureLocationUri);
+  }
   function createForm(mapa) {
     var tmp$, tmp$_0;
     var result = new String_0();
@@ -52,6 +297,7 @@ var KOTLINJS = function (_, Kotlin) {
     return result;
   }
   var server;
+  var localhost;
   var dataServerAdress;
   var songLocationUploadPrefix;
   var songLyricsUploadPrefix;
@@ -59,80 +305,103 @@ var KOTLINJS = function (_, Kotlin) {
   var albumUploadPrefix;
   var playlistUploadPrefix;
   function getSongLyricsPath(songId) {
-    return dataServerAdress + '/' + songLyricsUploadPrefix + songId;
+    return dataServerAdress + '/Public/' + songLyricsUploadPrefix + songId;
   }
   function getSongLocationPath(songId) {
-    return dataServerAdress + '/' + songLocationUploadPrefix + songId;
+    return dataServerAdress + '/Public/' + songLocationUploadPrefix + songId;
   }
   function getUserProfilePicturePath(username) {
-    return dataServerAdress + '/' + userUploadPrefix + username;
+    return dataServerAdress + '/Public/' + userUploadPrefix + username;
   }
   function getPlaylistCoverPath(playlistId) {
-    return dataServerAdress + '/' + playlistUploadPrefix + playlistId;
+    return dataServerAdress + '/Public/' + playlistUploadPrefix + playlistId;
   }
   function getAlbumCoverPath(albumId) {
-    return dataServerAdress + '/' + albumUploadPrefix + albumId;
+    return dataServerAdress + '/Public/' + albumUploadPrefix + albumId;
   }
-  var s3;
   function deleteSongLyrics(songId) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return DeleteFile(ensureNotNull(s3), songLyricsUploadPrefix + songId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/DeleteFile/:' + songLyricsUploadPrefix + songId, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function deleteSongLocation(songId) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return DeleteFile(ensureNotNull(s3), songLyricsUploadPrefix + songId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/DeleteFile/:' + songLyricsUploadPrefix + songId, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function deleteUserProfilePicture(username) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return DeleteFile(ensureNotNull(s3), userUploadPrefix + username);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/DeleteFile/:' + userUploadPrefix + username, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function deletePlaylistCover(playlistId) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return DeleteFile(ensureNotNull(s3), playlistUploadPrefix + playlistId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/DeleteFile/:' + playlistUploadPrefix + playlistId, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function deleteAlbumCover(albumId) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return DeleteFile(ensureNotNull(s3), albumUploadPrefix + albumId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/DeleteFile/:' + albumUploadPrefix + albumId, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function uploadSongLyrics(songId, filePath) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return UploadFile(ensureNotNull(s3), filePath, songLyricsUploadPrefix + songId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/uploadFile/' + songLyricsUploadPrefix + songId + '/' + filePath, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function uploadSongLocation(songId, filePath) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return UploadFile(ensureNotNull(s3), filePath, songLocationUploadPrefix + songId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/uploadFile/' + songLocationUploadPrefix + songId + '/' + filePath, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function uploadUserProfilePicture(username, filePath) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return UploadFile(ensureNotNull(s3), filePath, userUploadPrefix + username);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/uploadFile/' + userUploadPrefix + username + '/' + filePath, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function uploadPlaylistCover(playlistId, filePath) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return UploadFile(ensureNotNull(s3), filePath, playlistUploadPrefix + playlistId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/uploadFile/' + playlistUploadPrefix + playlistId + '/' + filePath, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function uploadAlbumCover(albumId, filePath) {
-    if (s3 == null) {
-      s3 = s3Connection();
-    }
-    return UploadFile(ensureNotNull(s3), filePath, albumUploadPrefix + albumId);
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/uploadFile/' + albumUploadPrefix + albumId + '/' + filePath, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
+  }
+  function uploadFile(key, filePath) {
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/uploadFile/' + key + '/' + filePath, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
+  }
+  function deleteFile(key) {
+    var req = new XMLHttpRequest();
+    req.open('GET', server + '/AWS/DeleteFile/' + key, false);
+    req.setRequestHeader('Content-Type', 'applicatiosn/x-www-form-urlencoded');
+    req.send();
+    return Kotlin.primitiveCompareTo(req.status, 200) === 0;
   }
   function obtainAlbumFromID$AlbumData(publish_year, image, update_time, user_id, id, title, songs) {
     this.publish_year = publish_year;
@@ -492,7 +761,7 @@ var KOTLINJS = function (_, Kotlin) {
         var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
         userDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
       }
-      var user = User_init_1(json.profile.nick, json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified, ensureNotNull(json.profile.mail), json.profile.bio, userDate);
+      var user = User_init_1(json.profile.nick, json.profile.user, getUserProfilePicturePath(json.profile.nick), json.profile.verified, ensureNotNull(json.profile.mail), json.profile.bio, userDate);
       user.country = json.profile.country;
       user.facebookAccount = json.profile.facebook;
       user.twitterAccount = json.profile.twitter;
@@ -644,7 +913,7 @@ var KOTLINJS = function (_, Kotlin) {
         var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
         userDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
       }
-      var user = User_init_1(json.profile.nick, json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified, ensureNotNull(json.profile.mail), json.profile.bio, userDate);
+      var user = User_init_1(json.profile.nick, json.profile.user, getUserProfilePicturePath(json.profile.nick), json.profile.verified, ensureNotNull(json.profile.mail), json.profile.bio, userDate);
       user.country = json.profile.country;
       user.country = json.profile.country;
       user.facebookAccount = json.profile.facebook;
@@ -693,7 +962,6 @@ var KOTLINJS = function (_, Kotlin) {
   obtainSongsFromUserServer$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.size, other.size) && Kotlin.equals(this.songs, other.songs) && Kotlin.equals(this.error, other.error)))));
   };
-  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   function obtainSongsFromUserServer(username) {
     var tmp$;
     println('obtainSongsFromUserServer');
@@ -788,7 +1056,7 @@ var KOTLINJS = function (_, Kotlin) {
   function obtainPlaylistDataServer(id) {
     var tmp$, tmp$_0;
     var req = new XMLHttpRequest();
-    req.open('GET', server + '/users-lists/' + id, false);
+    req.open('GET', server + '/user-lists/' + id, false);
     req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
@@ -3481,252 +3749,7 @@ var KOTLINJS = function (_, Kotlin) {
       throw Exception_init('Error ' + req.status);
     }
   }
-  function main(args) {
-  }
-  function test_user() {
-    try {
-      var user = User_init('testJS', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token = doSignUpServer(user);
-      var token2 = doLoginServer('testJS', '1234567');
-      println('Check if equals ' + equals(token, token2).toString());
-      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-        return false;
-      }
-       else
-        throw e;
-    }
-  }
-  function test_logout() {
-    try {
-      var user = User_init('testJS', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token = doSignUpServer(user);
-      doLogoutServer('testJS', token);
-      try {
-        if (doDeleteAccountServer('testJS', token)) {
-          println('Test Error');
-        }
-      }
-       catch (e) {
-        if (Kotlin.isType(e, Exception)) {
-          println(e);
-          println('Test ' + equals(e.message, 'invalidToken').toString());
-        }
-         else
-          throw e;
-      }
-      var token2 = doLoginServer('testJS', '1234567');
-      if (doDeleteAccountServer('testJS', token2)) {
-        println('PASSED');
-        return true;
-      }
-       else {
-        return false;
-      }
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        var token_0 = doLoginServer('testJS', '1234567');
-        doDeleteAccountServer('testJS', token_0);
-        return false;
-      }
-       else
-        throw e;
-    }
-  }
-  function test_following() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var following = getFollowedUsersServer('testJS1');
-      if (!following.isEmpty()) {
-        return false;
-      }
-      var user2 = User_init('testJS2', '1234567');
-      user2.name = 'Test2';
-      user2.email = 'test2@test.com';
-      var token = doSignUpServer(user2);
-      if (!addFollowerToUserServer('testJS1', token1, 'testJS2')) {
-        return false;
-      }
-      if (!isUserFollowedByUserServer('testJS1', 'testJS2')) {
-        return false;
-      }
-      if (isUserFollowedByUserServer('testJS2', 'testJS1')) {
-        return false;
-      }
-      var number = getNumberOfFollowersOfUserServer('testJS2');
-      if (number.toInt() !== 1) {
-        return false;
-      }
-      following = getFollowersOfUserServer('testJS2');
-      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS1')) {
-        return false;
-      }
-      following = getFollowedUsersServer('testJS1');
-      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
-        return false;
-      }
-      if (!deleteFollowerToUserServer('testJS1', '', 'testJS2')) {
-        return false;
-      }
-      following = getFollowedUsersServer('testJS1');
-      if (!following.isEmpty()) {
-        return false;
-      }
-      token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-      token = doLoginServer('testJS2', '1234567');
-      doDeleteAccountServer('testJS2', token);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token_0 = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token_0);
-      token_0 = doLoginServer('testJS2', '1234567');
-      doDeleteAccountServer('testJS2', token_0);
-    }
-    return false;
-  }
-  function test_album() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var albums = obtainAlbumsFromUserServer('testJS1');
-      if (!albums.isEmpty()) {
-        return false;
-      }
-      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
-      createAlbumsServer('testJS1', token1, album);
-      albums = obtainAlbumsFromUserServer('testJS1');
-      if (albums.size === 0 || !equals(albums.get_za3lpa$(0).name, 'testJSAlbum')) {
-        return false;
-      }
-      if (!deleteAlbumsServer('testJS1', token1, album)) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function testfav() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var albums = obtainAlbumsFromUserServer('testJS1');
-      if (!albums.isEmpty()) {
-        return false;
-      }
-      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
-      uploadSongServer('testJS1', token1, song);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function test_songlist() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var songlist = getFollowedPlaylistsServer('testJS1');
-      if (!songlist.isEmpty()) {
-        return false;
-      }
-      var playlist = new Playlist(L_1, 'myPlaylist', user, '', emptyList(), emptyList());
-      createPlaylistServer('testJS1', token1, playlist);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function test_songs() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var songs = obtainSongsFromUserServer('testJS1');
-      if (!songs.isEmpty()) {
-        return false;
-      }
-      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
-      uploadSongServer('testJS1', token1, song);
-      songs = obtainSongsFromUserServer('testJS1');
-      if (songs.size !== 1 || !equals(songs.get_za3lpa$(0).name, 'TestJSSong')) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
   function main_0(args) {
-    var s3 = s3Connection();
-    ListBuckets(s3);
   }
   function Album(id, name, creator, releaseDate, artLocationUri, content) {
     if (id === void 0)
@@ -4190,6 +4213,14 @@ var KOTLINJS = function (_, Kotlin) {
     simpleName: 'InstrumentedTestBackEndSpreadYoutMusic',
     interfaces: []
   };
+  _.test_user = test_user;
+  _.test_logout = test_logout;
+  _.test_following = test_following;
+  _.test_album = test_album;
+  _.testfav = testfav;
+  _.test_songlist = test_songlist;
+  _.test_songs = test_songs;
+  _.main_kand9s$ = main;
   var package$apis = _.apis || (_.apis = {});
   package$apis.createForm_alv746$ = createForm;
   Object.defineProperty(package$apis, 'server', {
@@ -4200,14 +4231,16 @@ var KOTLINJS = function (_, Kotlin) {
       server = value;
     }
   });
-  Object.defineProperty(package$apis, 's3', {
+  Object.defineProperty(package$apis, 'localhost', {
     get: function () {
-      return s3;
+      return localhost;
     },
     set: function (value) {
-      s3 = value;
+      localhost = value;
     }
   });
+  package$apis.uploadFile_puj7f4$ = uploadFile;
+  package$apis.deleteFile_61zpoe$ = deleteFile;
   package$apis.obtainAlbumFromID_s8cxhz$ = obtainAlbumFromID;
   package$apis.obtainSongFromID_2gd3um$ = obtainSongFromID;
   package$apis.obtainUserDataServerFromID_s8cxhz$ = obtainUserDataServerFromID;
@@ -4268,15 +4301,7 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.deleteSongServer_jecffn$ = deleteSongServer;
   package$apis.doUpdateAccountServer_oqo341$ = doUpdateAccountServer;
   var package$controller = _.controller || (_.controller = {});
-  package$controller.main_kand9s$ = main;
-  _.test_user = test_user;
-  _.test_logout = test_logout;
-  _.test_following = test_following;
-  _.test_album = test_album;
-  _.testfav = testfav;
-  _.test_songlist = test_songlist;
-  _.test_songs = test_songs;
-  _.main_kand9s$ = main_0;
+  package$controller.main_kand9s$ = main_0;
   var package$models = _.models || (_.models = {});
   package$models.Album = Album;
   package$models.Playlist = Playlist;
@@ -4294,14 +4319,14 @@ var KOTLINJS = function (_, Kotlin) {
   });
   package$test.InstrumentedTestBackEndSpreadYoutMusic = InstrumentedTestBackEndSpreadYoutMusic;
   server = 'http://155.210.13.105:7800';
+  localhost = 'http://localhost:3000';
   dataServerAdress = 'http://155.210.13.105:7480';
   songLocationUploadPrefix = 'song_';
   songLyricsUploadPrefix = 'lyric_';
   userUploadPrefix = 'user_';
   albumUploadPrefix = 'album_';
   playlistUploadPrefix = 'playlist_';
-  s3 = null;
-  main_0([]);
+  main([]);
   Kotlin.defineModule('KOTLINJS', _);
   return _;
 }(typeof KOTLINJS === 'undefined' ? {} : KOTLINJS, kotlin);
