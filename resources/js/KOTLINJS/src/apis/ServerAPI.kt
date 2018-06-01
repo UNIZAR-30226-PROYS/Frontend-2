@@ -93,55 +93,67 @@ private fun getAlbumCoverPath(albumId: Long): String {
     return "$dataServerAdress/$albumUploadPrefix$albumId"
 }
 
-/*
+@JsModule("S3")
+external  fun ListBuckets(s3: Any)
+external fun s3Connection(): Any
+external fun UploadFile(s3: Any, file: String, key: String):Boolean
+external fun DeleteFile(s3:Any, key: String):Boolean
+
+var s3: Any? = null
+
 /**
  * Elimina las letras de una canción
  * Devuelve true si la operación ha tenido exito
  */
-private fun deleteSongLyrics(songId: Long, context: Context): Boolean {
-    AmazonS3UploadFileService.deleteFile("$songLyricsUploadPrefix$songId", context, {
-    })
-    return true
+private fun deleteSongLyrics(songId: Long): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return DeleteFile(s3!!,"$songLyricsUploadPrefix$songId")
 }
 
 /**
  * Elimina el archivo de música de una canción
  * Devuelve true si la operación ha tenido exito
  */
-private fun deleteSongLocation(songId: Long, context: Context): Boolean {
-    AmazonS3UploadFileService.deleteFile("$songLocationUploadPrefix$songId", context, {
-    })
-    return true
+private fun deleteSongLocation(songId: Long): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return DeleteFile(s3!!,"$songLyricsUploadPrefix$songId")
 }
 
 /**
  * Elimina la foto de perfil de un usuario
  * Devuelve true si la operación ha tenido exito
  */
-private fun deleteUserProfilePicture(username: String, context: Context): Boolean {
-    AmazonS3UploadFileService.deleteFile("$userUploadPrefix$username", context, {
-    })
-    return true
+private fun deleteUserProfilePicture(username: String): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return DeleteFile(s3!!,"$userUploadPrefix$username")
 }
 
 /**
  * Elimina la foto de portada de una playlist
  * Devuelve true si la operación ha tenido exito
  */
-private fun deletePlaylistCover(playlistId: Long, context: Context): Boolean {
-    AmazonS3UploadFileService.deleteFile("$playlistUploadPrefix$playlistId", context, {
-    })
-    return true
+private fun deletePlaylistCover(playlistId: Long): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return DeleteFile(s3!!,"$playlistUploadPrefix$playlistId")
 }
 
 /**
  * Elimina la foto de portada de un álbum
  * Devuelve true si la operación ha tenido exito
  */
-private fun deleteAlbumCover(albumId: Long, context: Context): Boolean {
-    AmazonS3UploadFileService.deleteFile("$albumUploadPrefix$albumId", context, {
-    })
-    return true
+private fun deleteAlbumCover(albumId: Long): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return DeleteFile(s3!!,"$albumUploadPrefix$albumId")
 }
 
 
@@ -149,58 +161,57 @@ private fun deleteAlbumCover(albumId: Long, context: Context): Boolean {
  * Sube las letras de una canción
  * Devuelve true si la operación ha tenido exito
  */
-private fun uploadSongLyrics(songId: Long, filePath: String, context: Context): Boolean {
-    AmazonS3UploadFileService.uploadFile(filePath, "$songLyricsUploadPrefix$songId", context, {
-        // CUIDADO: Si falla al subir no se está tratando el error
-    })
-
-    return true
+private fun uploadSongLyrics(songId: Long, filePath: String): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return UploadFile(s3!!,filePath, "$songLyricsUploadPrefix$songId")
 }
 
 /**
  * Sube el archivo de música de una canción
  * Devuelve true si la operación ha tenido exito
  */
-private fun uploadSongLocation(songId: Long, filePath: String, context: Context): Boolean {
-    AmazonS3UploadFileService.uploadFile(filePath, "$songLocationUploadPrefix$songId", context, {
-        // CUIDADO: Si falla al subir no se está tratando el error
-    })
-    return true
+private fun uploadSongLocation(songId: Long, filePath: String): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return UploadFile(s3!!,filePath, "$songLocationUploadPrefix$songId")
 }
 
 /**
  * Sube la foto de perfil de un usuario
  * Devuelve true si la operación ha tenido exito
  */
-private fun uploadUserProfilePicture(username: String, filePath: String, context: Context): Boolean {
-    AmazonS3UploadFileService.uploadFile(filePath, "$userUploadPrefix$username", context, {
-        // CUIDADO: Si falla al subir no se está tratando el error
-    })
-    return true
+private fun uploadUserProfilePicture(username: String, filePath: String): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return UploadFile(s3!!,filePath, "$userUploadPrefix$username")
 }
 
 /**
  * Sube la foto de portada de una playlist
  * Devuelve true si la operación ha tenido exito
  */
-private fun uploadPlaylistCover(playlistId: Long, filePath: String, context: Context): Boolean {
-    AmazonS3UploadFileService.uploadFile(filePath, "$playlistUploadPrefix$playlistId", context, {
-        // CUIDADO: Si falla al subir no se está tratando el error
-    })
-    return true
+private fun uploadPlaylistCover(playlistId: Long, filePath: String): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return UploadFile(s3!!,filePath, "$playlistUploadPrefix$playlistId")
 }
 
 /**
  * Sube la foto de portada de un álbum
  * Devuelve true si la operación ha tenido exito
  */
-private fun uploadAlbumCover(albumId: Long, filePath: String, context: Context): Boolean {
-    AmazonS3UploadFileService.uploadFile(filePath, "$albumUploadPrefix$albumId", context, {
-        // CUIDADO: Si falla al subir no se está tratando el error
-    })
-    return true
+private fun uploadAlbumCover(albumId: Long, filePath: String): Boolean {
+    if (s3 == null){
+        s3 = s3Connection()
+    }
+    return UploadFile(s3!!,filePath, "$albumUploadPrefix$albumId")
 }
-*/
+
 /*
                             PETICIONES AUXILIARES
  */

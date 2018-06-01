@@ -6,10 +6,10 @@ var KOTLINJS = function (_, Kotlin) {
   var String_0 = String;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
+  var ensureNotNull = Kotlin.ensureNotNull;
   var Kind_CLASS = Kotlin.Kind.CLASS;
   var equals = Kotlin.equals;
   var toList = Kotlin.kotlin.collections.toList_se6h4x$;
-  var ensureNotNull = Kotlin.ensureNotNull;
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
   var L0 = Kotlin.Long.ZERO;
   var split = Kotlin.kotlin.text.split_o64adg$;
@@ -73,6 +73,67 @@ var KOTLINJS = function (_, Kotlin) {
   }
   function getAlbumCoverPath(albumId) {
     return dataServerAdress + '/' + albumUploadPrefix + albumId;
+  }
+  var s3;
+  function deleteSongLyrics(songId) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return DeleteFile(ensureNotNull(s3), songLyricsUploadPrefix + songId);
+  }
+  function deleteSongLocation(songId) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return DeleteFile(ensureNotNull(s3), songLyricsUploadPrefix + songId);
+  }
+  function deleteUserProfilePicture(username) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return DeleteFile(ensureNotNull(s3), userUploadPrefix + username);
+  }
+  function deletePlaylistCover(playlistId) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return DeleteFile(ensureNotNull(s3), playlistUploadPrefix + playlistId);
+  }
+  function deleteAlbumCover(albumId) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return DeleteFile(ensureNotNull(s3), albumUploadPrefix + albumId);
+  }
+  function uploadSongLyrics(songId, filePath) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return UploadFile(ensureNotNull(s3), filePath, songLyricsUploadPrefix + songId);
+  }
+  function uploadSongLocation(songId, filePath) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return UploadFile(ensureNotNull(s3), filePath, songLocationUploadPrefix + songId);
+  }
+  function uploadUserProfilePicture(username, filePath) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return UploadFile(ensureNotNull(s3), filePath, userUploadPrefix + username);
+  }
+  function uploadPlaylistCover(playlistId, filePath) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return UploadFile(ensureNotNull(s3), filePath, playlistUploadPrefix + playlistId);
+  }
+  function uploadAlbumCover(albumId, filePath) {
+    if (s3 == null) {
+      s3 = s3Connection();
+    }
+    return UploadFile(ensureNotNull(s3), filePath, albumUploadPrefix + albumId);
   }
   function obtainAlbumFromID$AlbumData(publish_year, image, update_time, user_id, id, title, songs) {
     this.publish_year = publish_year;
@@ -176,7 +237,7 @@ var KOTLINJS = function (_, Kotlin) {
             songs.add_11rb$(song);
           }
         }
-        return new Album(json.album.id, json.album.title, ensureNotNull(obtainUserDataServerFromID(json.album.user_id, null)), new Date(), getAlbumCoverPath(json.album.id), songs);
+        return new Album(json.album.id, json.album.title, ensureNotNull(obtainUserDataServerFromID_0(json.album.user_id, null)), new Date(), getAlbumCoverPath(json.album.id), songs);
       }
        else {
         Exception_init(json.error);
@@ -281,6 +342,9 @@ var KOTLINJS = function (_, Kotlin) {
       }
     }
     return null;
+  }
+  function obtainUserDataServerFromID(userID) {
+    return obtainUserDataServerFromID_0(userID, null);
   }
   function obtainUserDataServerFromID$UserData(nick, mail_visible, country, mail, birth_date, verified, bio, register_date, id, user, facebook, twitter, intragram, admin) {
     this.nick = nick;
@@ -402,7 +466,7 @@ var KOTLINJS = function (_, Kotlin) {
   obtainUserDataServerFromID$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.profile, other.profile) && Kotlin.equals(this.error, other.error)))));
   };
-  function obtainUserDataServerFromID(userID, sessionToken) {
+  function obtainUserDataServerFromID_0(userID, sessionToken) {
     if (sessionToken === void 0)
       sessionToken = null;
     var req = new XMLHttpRequest();
@@ -427,6 +491,9 @@ var KOTLINJS = function (_, Kotlin) {
       Exception_init('Error');
     }
     return null;
+  }
+  function obtainUserDataServer(username) {
+    return obtainUserDataServer_0(username, null);
   }
   function obtainUserDataServer$UserData(nick, mail_visible, country, mail, birth_date, verified, bio, register_date, id, user, facebook, twitter, intragram, admin) {
     this.nick = nick;
@@ -548,7 +615,7 @@ var KOTLINJS = function (_, Kotlin) {
   obtainUserDataServer$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.profile, other.profile) && Kotlin.equals(this.error, other.error)))));
   };
-  function obtainUserDataServer(username, sessionToken) {
+  function obtainUserDataServer_0(username, sessionToken) {
     var req = new XMLHttpRequest();
     if (sessionToken != null) {
       req.open('GET', server + '/users/' + username + '?token=' + toString(sessionToken), false);
@@ -725,12 +792,12 @@ var KOTLINJS = function (_, Kotlin) {
         tmp$_0 = toList(json.followers).iterator();
         while (tmp$_0.hasNext()) {
           var i_0 = tmp$_0.next();
-          var user = obtainUserDataServerFromID(i_0, null);
+          var user = obtainUserDataServerFromID_0(i_0, null);
           if (user != null) {
             users.add_11rb$(user);
           }
         }
-        return new Playlist(id, json.title, ensureNotNull(obtainUserDataServerFromID(json.author, null)), getPlaylistCoverPath(id), songs, users);
+        return new Playlist(id, json.title, ensureNotNull(obtainUserDataServerFromID_0(json.author, null)), getPlaylistCoverPath(id), songs, users);
       }
        else {
         Exception_init(json.error);
@@ -1070,7 +1137,7 @@ var KOTLINJS = function (_, Kotlin) {
         tmp$ = toList(json.users).iterator();
         while (tmp$.hasNext()) {
           var users_id = tmp$.next();
-          var user = obtainUserDataServerFromID(users_id, null);
+          var user = obtainUserDataServerFromID_0(users_id, null);
           if (user != null) {
             result.add_11rb$(user);
           }
@@ -1149,7 +1216,7 @@ var KOTLINJS = function (_, Kotlin) {
         tmp$ = toList(json.users).iterator();
         while (tmp$.hasNext()) {
           var users_id = tmp$.next();
-          var user = obtainUserDataServerFromID(users_id, null);
+          var user = obtainUserDataServerFromID_0(users_id, null);
           if (user != null) {
             result.add_11rb$(user);
           }
@@ -1427,7 +1494,7 @@ var KOTLINJS = function (_, Kotlin) {
         tmp$ = json.id;
         for (tmp$_0 = 0; tmp$_0 !== tmp$.length; ++tmp$_0) {
           var i = tmp$[tmp$_0];
-          var user = obtainUserDataServerFromID(i, null);
+          var user = obtainUserDataServerFromID_0(i, null);
           if (user != null) {
             result.add_11rb$(user);
           }
@@ -2343,7 +2410,7 @@ var KOTLINJS = function (_, Kotlin) {
   function obtainTrendSongsInUserCountryServer(username, cantidad) {
     var tmp$;
     println('obtainTrendSongsInUserCountryServer');
-    var user = obtainUserDataServer(username, null);
+    var user = obtainUserDataServer_0(username, null);
     var req = new XMLHttpRequest();
     req.open('GET', server + '/songs/popular/' + toString(ensureNotNull(user).country) + '/?n=' + cantidad, false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -2543,7 +2610,7 @@ var KOTLINJS = function (_, Kotlin) {
       tmp$ = toList_0(json.users).iterator();
       while (tmp$.hasNext()) {
         var one = tmp$.next();
-        result.add_11rb$(ensureNotNull(obtainUserDataServerFromID(toLong(one.id), null)));
+        result.add_11rb$(ensureNotNull(obtainUserDataServerFromID_0(toLong(one.id), null)));
       }
       return result;
     }
@@ -3046,7 +3113,7 @@ var KOTLINJS = function (_, Kotlin) {
       }
        else {
         album.id = json.album.id;
-        album.creator = ensureNotNull(obtainUserDataServerFromID(json.album.user_id, null));
+        album.creator = ensureNotNull(obtainUserDataServerFromID_0(json.album.user_id, null));
         return true;
       }
     }
@@ -3204,7 +3271,7 @@ var KOTLINJS = function (_, Kotlin) {
     return false;
   }
   function isUserAdmin(username, sessionToken) {
-    var user = obtainUserDataServer(username, sessionToken);
+    var user = obtainUserDataServer_0(username, sessionToken);
     if (ensureNotNull(user).admin == null) {
       return false;
     }
@@ -3485,7 +3552,7 @@ var KOTLINJS = function (_, Kotlin) {
       if (!albums.isEmpty()) {
         return false;
       }
-      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
+      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
       if (!createAlbumsServer('testJS1', token1, album)) {
         return false;
       }
@@ -3601,8 +3668,6 @@ var KOTLINJS = function (_, Kotlin) {
     return false;
   }
   function main_0(args) {
-    var user = obtainUserDataServer('alex', null);
-    println(user);
   }
   function Album(id, name, creator, releaseDate, artLocationUri, content) {
     this.id = id;
@@ -3827,10 +3892,20 @@ var KOTLINJS = function (_, Kotlin) {
       server = value;
     }
   });
+  Object.defineProperty(package$apis, 's3', {
+    get: function () {
+      return s3;
+    },
+    set: function (value) {
+      s3 = value;
+    }
+  });
   package$apis.obtainAlbumFromID_s8cxhz$ = obtainAlbumFromID;
   package$apis.obtainSongFromID_s8cxhz$ = obtainSongFromID;
-  package$apis.obtainUserDataServerFromID_tqiios$ = obtainUserDataServerFromID;
-  package$apis.obtainUserDataServer_jyasbz$ = obtainUserDataServer;
+  package$apis.obtainUserDataServerFromID_s8cxhz$ = obtainUserDataServerFromID;
+  package$apis.obtainUserDataServerFromID_tqiios$ = obtainUserDataServerFromID_0;
+  package$apis.obtainUserDataServer_61zpoe$ = obtainUserDataServer;
+  package$apis.obtainUserDataServer_jyasbz$ = obtainUserDataServer_0;
   package$apis.obtainSongsFromUserServer_61zpoe$ = obtainSongsFromUserServer;
   package$apis.obtainPlayListFromIdServer_s8cxhz$ = obtainPlayListFromIdServer;
   package$apis.obtainPlaylistsFromUserServer_61zpoe$ = obtainPlaylistsFromUserServer;
@@ -3916,6 +3991,7 @@ var KOTLINJS = function (_, Kotlin) {
   userUploadPrefix = 'user_';
   albumUploadPrefix = 'album_';
   playlistUploadPrefix = 'playlist_';
+  s3 = null;
   main_0([]);
   Kotlin.defineModule('KOTLINJS', _);
   return _;

@@ -243,8 +243,7 @@ fun test_songs():Boolean{
 
 
 fun main(args: Array<String>) {
-    val user = obtainUserDataServer("alex",null)
-    println(user)
+
     /*
     try{
         //test_user() -- PASSED
