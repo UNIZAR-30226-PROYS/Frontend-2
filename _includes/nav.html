@@ -44,6 +44,7 @@
             console.log('log out');
             unsetCookie('username');
             unsetCookie('token');
+            KOTLINJS.apis.doLogoutServer_puj7f4$(user, token);
             window.location = "http://127.0.0.1:4000/index";
         });
         $('#nav-login').click(function () {

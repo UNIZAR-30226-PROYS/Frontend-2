@@ -57,8 +57,6 @@ layout: general
       
 
         $('#confirm').click(function () {
-            document.getElementById("voidfile").style.display = "none";
-            document.getElementById("voidtitle").style.display = "none";
             document.getElementById("voidalbum").style.display = "none";
             var error = false;
             if( document.getElementById("formalbum").albumname.value === "" ){
@@ -70,13 +68,24 @@ layout: general
           
 
            if( error == false ){
-               var name = document.getElementById("formalbum").albumname.value;
+                try {
+                    var name = document.getElementById("formalbum").albumname.value;
 
-               var uri = document.getElementById("formalbum").albumimage.value;
-               var token = getCookie('token');
-               var user = getCookie('username');
-               /*var album = KOTLINJS.models.Album(0, name, user, year, uri);*/
-               /*KOTLINJS.apis.createAlbumsServer_xdras9$(user, token, album);*/
+                    var uri = document.getElementById("formalbum").albumimage.value;
+                    var token = getCookie('token');
+                    var user = getCookie('username');
+                    /*var album = KOTLINJS.models.Album(0, name, user, year, uri);*/
+                    var id = Math.random() * (200 - 100) + 100;
+                    var creator = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
+
+                    var playlist = KOTLINJS.models.Playlist_init_ylc0oi$(kotlin.Long.fromInt(id), name, user, uri);
+                    console.log("creando playlist" + playlist.name);
+
+                    KOTLINJS.apis.createPlaylistServer_l2qie2$(user, token, playlist);
+                    window.location = "http://127.0.0.1:4000/profile?user=" + user;
+                }catch (error){
+                    console.log(error);
+                }
            }
 
         });

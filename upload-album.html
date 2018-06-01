@@ -114,16 +114,28 @@ layout: general
                var name = document.getElementById("formalbum").albumname.value;
                var year = document.getElementById("formalbum").albumyear.value;
                var uri = document.getElementById("formalbum").albumimage.value;
+               var genere = document.getElementById("formalbum").genero.value;
                var token = getCookie('token');
                var user = getCookie('username');
-               var album = KOTLINJS.models.Album(0, name, user, year, uri);
-               KOTLINJS.apis.createAlbumsServer_xdras9$(user, token, album);
-               for( var i = 0; i < last_index; i++){
-                   var file = document.getElementById("form-upload-" + i ).songfile.value;
-                   var title = document.getElementById("form-upload-" + i ).songtitle.value;
-                   var srt = document.getElementById("form-upload-" + i ).songsrt.value;
-                   var song = KOTLINJS.models.Song(0, tile, file, 0, album, genere, srt);
-                   /*TODO*/
+               /* random error generator xddd */
+               var id = Math.floor((Math.random() * (200 - 100)) + 100);
+               var creator = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user);
+               var album = KOTLINJS.models.Album_init_wm91jm$(id, name, creator, uri);
+               console.log("id albm:" + album.id);
+               try {
+
+                   for (var i = 0; i < last_index; i++) {
+                       var file = document.getElementById("form-upload-" + i).songfile.value;
+                       var title = document.getElementById("form-upload-" + i).songtitle.value;
+                       var srt = document.getElementById("form-upload-" + i).songsrt.value;
+                       var song = KOTLINJS.models.Song_init_4zn6bq$(0, title, file, 0, album, genere, srt);
+                       KOTLINJS.apis.uploadSongServer_jecffn$(user, token, song);
+                   }
+                   KOTLINJS.apis.createAlbumsServer_xdras9$(user, token, album);
+
+                   window.location = "http://127.0.0.1:4000/profile?user=" + user;
+               }catch (error){
+                   console.log(error);
                }
            }
 

@@ -241,6 +241,28 @@ layout: general
 </style>
 
 <script>
+
+
+    function toggleText(button_id)  {
+
+        var token = getCookie('token');
+        var user = getCookie('username');
+        var el = document.getElementById(button_id);
+        var perfil = getParameterByName('user');
+
+        if (el.firstChild.data == "Seguir")
+        {
+            el.firstChild.data = "Dejar de seguir";
+            KOTLINJS.apis.addFollowerToUserServer_6hosri$( user, token, perfil );
+        }
+        else
+        {
+            console.log("follow " + perfil + " desde " + user);
+            el.firstChild.data = "Seguir";
+            KOTLINJS.apis.deleteFollowerToUserServer_6hosri$(user , token, perfil);
+        }
+    }
+
     $(document).ready( function () {
 
         var user = getParameterByName('user');
@@ -250,6 +272,7 @@ layout: general
 
         var token = getCookie('token');
 		var registered_user = getCookie('username');
+
 
         if( (registered_user == undefined || registered_user == "" || registered_user.length == 0) ){
             console.log("usuario sin login");
@@ -263,15 +286,19 @@ layout: general
             document.getElementById("seguir").style.display = "none";
         }else{      /* otro artista */
             document.getElementById("editar").style.display = "none";
+            if( KOTLINJS.apis.isUserFollowedByUserServer_puj7f4$(registered_user, user) ){
+                document.getElementById("seguir").innerHTML = "Dejar de seguir";
+            }
 
         }
 
         /**************************************************************************************************************/
-        var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user, token);
+        var usuario = KOTLINJS.apis.obtainUserDataServer_jyasbz$(user);
 
         document.getElementById("profile-name").innerHTML = usuario.username;
         var imagen = document.getElementById('profile-main-image');
         imagen.src = usuario.pictureLocationUri;
+        console.log("imagen:" + usuario.pictureLocationUri);
 
 
         document.getElementById("social-media").innerHTML =
@@ -284,12 +311,14 @@ layout: general
         var following = KOTLINJS.apis.getFollowedUsersServer_61zpoe$(user);
         document.getElementById("num-followers").innerHTML = followers.modCount;
         document.getElementById("num-following").innerHTML = following.modCount;
+        console.log("DEBUG");
 
         /* canciones */
-        /*var canciones = KOTLINJS.apis.get*/
-        var canciones = KOTLINJS.apis.obtainPlaylistList();
+        /*var canciones = KOTLINJS.apis.obtainPlaylistList();*/
+        var canciones = KOTLINJS.apis.obtainSongsFromUserServer_61zpoe$(user);
+        console.log(canciones);
         var inner = "";
-        for( var i = 0; i < 5; i++ ){
+        for( var i = 0; i < 5 && i < canciones.length; i++ ){
             var song = canciones.array_hd7ov6$_0[i];
             inner +=
                 "<div class=\"top-elem\">\n" +
@@ -312,6 +341,7 @@ layout: general
         var albums_len = albums.modCount;
         var albums_row = albums_len/4;
         var html_content = "";
+        console.log(albums);
 
         for (row = 0; row < albums_row; row++) {
             html_content = html_content + "<div class=\"row\">";
@@ -347,8 +377,9 @@ layout: general
         var playlist_len = playlist.modCount;
         var playlist_row = playlist_len/4;
         var html_content = "";
+        console.log(playlist);
 
-        for (row = 0; row < playlist_row; row++) {
+        for (row = 0; row < playlist_row +1; row++) {
             html_content = html_content + "<div class=\"row\">";
             for (col = 0; col < 4; col++) {
                 if(row == 0 && col == 0 && registered_user == user){
@@ -403,12 +434,12 @@ layout: general
     <div id="profile-header">
         <div id="profile-back-back"></div>
 
-        <img id="profile-main-image"  src="resources/imgs/nas-illmatic.jpg">
+        <img id="profile-main-image"  src="resources/imgs/voidalbum.jpg">
         <div id="profile-id">
             <img id="verificado"  src="resources/imgs/ok.png">
             <h1 id="profile-name">Artist  </h1>
         </div>
-        <button id="seguir" type="button" class="btn btn-outline-success"><strong>+ Seguir</strong></button>
+        <button id="seguir" type="button" class="btn btn-outline-success" onclick="toggleText(this.id)">Seguir</button>
         <a href="http://127.0.0.1:4000/edit-profile">
             <button id="editar" type="button" class="btn btn-outline-success"><strong>Editar perfil</strong></button>
         </a>
@@ -436,7 +467,7 @@ layout: general
                             </div>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-4">
-                                <h5 class="profile-top-name"> <a href="">Titulo</a> </h5>
+                                <h5 class="profile-top-name"> <a href="">No hay canciones</a> </h5>
                             </div>
 
                         </div>
@@ -453,7 +484,7 @@ layout: general
                 <a id="following-link" >
                     <div class="follow-hover">
                         <h1>Siguiendo</h1>
-                        <h1 id="num-following">10000000</h1>
+                        <h1 id="num-following">xyz</h1>
                     </div>
                 </a>
             </div>
@@ -461,7 +492,7 @@ layout: general
                 <a id="followers-link">
                     <div class="follow-hover">
                         <h1>Sequidores</h1>
-                        <h1 id="num-followers">0</h1>
+                        <h1 id="num-followers">xyz</h1>
                     </div>
             </div>
         </div>

@@ -415,7 +415,7 @@ layout: general
 
         /*********** novedades************/
         var inner = "";
-        var albumes = KOTLINJS.apis.obtainAlbumList();
+        var albumes = KOTLINJS.apis.obtainUpdatedPlaylistsFollowedByUserServer_18v4st$(user, toke, 5);
         for( var i = 0; i < albumes.modCount; i++ ){
             var active = "";
             if( i == 0){
@@ -473,7 +473,7 @@ layout: general
 
 
         /*******   generos  *******/
-        /*
+
         var inner = "";
         var generos = KOTLINJS.apis.obtainGeneresServer();
         var colorpal = ["#d5f4e6", "#80ced6", "#fefbd8", "#618685"];

@@ -8,7 +8,7 @@ import kotlin.js.Date
 
 class User() : Recommendation {
     var username: String? = null
-    var name: String? = null
+    var name: String = ""
     var pictureLocationUri: String? = null
     var biography: String? = null
     var email: String? = null
@@ -18,6 +18,9 @@ class User() : Recommendation {
     var twitterAccount: String? = null
     var facebookAccount: String? = null
     var instagramAccount: String? = null
+    var admin: Boolean? = null
+    var id: Long? = null
+    var verified: Boolean = false
 
     constructor(username: String, password: String): this(){
         this.username = username
@@ -26,6 +29,9 @@ class User() : Recommendation {
 
     constructor(username: String): this(){
         this.username = username
+    }
+    constructor(id: Long): this(){
+        this.id = id
     }
 
     constructor(username: String, name: String, email: String, pictureLocationUri: String): this(){
@@ -53,5 +59,13 @@ class User() : Recommendation {
     fun getShareLink(): String{
         //TODO: El link devuelto ha de ser el que apunta al mismo usuario desde la interfaz web
         return "https://www.google.es/"
+    }
+
+    constructor(nick: String, user: String, userProfilePicturePath: String, verified: Boolean, mail: String, bio: String, userDate: Date?):this(){
+        this.name = nick
+        this.username = user
+        this.pictureLocationUri = userProfilePicturePath
+        this.verified = verified
+        this.email = mail
     }
 }

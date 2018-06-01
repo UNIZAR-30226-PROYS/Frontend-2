@@ -92,7 +92,7 @@ layout: general
   /******************************************************************************************************************/
   $(document).ready( function () {
       $('#register-button').click(function () {
-          console.log('HEY');
+
           var nick = $('input[id="nick-signup"]').val();
           var user = $('input[id="user-signup"]').val();
           var pass0 = $('input[id="pass1-signup"]').val();
@@ -100,8 +100,11 @@ layout: general
           var mail = $('input[id="mail-signup"]').val();
           var country = $('input[id="country"]').val();
           var birth = $('input[id="date"]').val();
+          var image = $('input[id="image"]').val();
           resetRegisterInputs();
-          if (user === "" || pass0 === "" || pass1 === "" || mail === "" || nick === "" || country === "" || birth === "") {
+          if (user === "" || pass0 === "" || pass1 === "" || mail === "" || nick === "" || country === "" ) {
+              console.log('HEY algo falta');
+
               if (user === "") {
                   $('div[id="user-signup-container"]').addClass("has-error");
                   $('span[id="user-signup-icon"]').removeClass("hidden");
@@ -131,10 +134,35 @@ layout: general
                   $('span[id="date-signup-icon"]').removeClass("hidden");
               }
           } else {
-              /****** TODO *******/
-              document.cookie = "username=" + user + ";token=" + token;
-              setCookie("username", user);
-              setCookie("token", token);
+              try {
+                  console.log('HEY');
+                  /*var day = kotlin.Date(1999, 1, 1);*/
+                  var new_user = KOTLINJS.models.User_init_w74nik$(user, nick,  mail, image);
+                  new_user.password = pass0;
+                  /*new_user.birthDate = day;*/
+                  new_user.biography = "";
+                  console.log(new_user.name);
+                  console.log(new_user.password);
+                  var token = KOTLINJS.apis.doSignUpServer_m5kwz3$(new_user);
+                  document.cookie = "username=" + user + ";token=" + token;
+                  setCookie("username", user);
+                  setCookie("token", token);
+                  window.location = "http://127.0.0.1:4000/profile?user=" + user;
+              }catch(error) {
+                  console.log('HEY error');
+                  var x = document.getElementById("register-error-msg");
+                  var y = document.getElementById("register-error-msg-space");
+                  if (x.style.display === "none") {
+                      x.innerHTML = "<div class=\"alert alert-danger\">\n" +
+                          "                      <strong>Error!</strong>" + error + "\n" +
+                          "                  </div>";
+                      x.style.display = "block";
+                      y.style.display = "block";
+                  } else {
+                      x.style.display = "none";
+                      y.style.display = "none";
+                  }
+              }
           }
       });
 
@@ -153,9 +181,11 @@ layout: general
               }
           } else {
               try {
-                  if( KOTLINJS.apis.isUserAdmin_61zpoe$(user) ){
+
+                  if( KOTLINJS.apis.isUserAdmin_puj7f4$(user, null) ){
                       window.location = "http://127.0.0.1:4000/admin";
                   }
+
                   var token = KOTLINJS.apis.doLoginServer_puj7f4$(user, pass);
                   document.cookie = "username=" + user + ";token=" + token;
                   setCookie("username", user);
@@ -166,7 +196,7 @@ layout: general
                   var y = document.getElementById("login-error-msg-space");
                   if (x.style.display === "none") {
                       x.innerHTML = "<div class=\"alert alert-danger\">\n" +
-                          "                      <strong>Error!</strong> Usuario o contraseña incorrectos\n" +
+                          "                      <strong>Error!</strong>" + error +  "\n" +
                           "                  </div>";
                       x.style.display = "block";
                       y.style.display = "block";
@@ -204,10 +234,13 @@ layout: general
 
 </script>
 
+<!--
 <script async defer src="https://apis.google.com/js/api.js"
         onload="this.onload=function(){};handleClientLoad()"
         onreadystatechange="if (this.readyState === 'complete') this.onload()">
 </script>
+-->
+<body>
 
 
 <div id="login-page" >
@@ -264,6 +297,14 @@ layout: general
             <div id="loading-icon-signup" class="hidden" align="center"><img width="100" height="100" src="/resources/imgs/loading.gif"></div>
           <div id="signup-alert" class="hidden alert"></div>
           <form class="form-horizontal" action="">
+
+            <label class="col-sm-3 control-label" style="display: none" id="register-error-msg-space"></label>
+            <div class="col-sm-9" id="register-error-msg" style="display: none">
+              <div class="alert alert-danger">
+                <strong>Error!</strong> Error msg
+              </div>
+            </div>
+
 			<div id="nick-signup-container" class="form-group has-feedback">
               <!-- Esto habrá que cambiarlo por un POST al autentificador -->
               <label for="user-signup" class="col-sm-3 control-label">Nickname</label>
@@ -320,6 +361,14 @@ layout: general
                   <span id="pass2-signup-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
               </div>
             </div>
+            <div id="image-container" class="form-group has-feedback">
+            <label for="image-signup" class="col-sm-3 control-label">Imagen de perfil</label>
+                <div class="col-sm-9">
+                <input  name="image" type="file" class="form-control-file" id="image" accept="image/*">
+            <span id="image-icon" class="glyphicon glyphicon-remove form-control-feedback hidden"></span>
+            </div>
+            </div>
+
             <div class="form-group">
               <div class="col-sm-offset-3 col-sm-9">
                 <!--<button id="register-button" type="submit" class="btn btn-default">SignUp</button>-->
@@ -334,3 +383,5 @@ layout: general
 </div>
 
 </div>
+
+</body>

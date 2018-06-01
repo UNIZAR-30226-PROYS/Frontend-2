@@ -88,6 +88,125 @@ layout: general
         document.getElementById('ver-todos-artistas').href = "http://127.0.0.1:4000/busqueda-artista?term=" + term;
         document.getElementById('ver-todos-album').href = "http://127.0.0.1:4000/busqueda-listas?type=album&term=" + term;
         document.getElementById('ver-todos-playlist').href = "http://127.0.0.1:4000/busqueda-listas?type=playlist&term=" + term;
+        var resultado = KOTLINJS.apis.obtainResultForQueryServer_4k4yms$(kotlin.Long.fromInt(12), term, null);
+        console.log('Mostrando resultado');
+        console.log(resultado);
+        var inner_song = "";
+        var inner_artist_izq = "";
+        var inner_artist_dec = "";
+        var inner_playlist = "";
+        var inner_album = "";
+        var count_song = 0;
+        var count_izq = 0;
+        var count_dec = 0;
+        var count_playlist = 0;
+        var count_album = 0;
+        for( var i = 0; i < resultado.modCount; i++ ){
+            var elem = resultado.array_hd7ov6$_0[i];
+            if( ~(elem.album == null) ){
+                if( count_song < 5 ){
+                    count_song++;
+                    inner_song +=
+                        "<div class=\"playlist-elem\">\n" +
+                        "                    <div class=\"row\">\n" +
+                        "                        <div class=\"col-sm-4\">\n" +
+                        "                            <h5> <a href=\"http://127.0.0.1:4000/song?id=" + elem.id + "\">" + elem.name + "</a> </h5>\n" +
+                        "                        </div>\n" +
+                        "                        <div class=\"col-sm-3\">\n" +
+                        "                            <h5> <a href=\"http://127.0.0.1:4000/profile?user=" + elem.album.creator.name + "\">" + elem.album.creator.name + "</a>\n" +
+                        "                        </div>\n" +
+                        "                        <div class=\"col-sm-2\">\n" +
+                        "                            <h5> <a href=\"http://127.0.0.1:4000/playlist?type=album&id=" + elem.album.id + "\">" + elem.album.name + "</a> </h5>\n" +
+                        "                        </div>\n" +
+                        "                    </div>\n" +
+                        "                </div>";
+                }
+            }else if( ~(null == elem.email) ){
+                if( count_izq < 2 ){
+                    count_izq++;
+                    inner_artist_izq +=
+                        "<div class=\"col-sm\">\n" +
+                        "<a href='http://127.0.0.1:4000/profile?user=" + elem.name + "'>" +
+
+                        "\t\t\t\t\t\t\t\t\t\t<div class=\"elemento\">\n" +
+                        "\t\t                                <div class=\"row\">\n" +
+                        "\t\t                                    <div class=\"col-sm\">\n" +
+                        "\t\t                                        <img class=\"artista\"  src=\"" + elem.pictureLocationUri + "\">\n" +
+                        "\t\t                                    </div>\n" +
+                        "\t\t                                    <div class=\"col-sm\">\n" +
+                        "\t\t                                        <h1 class=\"nombre-artista\">" + elem.name + "</h1>\n" +
+                        "\t\t                                    </div>\n" +
+                        "\t\t                                </div>\n" +
+                        "\t\t\t\t\t\t\t\t\t\t</div> <!-- elemento -->\n" +
+                        "</a>" +
+
+                        "\t\t                            </div>";
+                }else if( count_dec < 2 ){
+                    count_dec++;
+                    inner_artist_dec +=
+                        "<div class=\"col-sm\">\n" +
+                            "<a href='http://127.0.0.1:4000/profile?user=" + elem.name + "'>" +
+                        "\t\t\t\t\t\t\t\t\t<div class=\"elemento\">\n" +
+                        "                                    <div class=\"row\">\n" +
+                        "                                        <div class=\"col-sm\">\n" +
+                        "                                            <img class=\"artista\"  src=\"" + elem.pictureLocationUri + "\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"col-sm\">\n" +
+                        "                                            <h1 class=\"nombre-artista\">" + elem.name + "</h1>\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "\t\t\t\t\t\t\t\t\t</div> <!-- elemento -->\n" +
+                            "</a>" +
+                        "                                </div>";
+                }
+            }else if( ~(null == elem.artLocationUri) ){
+                if( count_album < 2 ){
+                    count_album++;
+                    inner_album +=
+                        "<div class=\"col-sm\">\t\n" +
+                        "<a href=\"http://127.0.0.1:4000/playlist?type=album&id=" + elem.id + "\">" +
+                        "\t\t\t\t\t\t\t\t\t\t<div class=\"elemento\">\n" +
+                        "\t\t                                <div class=\"row\">\n" +
+                        "\t\t                                    <div class=\"col-sm\">\n" +
+                        "\t\t                                        <img class=\"lista\"  src=\"" + elem.pictureLocationUri + "\">\n" +
+                        "\t\t                                    </div>\n" +
+                        "\t\t                                    <div class=\"col-sm\">\n" +
+                        "\t\t                                        <h1>" + elem.name + "</h1>\n" +
+                        "\t\t                                    </div>\n" +
+                        "\t\t                                </div>\n" +
+                        "\t\t\t\t\t\t\t\t\t\t </div><!-- elemento -->\n" +
+                            "</a>" +
+                        "\t\t                            </div>";
+                }
+            }else if( true ){
+                if( count_playlist < 2 ){
+                    count_playlist++;
+                    inner_playlist +=
+                        "<div class=\"col-sm\">\n" +
+                            "<a href=\"http://127.0.0.1:4000/playlist?type=playlist&id=" + elem.id + "\">" +
+                        "\t\t\t\t\t\t\t\t\t<div class=\"elemento\">\n" +
+                        "\t\t                                <div class=\"row\">\n" +
+                        "\t\t                                    <div class=\"col-sm\">\n" +
+                        "\t\t                                        <img class=\"lista\"  src=\"" + elem.pictureLocationUri + "\">\n" +
+                        "\t\t                                    </div>\n" +
+                        "\t\t                                    <div class=\"col-sm\">\n" +
+                        "\t\t                                        <h1>" + elem.name + "</h1>\n" +
+                        "\t\t                                    </div>\n" +
+                        "\t\t                                </div>\n" +
+
+                        "\t\t\t\t\t\t\t\t\t\t </div><!-- elemento -->\n" +
+                        "</a>" +
+                        "                                </div>";
+                }
+            }
+        }
+
+        document.getElementById("container-songs").innerHTML = inner_song;
+        document.getElementById("primera-linea-art").innerHTML = inner_artist_izq;
+        document.getElementById("segunda-linea-art").innerHTML = inner_artist_dec;
+        document.getElementById("primera-linea-dec").innerHTML = inner_playlist;
+        document.getElementById("segunda-linea-dec").innerHTML = inner_album;
+
     });
 
 </script>
@@ -115,6 +234,8 @@ layout: general
                 </div>
 
                 <!-- playlist -->
+                <div id="container-songs">
+                    <!--
                 <div class="playlist-elem">
                     <div class="row">
                         <div class="col-sm-4">
@@ -127,7 +248,6 @@ layout: general
                             <h5> <a href="">Album</a> </h5>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="playlist-elem" >
@@ -187,6 +307,9 @@ layout: general
                         </div>
                     </div>
                 </div>
+                -->
+                </div>
+
             </div>
         </div>
     </div>
@@ -201,8 +324,9 @@ layout: general
                         <h1 class="titulo-busqueda">Artistas</h1>
                         <a href="" id="ver-todos-artistas"><h1 class="ver-todo" >Ver todas</h1></a>
                         <div class="columna-artistas-contenido">
-                            <div class="row" id="primera-linea-izq">
-								
+                            <div class="row" id="primera-linea-art">
+
+                                <!--
 		                            <div class="col-sm">
 										<div class="elemento">
 		                                <div class="row">
@@ -213,7 +337,7 @@ layout: general
 		                                        <h1 class="nombre-artista">artista1</h1>
 		                                    </div>
 		                                </div>
-										</div> <!-- elemento -->
+										</div>
 		                            </div>
 								
                                 <div class="col-sm">
@@ -226,11 +350,13 @@ layout: general
                                             <h1 class="nombre-artista">artista1</h1>
                                         </div>
                                     </div>
-									</div> <!-- elemento -->
+									</div>
                                 </div>
+                                -->
                             </div>
-                            <!-- segunda linea-->
-                            <div class="row" id="segunda-linea-izq">
+
+                            <div class="row" id="segunda-linea-art">
+                                <!--
                                 <div class="col-sm">
 									<div class="elemento">
                                     <div class="row">
@@ -241,7 +367,7 @@ layout: general
                                             <h1 class="nombre-artista">artista1</h1>
                                         </div>
                                     </div>
-									</div> <!-- elemento -->
+									</div>
                                 </div>
                                 <div class="col-sm">
 									<div class="elemento">
@@ -253,8 +379,9 @@ layout: general
                                             <h1 class="nombre-artista">artista1</h1>
                                         </div>
                                     </div>
-									</div> <!-- elemento -->
+									</div>
                                 </div>
+                                -->
                             </div>
                         </div>
                     </div>
@@ -266,17 +393,11 @@ layout: general
                         <h1 class="titulo-busqueda">Listas</h1>
 
                         <div class="columna-listas-contenido">
-                            <div class="row" id="primera-linea-dec">
-                                <div class="col-sm">
 
-                                    <h1>Albumes</h1>
-                                </div>
-                                <div class="col-sm">
-                                    <h1>Playlist</h1>
-                                </div>
-                            </div>
                             <div class="row" id="primera-linea-dec">
+                                <!--
                                 <div class="col-sm">
+                                    <a href="">
 									<div class="elemento">
 		                                <div class="row">
 		                                    <div class="col-sm">
@@ -286,7 +407,8 @@ layout: general
 		                                        <h1>artista1</h1>
 		                                    </div>
 		                                </div>
-										 </div><!-- elemento -->
+                                    </div>
+                                    </a>
                                 </div>
                                 <div class="col-sm">
                                     <div class="elemento">
@@ -298,12 +420,21 @@ layout: general
 		                                        <h1>artista1</h1>
 		                                    </div>
 		                                </div>
-										 </div><!-- elemento -->
+										 </div>
+                                </div>
+                                -->
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm">
+                                    <a href="" id="ver-todos-playlist"><h1>Ver playlist</h1></a>
                                 </div>
                             </div>
 
+
                             <!-- segunda linea-->
 		                        <div class="row" id="segunda-linea-dec">
+                                    <!--
 		                            <div class="col-sm">	
 										<div class="elemento">
 		                                <div class="row">
@@ -314,7 +445,7 @@ layout: general
 		                                        <h1>artista1</h1>
 		                                    </div>
 		                                </div>
-										 </div><!-- elemento -->
+										 </div>
 		                            </div>
 		                            <div class="col-sm">
 		                                <div class="elemento">
@@ -326,17 +457,16 @@ layout: general
 		                                        <h1>artista1</h1>
 		                                    </div>
 		                                </div>
-										 </div><!-- elemento -->
+										 </div>
 		                            </div>
+		                            -->
 		                        </div>
 
                                 <div class="row">
                                     <div class="col-sm">
-                                        <a href="" id="ver-todos-album"><h1>Ver todas</h1></a>
+                                        <a href="" id="ver-todos-album"><h1>Ver albumes</h1></a>
                                     </div>
-                                    <div class="col-sm">
-                                        <a href="" id="ver-todos-playlist"><h1>Ver todas</h1></a>
-                                    </div>
+
                                 </div>
 
                         </div>
