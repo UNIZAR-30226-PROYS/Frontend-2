@@ -5,6 +5,7 @@ import kotlin.collections.ArrayList
 import kotlin.js.Date
 
 object ServerEmulator {
+    /*
     val songList = HashMap<Long, Song>()
     val userList = HashMap<String, User>()
     val playlistList = HashMap<Long, Playlist>()
@@ -88,5 +89,5 @@ object ServerEmulator {
         albumList.add(album2)
 
     }
-
+    */
 }

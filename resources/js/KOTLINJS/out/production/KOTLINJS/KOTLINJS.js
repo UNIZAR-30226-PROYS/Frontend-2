@@ -3,34 +3,282 @@ if (typeof kotlin === 'undefined') {
 }
 var KOTLINJS = function (_, Kotlin) {
   'use strict';
-  var String_0 = String;
+  var equals = Kotlin.equals;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
+  var Exception = Kotlin.kotlin.Exception;
+  var L0 = Kotlin.Long.ZERO;
   var ensureNotNull = Kotlin.ensureNotNull;
+  var L_1 = Kotlin.Long.NEG_ONE;
+  var String_0 = String;
   var Kind_CLASS = Kotlin.Kind.CLASS;
-  var equals = Kotlin.equals;
   var toList = Kotlin.kotlin.collections.toList_se6h4x$;
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
-  var L0 = Kotlin.Long.ZERO;
   var split = Kotlin.kotlin.text.split_o64adg$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
-  var Exception = Kotlin.kotlin.Exception;
   var to = Kotlin.kotlin.to_ujzrz7$;
   var mapOf = Kotlin.kotlin.collections.mapOf_x2b85n$;
   var mapOf_0 = Kotlin.kotlin.collections.mapOf_qfcya0$;
   var toList_0 = Kotlin.kotlin.collections.toList_7wnvza$;
   var toLong = Kotlin.kotlin.text.toLong_pdl1vz$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
-  var L1 = Kotlin.Long.ONE;
   var iterator = Kotlin.kotlin.js.iterator_s8jyvk$;
-  var L_1 = Kotlin.Long.NEG_ONE;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
-  var HashMap_init = Kotlin.kotlin.collections.HashMap_init_q3lmfv$;
-  var L2 = Kotlin.Long.fromInt(2);
-  var L103000 = Kotlin.Long.fromInt(103000);
-  var L132000 = Kotlin.Long.fromInt(132000);
-  var Pair = Kotlin.kotlin.Pair;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  var Exception_init_0 = Kotlin.kotlin.Exception_init_dbl4no$;
+  var L1 = Kotlin.Long.ONE;
+  var L30 = Kotlin.Long.fromInt(30);
+  var L20 = Kotlin.Long.fromInt(20);
+  function test_user() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      var token2 = doLoginServer('testJS', '1234567');
+      println('Check if equals ' + equals(token, token2).toString());
+      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_logout() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      doLogoutServer('testJS', token);
+      try {
+        if (doDeleteAccountServer('testJS', token)) {
+          println('Test Error');
+        }
+      }
+       catch (e) {
+        if (Kotlin.isType(e, Exception)) {
+          println(e);
+          println('Test ' + equals(e.message, 'invalidToken').toString());
+        }
+         else
+          throw e;
+      }
+      var token2 = doLoginServer('testJS', '1234567');
+      if (doDeleteAccountServer('testJS', token2)) {
+        println('PASSED');
+        return true;
+      }
+       else {
+        return false;
+      }
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        var token_0 = doLoginServer('testJS', '1234567');
+        doDeleteAccountServer('testJS', token_0);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_following() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var following = getFollowedUsersServer('testJS1');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      var user2 = User_init('testJS2', '1234567');
+      user2.name = 'Test2';
+      user2.email = 'test2@test.com';
+      var token = doSignUpServer(user2);
+      if (!addFollowerToUserServer('testJS1', token1, 'testJS2')) {
+        return false;
+      }
+      if (!isUserFollowedByUserServer('testJS1', 'testJS2')) {
+        return false;
+      }
+      if (isUserFollowedByUserServer('testJS2', 'testJS1')) {
+        return false;
+      }
+      var number = getNumberOfFollowersOfUserServer('testJS2');
+      if (number.toInt() !== 1) {
+        return false;
+      }
+      following = getFollowersOfUserServer('testJS2');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS1')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS1');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
+        return false;
+      }
+      if (!deleteFollowerToUserServer('testJS1', '', 'testJS2')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS1');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+      token = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token_0 = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token_0);
+      token_0 = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token_0);
+    }
+    return false;
+  }
+  function test_album() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var albums = obtainAlbumsFromUserServer('testJS1');
+      if (!albums.isEmpty()) {
+        return false;
+      }
+      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
+      createAlbumsServer('testJS1', token1, album);
+      albums = obtainAlbumsFromUserServer('testJS1');
+      if (albums.size === 0 || !equals(albums.get_za3lpa$(0).name, 'testJSAlbum')) {
+        return false;
+      }
+      if (!deleteAlbumsServer('testJS1', token1, album)) {
+        return false;
+      }
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function testfav() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var albums = obtainAlbumsFromUserServer('testJS1');
+      if (!albums.isEmpty()) {
+        return false;
+      }
+      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
+      uploadSongServer('testJS1', token1, song);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
+  function test_songlist() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var songlist = getFollowedPlaylistsServer('testJS1');
+      if (!songlist.isEmpty()) {
+        return false;
+      }
+      var playlist = new Playlist(L_1, 'myPlaylist', user, '', emptyList(), emptyList());
+      createPlaylistServer('testJS1', token1, playlist);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function test_songs() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var songs = obtainSongsFromUserServer('testJS1');
+      if (!songs.isEmpty()) {
+        return false;
+      }
+      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
+      uploadSongServer('testJS1', token1, song);
+      songs = obtainSongsFromUserServer('testJS1');
+      if (songs.size !== 1 || !equals(songs.get_za3lpa$(0).name, 'TestJSSong')) {
+        return false;
+      }
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function main(args) {
+    var Test = new InstrumentedTestBackEndSpreadYoutMusic();
+    Test.UserRequestTest();
+    Test.SongsRequestTest();
+    Test.AlbumRequestTest();
+    Test.ComplexRequestsTest();
+    Test.PlaylistRequestTest();
+  }
   function createForm(mapa) {
     var tmp$, tmp$_0;
     var result = new String_0();
@@ -221,23 +469,30 @@ var KOTLINJS = function (_, Kotlin) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.album, other.album) && Kotlin.equals(this.error, other.error)))));
   };
   function obtainAlbumFromID(id) {
-    var tmp$;
+    var tmp$, tmp$_0;
     var req = new XMLHttpRequest();
     req.open('GET', server + '/albums/' + id, false);
     req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
+      println(req.responseText);
       var json = JSON.parse(req.responseText);
       if (equals(json.error, 'ok')) {
         var songs = ArrayList_init();
         tmp$ = toList(json.album.songs).iterator();
         while (tmp$.hasNext()) {
           var i = tmp$.next();
-          var song = obtainSongFromID(i);
+          var song = obtainSongFromID(i, false);
           if (song != null) {
             songs.add_11rb$(song);
           }
         }
-        return new Album(json.album.id, json.album.title, ensureNotNull(obtainUserDataServerFromID_0(json.album.user_id, null)), new Date(), getAlbumCoverPath(json.album.id), songs);
+        var album = new Album(json.album.id, json.album.title, ensureNotNull(obtainUserDataServerFromID_0(json.album.user_id, null)), new Date(), getAlbumCoverPath(json.album.id), songs);
+        tmp$_0 = songs.iterator();
+        while (tmp$_0.hasNext()) {
+          var i_0 = tmp$_0.next();
+          i_0.album = album;
+        }
+        return album;
       }
        else {
         Exception_init(json.error);
@@ -248,11 +503,11 @@ var KOTLINJS = function (_, Kotlin) {
     }
     return null;
   }
-  function obtainSongFromID$DataSong(country, upload_time, id, albumId, title, user_id) {
+  function obtainSongFromID$DataSong(country, upload_time, id, album_id, title, user_id) {
     this.country = country;
     this.upload_time = upload_time;
     this.id = id;
-    this.albumId = albumId;
+    this.album_id = album_id;
     this.title = title;
     this.user_id = user_id;
   }
@@ -271,7 +526,7 @@ var KOTLINJS = function (_, Kotlin) {
     return this.id;
   };
   obtainSongFromID$DataSong.prototype.component4 = function () {
-    return this.albumId;
+    return this.album_id;
   };
   obtainSongFromID$DataSong.prototype.component5 = function () {
     return this.title;
@@ -279,24 +534,24 @@ var KOTLINJS = function (_, Kotlin) {
   obtainSongFromID$DataSong.prototype.component6 = function () {
     return this.user_id;
   };
-  obtainSongFromID$DataSong.prototype.copy_qm98u4$ = function (country, upload_time, id, albumId, title, user_id) {
-    return new obtainSongFromID$DataSong(country === void 0 ? this.country : country, upload_time === void 0 ? this.upload_time : upload_time, id === void 0 ? this.id : id, albumId === void 0 ? this.albumId : albumId, title === void 0 ? this.title : title, user_id === void 0 ? this.user_id : user_id);
+  obtainSongFromID$DataSong.prototype.copy_qm98u4$ = function (country, upload_time, id, album_id, title, user_id) {
+    return new obtainSongFromID$DataSong(country === void 0 ? this.country : country, upload_time === void 0 ? this.upload_time : upload_time, id === void 0 ? this.id : id, album_id === void 0 ? this.album_id : album_id, title === void 0 ? this.title : title, user_id === void 0 ? this.user_id : user_id);
   };
   obtainSongFromID$DataSong.prototype.toString = function () {
-    return 'DataSong(country=' + Kotlin.toString(this.country) + (', upload_time=' + Kotlin.toString(this.upload_time)) + (', id=' + Kotlin.toString(this.id)) + (', albumId=' + Kotlin.toString(this.albumId)) + (', title=' + Kotlin.toString(this.title)) + (', user_id=' + Kotlin.toString(this.user_id)) + ')';
+    return 'DataSong(country=' + Kotlin.toString(this.country) + (', upload_time=' + Kotlin.toString(this.upload_time)) + (', id=' + Kotlin.toString(this.id)) + (', album_id=' + Kotlin.toString(this.album_id)) + (', title=' + Kotlin.toString(this.title)) + (', user_id=' + Kotlin.toString(this.user_id)) + ')';
   };
   obtainSongFromID$DataSong.prototype.hashCode = function () {
     var result = 0;
     result = result * 31 + Kotlin.hashCode(this.country) | 0;
     result = result * 31 + Kotlin.hashCode(this.upload_time) | 0;
     result = result * 31 + Kotlin.hashCode(this.id) | 0;
-    result = result * 31 + Kotlin.hashCode(this.albumId) | 0;
+    result = result * 31 + Kotlin.hashCode(this.album_id) | 0;
     result = result * 31 + Kotlin.hashCode(this.title) | 0;
     result = result * 31 + Kotlin.hashCode(this.user_id) | 0;
     return result;
   };
   obtainSongFromID$DataSong.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.country, other.country) && Kotlin.equals(this.upload_time, other.upload_time) && Kotlin.equals(this.id, other.id) && Kotlin.equals(this.albumId, other.albumId) && Kotlin.equals(this.title, other.title) && Kotlin.equals(this.user_id, other.user_id)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.country, other.country) && Kotlin.equals(this.upload_time, other.upload_time) && Kotlin.equals(this.id, other.id) && Kotlin.equals(this.album_id, other.album_id) && Kotlin.equals(this.title, other.title) && Kotlin.equals(this.user_id, other.user_id)))));
   };
   function obtainSongFromID$Data(song, error) {
     this.song = song;
@@ -328,14 +583,21 @@ var KOTLINJS = function (_, Kotlin) {
   obtainSongFromID$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.song, other.song) && Kotlin.equals(this.error, other.error)))));
   };
-  function obtainSongFromID(id) {
+  function obtainSongFromID(id, album) {
+    if (album === void 0)
+      album = true;
     var req = new XMLHttpRequest();
     req.open('GET', server + '/songs/' + id, false);
     req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
       if (equals(json.error, 'ok')) {
-        return new Song(json.song.id, json.song.title, json.song.country, getSongLocationPath(json.song.id), L0, obtainAlbumFromID(json.song.albumId), '', getSongLyricsPath(json.song.id));
+        if (album) {
+          return new Song(json.song.id, json.song.title, json.song.country, getSongLocationPath(json.song.id), L0, obtainAlbumFromID(json.song.album_id), '', getSongLyricsPath(json.song.id));
+        }
+         else {
+          return new Song(json.song.id, json.song.title, json.song.country, getSongLocationPath(json.song.id), L0, null, '', getSongLyricsPath(json.song.id));
+        }
       }
        else {
         Exception_init(json.error);
@@ -474,12 +736,12 @@ var KOTLINJS = function (_, Kotlin) {
     req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
-      var user = User_init_2(json.profile.nick, json.profile.user, ensureNotNull(json.profile.mail), getUserProfilePicturePath(json.profile.bio));
-      user.biography = json.profile.bio;
+      var userDate = null;
       if (!equals(json.profile.birth_date.toString(), '-1')) {
         var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
-        user.birthDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
+        userDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
       }
+      var user = User_init_1(json.profile.nick, json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified, ensureNotNull(json.profile.mail), json.profile.bio, userDate);
       user.country = json.profile.country;
       user.facebookAccount = json.profile.facebook;
       user.twitterAccount = json.profile.twitter;
@@ -626,12 +888,12 @@ var KOTLINJS = function (_, Kotlin) {
     req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
-      var user = User_init_2(json.profile.nick, json.profile.user, ensureNotNull(json.profile.mail), getUserProfilePicturePath(json.profile.bio));
-      user.biography = json.profile.bio;
+      var userDate = null;
       if (!equals(json.profile.birth_date.toString(), '-1')) {
         var date = split(json.profile.birth_date, Kotlin.charArrayOf(45));
-        user.birthDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
+        userDate = new Date(toInt(date.get_za3lpa$(0)), toInt(date.get_za3lpa$(1)), toInt(date.get_za3lpa$(2)));
       }
+      var user = User_init_1(json.profile.nick, json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified, ensureNotNull(json.profile.mail), json.profile.bio, userDate);
       user.country = json.profile.country;
       user.country = json.profile.country;
       user.facebookAccount = json.profile.facebook;
@@ -680,7 +942,6 @@ var KOTLINJS = function (_, Kotlin) {
   obtainSongsFromUserServer$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.size, other.size) && Kotlin.equals(this.songs, other.songs) && Kotlin.equals(this.error, other.error)))));
   };
-  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   function obtainSongsFromUserServer(username) {
     var tmp$;
     println('obtainSongsFromUserServer');
@@ -712,7 +973,7 @@ var KOTLINJS = function (_, Kotlin) {
     }
     return emptyList();
   }
-  function obtainPlayListFromIdServer$Data(title, author, creation_time, songs_size, songs, followers_size, followers, error) {
+  function obtainPlaylistDataServer$Data(title, author, creation_time, songs_size, songs, followers_size, followers, error) {
     this.title = title;
     this.author = author;
     this.creation_time = creation_time;
@@ -722,42 +983,42 @@ var KOTLINJS = function (_, Kotlin) {
     this.followers = followers;
     this.error = error;
   }
-  obtainPlayListFromIdServer$Data.$metadata$ = {
+  obtainPlaylistDataServer$Data.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'Data',
     interfaces: []
   };
-  obtainPlayListFromIdServer$Data.prototype.component1 = function () {
+  obtainPlaylistDataServer$Data.prototype.component1 = function () {
     return this.title;
   };
-  obtainPlayListFromIdServer$Data.prototype.component2 = function () {
+  obtainPlaylistDataServer$Data.prototype.component2 = function () {
     return this.author;
   };
-  obtainPlayListFromIdServer$Data.prototype.component3 = function () {
+  obtainPlaylistDataServer$Data.prototype.component3 = function () {
     return this.creation_time;
   };
-  obtainPlayListFromIdServer$Data.prototype.component4 = function () {
+  obtainPlaylistDataServer$Data.prototype.component4 = function () {
     return this.songs_size;
   };
-  obtainPlayListFromIdServer$Data.prototype.component5 = function () {
+  obtainPlaylistDataServer$Data.prototype.component5 = function () {
     return this.songs;
   };
-  obtainPlayListFromIdServer$Data.prototype.component6 = function () {
+  obtainPlaylistDataServer$Data.prototype.component6 = function () {
     return this.followers_size;
   };
-  obtainPlayListFromIdServer$Data.prototype.component7 = function () {
+  obtainPlaylistDataServer$Data.prototype.component7 = function () {
     return this.followers;
   };
-  obtainPlayListFromIdServer$Data.prototype.component8 = function () {
+  obtainPlaylistDataServer$Data.prototype.component8 = function () {
     return this.error;
   };
-  obtainPlayListFromIdServer$Data.prototype.copy_v7dy06$ = function (title, author, creation_time, songs_size, songs, followers_size, followers, error) {
-    return new obtainPlayListFromIdServer$Data(title === void 0 ? this.title : title, author === void 0 ? this.author : author, creation_time === void 0 ? this.creation_time : creation_time, songs_size === void 0 ? this.songs_size : songs_size, songs === void 0 ? this.songs : songs, followers_size === void 0 ? this.followers_size : followers_size, followers === void 0 ? this.followers : followers, error === void 0 ? this.error : error);
+  obtainPlaylistDataServer$Data.prototype.copy_v7dy06$ = function (title, author, creation_time, songs_size, songs, followers_size, followers, error) {
+    return new obtainPlaylistDataServer$Data(title === void 0 ? this.title : title, author === void 0 ? this.author : author, creation_time === void 0 ? this.creation_time : creation_time, songs_size === void 0 ? this.songs_size : songs_size, songs === void 0 ? this.songs : songs, followers_size === void 0 ? this.followers_size : followers_size, followers === void 0 ? this.followers : followers, error === void 0 ? this.error : error);
   };
-  obtainPlayListFromIdServer$Data.prototype.toString = function () {
+  obtainPlaylistDataServer$Data.prototype.toString = function () {
     return 'Data(title=' + Kotlin.toString(this.title) + (', author=' + Kotlin.toString(this.author)) + (', creation_time=' + Kotlin.toString(this.creation_time)) + (', songs_size=' + Kotlin.toString(this.songs_size)) + (', songs=' + Kotlin.toString(this.songs)) + (', followers_size=' + Kotlin.toString(this.followers_size)) + (', followers=' + Kotlin.toString(this.followers)) + (', error=' + Kotlin.toString(this.error)) + ')';
   };
-  obtainPlayListFromIdServer$Data.prototype.hashCode = function () {
+  obtainPlaylistDataServer$Data.prototype.hashCode = function () {
     var result = 0;
     result = result * 31 + Kotlin.hashCode(this.title) | 0;
     result = result * 31 + Kotlin.hashCode(this.author) | 0;
@@ -769,10 +1030,10 @@ var KOTLINJS = function (_, Kotlin) {
     result = result * 31 + Kotlin.hashCode(this.error) | 0;
     return result;
   };
-  obtainPlayListFromIdServer$Data.prototype.equals = function (other) {
+  obtainPlaylistDataServer$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.title, other.title) && Kotlin.equals(this.author, other.author) && Kotlin.equals(this.creation_time, other.creation_time) && Kotlin.equals(this.songs_size, other.songs_size) && Kotlin.equals(this.songs, other.songs) && Kotlin.equals(this.followers_size, other.followers_size) && Kotlin.equals(this.followers, other.followers) && Kotlin.equals(this.error, other.error)))));
   };
-  function obtainPlayListFromIdServer(id) {
+  function obtainPlaylistDataServer(id) {
     var tmp$, tmp$_0;
     var req = new XMLHttpRequest();
     req.open('GET', server + '/songs/' + id, false);
@@ -851,7 +1112,7 @@ var KOTLINJS = function (_, Kotlin) {
         tmp$ = toList(json.id).iterator();
         while (tmp$.hasNext()) {
           var i = tmp$.next();
-          var songlist = obtainPlayListFromIdServer(i);
+          var songlist = obtainPlaylistDataServer(i);
           if (songlist != null) {
             result.add_11rb$(songlist);
           }
@@ -984,7 +1245,7 @@ var KOTLINJS = function (_, Kotlin) {
     var birth = null;
     var data = createForm(mapOf_0([to('mail', email), to('pass0', pass), to('pass1', pass), to('user', username), to('birth', birth)]));
     var req = new XMLHttpRequest();
-    req.open('POST', server + '/users/' + toString(nick) + '/signup?', false);
+    req.open('POST', server + '/users/' + nick + '/signup?', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
@@ -1364,7 +1625,7 @@ var KOTLINJS = function (_, Kotlin) {
     var req = new XMLHttpRequest();
     req.open('POST', server + '/users/' + username + '/unfollow/' + followed, false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    req.send(null);
+    req.send('token=' + sessionToken);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       println(req.responseText);
       var json = JSON.parse(req.responseText);
@@ -1423,7 +1684,7 @@ var KOTLINJS = function (_, Kotlin) {
         tmp$ = toList(json.id).iterator();
         while (tmp$.hasNext()) {
           var i = tmp$.next();
-          var songlist = obtainPlayListFromIdServer(i);
+          var songlist = obtainPlaylistDataServer(i);
           if (songlist != null) {
             result.add_11rb$(songlist);
           }
@@ -1434,7 +1695,7 @@ var KOTLINJS = function (_, Kotlin) {
         Exception_init(json.error);
       }
     }
-    return ensureNotNull(ServerEmulator_getInstance().playlistSeguidos.get_11rb$(username));
+    return emptyList();
   }
   function isPlaylistFollowedByUserServer(username, playlist) {
     var tmp$;
@@ -1825,7 +2086,7 @@ var KOTLINJS = function (_, Kotlin) {
   uploadSongServer$DataSong.prototype.component5 = function () {
     return this.user_id;
   };
-  uploadSongServer$DataSong.prototype.copy_e8famf$ = function (country, upload_time, id, title, user_id) {
+  uploadSongServer$DataSong.prototype.copy_1si7y6$ = function (country, upload_time, id, title, user_id) {
     return new uploadSongServer$DataSong(country === void 0 ? this.country : country, upload_time === void 0 ? this.upload_time : upload_time, id === void 0 ? this.id : id, title === void 0 ? this.title : title, user_id === void 0 ? this.user_id : user_id);
   };
   uploadSongServer$DataSong.prototype.toString = function () {
@@ -1883,7 +2144,7 @@ var KOTLINJS = function (_, Kotlin) {
       data = createForm(mapOf_0([to('token', sessionToken), to('title', song.name), to('albumID', null), to('country', song.country)]));
     }
      else {
-      data = createForm(mapOf_0([to('token', sessionToken), to('title', song.name), to('albumID', song.album.id.toString()), to('country', song.country)]));
+      data = createForm(mapOf_0([to('token', sessionToken), to('title', song.name), to('albumID', toString(ensureNotNull(song.album).id)), to('country', song.country)]));
     }
     req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
@@ -1892,8 +2153,8 @@ var KOTLINJS = function (_, Kotlin) {
       if (!equals(json.error, 'ok')) {
         throw Exception_init(json.error);
       }
-      song.id = json.song.id;
-      return true;
+      song.id = Kotlin.Long.fromInt(json.song.id);
+      return Kotlin.Long.fromInt(json.song.id);
     }
      else {
       throw Exception_init('Error ' + req.status);
@@ -1964,7 +2225,7 @@ var KOTLINJS = function (_, Kotlin) {
     return obtainFavouriteSongsByUserServer(username, sessionToken).size;
   }
   function obtainRecomendationsForUserServer(username, sessionToken, cantidad) {
-    return ServerEmulator_getInstance().recomendaciones.get_11rb$(username);
+    return emptyList();
   }
   function obtainPopularSongsServer$DataSongs(country, upload_time, user_id, reproductions, id, title, likes) {
     this.country = country;
@@ -2407,10 +2668,10 @@ var KOTLINJS = function (_, Kotlin) {
   obtainTrendSongsInUserCountryServer$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.songs, other.songs) && Kotlin.equals(this.error, other.error) && Kotlin.equals(this.results, other.results)))));
   };
-  function obtainTrendSongsInUserCountryServer(username, cantidad) {
+  function obtainTrendSongsInUserCountryServer(username, sessionToken, cantidad) {
     var tmp$;
     println('obtainTrendSongsInUserCountryServer');
-    var user = obtainUserDataServer_0(username, null);
+    var user = obtainUserDataServer_0(username, sessionToken);
     var req = new XMLHttpRequest();
     req.open('GET', server + '/songs/popular/' + toString(ensureNotNull(user).country) + '/?n=' + cantidad, false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -2436,7 +2697,7 @@ var KOTLINJS = function (_, Kotlin) {
     return result;
   }
   function obtainUpdatedPlaylistsFollowedByUserServer(username, sessionToken, cantidad) {
-    return ServerEmulator_getInstance().playlistSeguidos.get_11rb$(username);
+    return emptyList();
   }
   function obtainResultForQueryInSongServer$DataSongs(country, upload_time, user_id, reproductions, id, title, likes) {
     this.country = country;
@@ -2642,7 +2903,7 @@ var KOTLINJS = function (_, Kotlin) {
     return list;
   }
   function obtainPopularByGenreServer(cantidad) {
-    return ServerEmulator_getInstance().generos;
+    return emptyList();
   }
   function isOtherSessionOpenFromSameUserServer$Data(error, size, songs) {
     this.error = error;
@@ -2760,11 +3021,51 @@ var KOTLINJS = function (_, Kotlin) {
      else {
       Exception_init('Error');
     }
-    return ServerEmulator_getInstance().songList.get_11rb$(L1);
+    return null;
   }
-  function createPlaylistServer$Data(error, id) {
-    this.error = error;
+  function createPlaylistServer$DataList(creation_time, amount, author, id) {
+    this.creation_time = creation_time;
+    this.amount = amount;
+    this.author = author;
     this.id = id;
+  }
+  createPlaylistServer$DataList.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'DataList',
+    interfaces: []
+  };
+  createPlaylistServer$DataList.prototype.component1 = function () {
+    return this.creation_time;
+  };
+  createPlaylistServer$DataList.prototype.component2 = function () {
+    return this.amount;
+  };
+  createPlaylistServer$DataList.prototype.component3 = function () {
+    return this.author;
+  };
+  createPlaylistServer$DataList.prototype.component4 = function () {
+    return this.id;
+  };
+  createPlaylistServer$DataList.prototype.copy_tmi9z9$ = function (creation_time, amount, author, id) {
+    return new createPlaylistServer$DataList(creation_time === void 0 ? this.creation_time : creation_time, amount === void 0 ? this.amount : amount, author === void 0 ? this.author : author, id === void 0 ? this.id : id);
+  };
+  createPlaylistServer$DataList.prototype.toString = function () {
+    return 'DataList(creation_time=' + Kotlin.toString(this.creation_time) + (', amount=' + Kotlin.toString(this.amount)) + (', author=' + Kotlin.toString(this.author)) + (', id=' + Kotlin.toString(this.id)) + ')';
+  };
+  createPlaylistServer$DataList.prototype.hashCode = function () {
+    var result = 0;
+    result = result * 31 + Kotlin.hashCode(this.creation_time) | 0;
+    result = result * 31 + Kotlin.hashCode(this.amount) | 0;
+    result = result * 31 + Kotlin.hashCode(this.author) | 0;
+    result = result * 31 + Kotlin.hashCode(this.id) | 0;
+    return result;
+  };
+  createPlaylistServer$DataList.prototype.equals = function (other) {
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.creation_time, other.creation_time) && Kotlin.equals(this.amount, other.amount) && Kotlin.equals(this.author, other.author) && Kotlin.equals(this.id, other.id)))));
+  };
+  function createPlaylistServer$Data(error, list) {
+    this.error = error;
+    this.list = list;
   }
   createPlaylistServer$Data.$metadata$ = {
     kind: Kind_CLASS,
@@ -2775,22 +3076,22 @@ var KOTLINJS = function (_, Kotlin) {
     return this.error;
   };
   createPlaylistServer$Data.prototype.component2 = function () {
-    return this.id;
+    return this.list;
   };
-  createPlaylistServer$Data.prototype.copy_4wgjuj$ = function (error, id) {
-    return new createPlaylistServer$Data(error === void 0 ? this.error : error, id === void 0 ? this.id : id);
+  createPlaylistServer$Data.prototype.copy_ret7mq$ = function (error, list) {
+    return new createPlaylistServer$Data(error === void 0 ? this.error : error, list === void 0 ? this.list : list);
   };
   createPlaylistServer$Data.prototype.toString = function () {
-    return 'Data(error=' + Kotlin.toString(this.error) + (', id=' + Kotlin.toString(this.id)) + ')';
+    return 'Data(error=' + Kotlin.toString(this.error) + (', list=' + Kotlin.toString(this.list)) + ')';
   };
   createPlaylistServer$Data.prototype.hashCode = function () {
     var result = 0;
     result = result * 31 + Kotlin.hashCode(this.error) | 0;
-    result = result * 31 + Kotlin.hashCode(this.id) | 0;
+    result = result * 31 + Kotlin.hashCode(this.list) | 0;
     return result;
   };
   createPlaylistServer$Data.prototype.equals = function (other) {
-    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.error, other.error) && Kotlin.equals(this.id, other.id)))));
+    return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.error, other.error) && Kotlin.equals(this.list, other.list)))));
   };
   function createPlaylistServer(username, sessionToken, playlist) {
     println('createPlaylistServer');
@@ -2804,9 +3105,14 @@ var KOTLINJS = function (_, Kotlin) {
         Exception_init(json.error);
       }
        else {
-        Exception_init('Error');
+        playlist.id = Kotlin.Long.fromInt(json.list.id);
+        return Kotlin.Long.fromInt(json.list.id);
       }
     }
+     else {
+      Exception_init('Error');
+    }
+    return L_1;
   }
   function deletePlaylistServer$Data(error) {
     this.error = error;
@@ -2879,7 +3185,7 @@ var KOTLINJS = function (_, Kotlin) {
     var req = new XMLHttpRequest();
     req.open('POST', server + '/user-lists/' + username + '/' + playlistId + '/add', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', song.id.toString())]));
+    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', toString(song.id))]));
     req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
@@ -2921,7 +3227,7 @@ var KOTLINJS = function (_, Kotlin) {
     var req = new XMLHttpRequest();
     req.open('POST', server + '/user-lists/' + username + '/' + playlistId + '/remove', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', song.id.toString())]));
+    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', toString(song.id))]));
     req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
@@ -2935,24 +3241,24 @@ var KOTLINJS = function (_, Kotlin) {
   }
   function updatePlaylistServer(username, sessionToken, playlist) {
     var tmp$, tmp$_0;
-    var serverlist = obtainPlayListFromIdServer(playlist.id);
+    var serverlist = obtainPlaylistDataServer(ensureNotNull(playlist.id));
     tmp$ = playlist.content.iterator();
     while (tmp$.hasNext()) {
       var song = tmp$.next();
       if (!ensureNotNull(serverlist).content.contains_11rb$(song)) {
-        addSongToPlayListServer(username, new String_0(), playlist.id, song);
+        addSongToPlayListServer(username, new String_0(), ensureNotNull(playlist.id), song);
       }
     }
     tmp$_0 = ensureNotNull(serverlist).content.iterator();
     while (tmp$_0.hasNext()) {
       var song_0 = tmp$_0.next();
       if (!playlist.content.contains_11rb$(song_0)) {
-        removeSongToPlayListServer(username, new String_0(), playlist.id, song_0);
+        removeSongToPlayListServer(username, new String_0(), ensureNotNull(playlist.id), song_0);
       }
     }
   }
   function obtainGeneresServer() {
-    return ServerEmulator_getInstance().generesList;
+    return emptyList();
   }
   function obtainAlbumsFromUserServer$Data(error, size, albums) {
     this.error = error;
@@ -3013,7 +3319,7 @@ var KOTLINJS = function (_, Kotlin) {
      else {
       Exception_init('Error ' + toString(req.response));
     }
-    return ServerEmulator_getInstance().albumList;
+    return emptyList();
   }
   function createAlbumsServer$DataAlbum(publish_year, image, update_time, user_id, songs, id, title) {
     this.publish_year = publish_year;
@@ -3050,7 +3356,7 @@ var KOTLINJS = function (_, Kotlin) {
   createAlbumsServer$DataAlbum.prototype.component7 = function () {
     return this.title;
   };
-  createAlbumsServer$DataAlbum.prototype.copy_o8535w$ = function (publish_year, image, update_time, user_id, songs, id, title) {
+  createAlbumsServer$DataAlbum.prototype.copy_kjd391$ = function (publish_year, image, update_time, user_id, songs, id, title) {
     return new createAlbumsServer$DataAlbum(publish_year === void 0 ? this.publish_year : publish_year, image === void 0 ? this.image : image, update_time === void 0 ? this.update_time : update_time, user_id === void 0 ? this.user_id : user_id, songs === void 0 ? this.songs : songs, id === void 0 ? this.id : id, title === void 0 ? this.title : title);
   };
   createAlbumsServer$DataAlbum.prototype.toString = function () {
@@ -3112,15 +3418,15 @@ var KOTLINJS = function (_, Kotlin) {
         Exception_init(json.error);
       }
        else {
-        album.id = json.album.id;
+        album.id = Kotlin.Long.fromInt(json.album.id);
         album.creator = ensureNotNull(obtainUserDataServerFromID_0(json.album.user_id, null));
-        return true;
+        return Kotlin.Long.fromInt(json.album.id);
       }
     }
      else {
       Exception_init('Error ' + toString(req.response));
     }
-    return false;
+    return L_1;
   }
   function addSongToAlbumServer$Data(error) {
     this.error = error;
@@ -3152,7 +3458,7 @@ var KOTLINJS = function (_, Kotlin) {
     var req = new XMLHttpRequest();
     req.open('POST', server + '/albums/' + username + '/' + albumId + '/add', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', song.id.toString())]));
+    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', toString(song.id))]));
     req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
@@ -3194,7 +3500,7 @@ var KOTLINJS = function (_, Kotlin) {
     var req = new XMLHttpRequest();
     req.open('POST', server + '/user-lists/' + username + '/' + albumId + '/delete', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', song.id.toString())]));
+    var data = createForm(mapOf_0([to('token', sessionToken), to('songId', toString(song.id))]));
     req.send(data);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
@@ -3208,19 +3514,19 @@ var KOTLINJS = function (_, Kotlin) {
   }
   function updateAlbumsServer(username, sessionToken, album) {
     var tmp$, tmp$_0;
-    var serverlist = obtainAlbumFromID(album.id);
+    var serverlist = obtainAlbumFromID(ensureNotNull(album.id));
     tmp$ = album.content.iterator();
     while (tmp$.hasNext()) {
       var song = tmp$.next();
       if (!ensureNotNull(serverlist).content.contains_11rb$(song)) {
-        addSongToPlayListServer(username, new String_0(), album.id, song);
+        addSongToPlayListServer(username, new String_0(), ensureNotNull(album.id), song);
       }
     }
     tmp$_0 = ensureNotNull(serverlist).content.iterator();
     while (tmp$_0.hasNext()) {
       var song_0 = tmp$_0.next();
       if (!album.content.contains_11rb$(song_0)) {
-        removeSongToPlayListServer(username, new String_0(), album.id, song_0);
+        removeSongToPlayListServer(username, new String_0(), ensureNotNull(album.id), song_0);
       }
     }
   }
@@ -3252,7 +3558,7 @@ var KOTLINJS = function (_, Kotlin) {
   function deleteAlbumsServer(username, sessionToken, album) {
     println('deleteAlbumsServer');
     var req = new XMLHttpRequest();
-    req.open('POST', server + '/albums/' + album.id + '/delete', false);
+    req.open('POST', server + '/albums/' + toString(album.id) + '/delete', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var data = createForm(mapOf_0([to('nick', username), to('token', sessionToken)]));
     req.send(data);
@@ -3350,7 +3656,7 @@ var KOTLINJS = function (_, Kotlin) {
   function deleteSongServer(username, sessionToken, song) {
     println('deleteSongServer');
     var req = new XMLHttpRequest();
-    req.open('POST', server + '/songs/' + song.id + '/delete', false);
+    req.open('POST', server + '/songs/' + toString(song.id) + '/delete', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var data = createForm(mapOf_0([to('token', sessionToken), to('nick', username)]));
     req.send(data);
@@ -3415,261 +3721,11 @@ var KOTLINJS = function (_, Kotlin) {
       throw Exception_init('Error ' + req.status);
     }
   }
-  function isServerOnline2() {
-    return true;
-  }
-  function main(args) {
-  }
-  function test_user() {
-    try {
-      var user = User_init('testJS', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token = doSignUpServer(user);
-      var token2 = doLoginServer('testJS', '1234567');
-      println('Check if equals ' + equals(token, token2).toString());
-      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-        return false;
-      }
-       else
-        throw e;
-    }
-  }
-  function test_logout() {
-    try {
-      var user = User_init('testJS', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token = doSignUpServer(user);
-      doLogoutServer('testJS', token);
-      try {
-        if (doDeleteAccountServer('testJS', token)) {
-          println('Test Error');
-        }
-      }
-       catch (e) {
-        if (Kotlin.isType(e, Exception)) {
-          println(e);
-          println('Test ' + equals(e.message, 'invalidToken').toString());
-        }
-         else
-          throw e;
-      }
-      var token2 = doLoginServer('testJS', '1234567');
-      if (doDeleteAccountServer('testJS', token2)) {
-        println('PASSED');
-        return true;
-      }
-       else {
-        return false;
-      }
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        var token_0 = doLoginServer('testJS', '1234567');
-        doDeleteAccountServer('testJS', token_0);
-        return false;
-      }
-       else
-        throw e;
-    }
-  }
-  function test_following() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var following = getFollowedUsersServer('testJS1');
-      if (!following.isEmpty()) {
-        return false;
-      }
-      var user2 = User_init('testJS2', '1234567');
-      user2.name = 'Test2';
-      user2.email = 'test2@test.com';
-      var token = doSignUpServer(user2);
-      if (!addFollowerToUserServer('testJS1', token1, 'testJS2')) {
-        return false;
-      }
-      if (!isUserFollowedByUserServer('testJS1', 'testJS2')) {
-        return false;
-      }
-      if (isUserFollowedByUserServer('testJS2', 'testJS1')) {
-        return false;
-      }
-      var number = getNumberOfFollowersOfUserServer('testJS2');
-      if (number.toInt() !== 1) {
-        return false;
-      }
-      following = getFollowersOfUserServer('testJS2');
-      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS1')) {
-        return false;
-      }
-      following = getFollowedUsersServer('testJS1');
-      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
-        return false;
-      }
-      if (!deleteFollowerToUserServer('testJS1', '', 'testJS2')) {
-        return false;
-      }
-      following = getFollowedUsersServer('testJS1');
-      if (!following.isEmpty()) {
-        return false;
-      }
-      token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-      token = doLoginServer('testJS2', '1234567');
-      doDeleteAccountServer('testJS2', token);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token_0 = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token_0);
-      token_0 = doLoginServer('testJS2', '1234567');
-      doDeleteAccountServer('testJS2', token_0);
-    }
-    return false;
-  }
-  function test_album() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var albums = obtainAlbumsFromUserServer('testJS1');
-      if (!albums.isEmpty()) {
-        return false;
-      }
-      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
-      if (!createAlbumsServer('testJS1', token1, album)) {
-        return false;
-      }
-      albums = obtainAlbumsFromUserServer('testJS1');
-      if (albums.size === 0 || !equals(albums.get_za3lpa$(0).name, 'testJSAlbum')) {
-        return false;
-      }
-      if (!deleteAlbumsServer('testJS1', token1, album)) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function testfav() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var albums = obtainAlbumsFromUserServer('testJS1');
-      if (!albums.isEmpty()) {
-        return false;
-      }
-      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
-      if (!uploadSongServer('testJS1', token1, song)) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function test_songlist() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var songlist = getFollowedPlaylistsServer('testJS1');
-      if (!songlist.isEmpty()) {
-        return false;
-      }
-      var playlist = new Playlist(L_1, 'myPlaylist', user, '', emptyList(), emptyList());
-      createPlaylistServer('testJS1', token1, playlist);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function test_songs() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var songs = obtainSongsFromUserServer('testJS1');
-      if (!songs.isEmpty()) {
-        return false;
-      }
-      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
-      if (!uploadSongServer('testJS1', token1, song)) {
-        return false;
-      }
-      songs = obtainSongsFromUserServer('testJS1');
-      if (songs.size !== 1 || !equals(songs.get_za3lpa$(0).name, 'TestJSSong')) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
   function main_0(args) {
   }
   function Album(id, name, creator, releaseDate, artLocationUri, content) {
+    if (id === void 0)
+      id = null;
     this.id = id;
     this.name = name;
     this.creator = creator;
@@ -3723,20 +3779,21 @@ var KOTLINJS = function (_, Kotlin) {
     simpleName: 'Song',
     interfaces: [Recommendation]
   };
-  function User() {
-    this.username = null;
+  function User(username) {
+    this.username = username;
     this.name = null;
     this.pictureLocationUri = null;
     this.biography = null;
     this.email = null;
     this.password = null;
     this.birthDate = null;
-    this.country = null;
+    this.verifiedAccount = false;
     this.twitterAccount = null;
     this.facebookAccount = null;
     this.instagramAccount = null;
-    this.admin = null;
-    this.id = null;
+    this.country = null;
+    this.admin = false;
+    this.shareLink = 'http://155.210.13.105:8006/profile?user=' + this.username;
   }
   User.prototype.getTwitterAccountURL = function () {
     return this.twitterAccount != null ? 'https://twitter.com/' + toString(this.twitterAccount) : null;
@@ -3747,9 +3804,6 @@ var KOTLINJS = function (_, Kotlin) {
   User.prototype.getInstagramAccountURL = function () {
     return this.instagramAccount != null ? 'https://www.instagram.com/' + toString(this.instagramAccount) : null;
   };
-  User.prototype.getShareLink = function () {
-    return 'https://www.google.es/';
-  };
   User.$metadata$ = {
     kind: Kind_CLASS,
     simpleName: 'User',
@@ -3757,118 +3811,54 @@ var KOTLINJS = function (_, Kotlin) {
   };
   function User_init(username, password, $this) {
     $this = $this || Object.create(User.prototype);
-    User.call($this);
-    $this.username = username;
+    User.call($this, username);
     $this.password = password;
     return $this;
   }
-  function User_init_0(username, $this) {
+  function User_init_0(username, name, pictureLocationUri, verifiedAccount, $this) {
     $this = $this || Object.create(User.prototype);
-    User.call($this);
-    $this.username = username;
+    User.call($this, username);
+    $this.name = name;
+    $this.verifiedAccount = verifiedAccount;
+    $this.pictureLocationUri = pictureLocationUri;
     return $this;
   }
-  function User_init_1(id, $this) {
+  function User_init_1(username, name, pictureLocationUri, verifiedAccount, email, biography, birthDate, $this) {
     $this = $this || Object.create(User.prototype);
-    User.call($this);
-    $this.id = id;
-    return $this;
-  }
-  function User_init_2(username, name, email, pictureLocationUri, $this) {
-    $this = $this || Object.create(User.prototype);
-    User.call($this);
-    $this.username = username;
+    User.call($this, username);
     $this.name = name;
     $this.email = email;
     $this.pictureLocationUri = pictureLocationUri;
+    $this.verifiedAccount = verifiedAccount;
+    $this.biography = biography;
+    $this.birthDate = birthDate;
+    return $this;
+  }
+  function User_init_2(username, name, pictureLocationUri, email, biography, birthDate, $this) {
+    $this = $this || Object.create(User.prototype);
+    User.call($this, username);
+    $this.name = name;
+    $this.email = email;
+    $this.pictureLocationUri = pictureLocationUri;
+    $this.verifiedAccount = false;
+    $this.biography = biography;
+    $this.birthDate = birthDate;
+    return $this;
+  }
+  function User_init_3(username, password, name, pictureLocationUri, email, biography, birthDate, $this) {
+    $this = $this || Object.create(User.prototype);
+    User.call($this, username);
+    $this.password = password;
+    $this.name = name;
+    $this.email = email;
+    $this.pictureLocationUri = pictureLocationUri;
+    $this.verifiedAccount = false;
+    $this.biography = biography;
+    $this.birthDate = birthDate;
     return $this;
   }
   function ServerEmulator() {
     ServerEmulator_instance = this;
-    this.songList = HashMap_init();
-    this.userList = HashMap_init();
-    this.playlistList = HashMap_init();
-    this.generesList = ArrayList_init();
-    this.albumList = ArrayList_init();
-    this.cancionesFavoritas = HashMap_init();
-    this.artistasSeguidos = HashMap_init();
-    this.playlistSeguidos = HashMap_init();
-    this.recomendaciones = HashMap_init();
-    this.trends = ArrayList_init();
-    this.generos = ArrayList_init();
-    var autor1 = User_init_2('Media', 'Media', 'Right', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
-    var autor2 = User_init_2('Silent', 'Silent', 'Partner', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
-    var autor3 = User_init_2('abelcht', 'Abel ChT', 'Lion', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
-    var autor4 = User_init_2('Prueba', 'PRU', 'sdfdsfd', 'http://storage.googleapis.com/automotive-media/album_art.jpg');
-    var album1 = new Album(L1, 'Jazz', autor1, new Date(2018, 3, 22), 'http://storage.googleapis.com/automotive-media/album_art.jpg', ArrayList_init());
-    var album2 = new Album(L2, 'Blues', autor2, new Date(2017, 6, 27), 'http://storage.googleapis.com/automotive-media/album_art_2.jpg', ArrayList_init());
-    var cancion1 = new Song(L1, 'Jazz in Paris', '', 'http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3', L103000, album1, null, null);
-    var cancion2 = new Song(L2, 'The Messenger', '', 'http://storage.googleapis.com/automotive-media/The_Messenger.mp3', L132000, album2, null, null);
-    var list1 = ArrayList_init();
-    list1.add_11rb$(cancion1);
-    list1.add_11rb$(cancion2);
-    var list2 = ArrayList_init();
-    list2.add_11rb$(cancion1);
-    var playlist1 = new Playlist(L1, 'dfsdfdsfd', autor1, 'http://storage.googleapis.com/automotive-media/album_art_2.jpg', list1, ArrayList_init());
-    var playlist2 = new Playlist(L2, 'dfsdfdsfd', autor1, 'http://storage.googleapis.com/automotive-media/album_art_2.jpg', list2, ArrayList_init());
-    var $receiver = this.userList;
-    var key = ensureNotNull(autor1.username);
-    $receiver.put_xwzc9p$(key, autor1);
-    var $receiver_0 = this.userList;
-    var key_0 = ensureNotNull(autor2.username);
-    $receiver_0.put_xwzc9p$(key_0, autor2);
-    var $receiver_1 = this.userList;
-    var key_1 = ensureNotNull(autor3.username);
-    $receiver_1.put_xwzc9p$(key_1, autor3);
-    var $receiver_2 = this.songList;
-    var key_2 = cancion1.id;
-    $receiver_2.put_xwzc9p$(key_2, cancion1);
-    var $receiver_3 = this.songList;
-    var key_3 = cancion2.id;
-    $receiver_3.put_xwzc9p$(key_3, cancion2);
-    var $receiver_4 = this.playlistList;
-    var key_4 = playlist1.id;
-    $receiver_4.put_xwzc9p$(key_4, playlist1);
-    var $receiver_5 = this.playlistList;
-    var key_5 = playlist2.id;
-    $receiver_5.put_xwzc9p$(key_5, playlist2);
-    var $receiver_6 = this.artistasSeguidos;
-    var key_6 = ensureNotNull(autor3.username);
-    var value = ArrayList_init();
-    $receiver_6.put_xwzc9p$(key_6, value);
-    ensureNotNull(this.artistasSeguidos.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(autor1);
-    ensureNotNull(this.artistasSeguidos.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(autor2);
-    ensureNotNull(this.artistasSeguidos.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(autor3);
-    var $receiver_7 = this.cancionesFavoritas;
-    var key_7 = ensureNotNull(autor3.username);
-    var value_0 = ArrayList_init();
-    $receiver_7.put_xwzc9p$(key_7, value_0);
-    ensureNotNull(this.cancionesFavoritas.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(cancion1);
-    ensureNotNull(this.cancionesFavoritas.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(cancion2);
-    var $receiver_8 = this.playlistSeguidos;
-    var key_8 = ensureNotNull(autor3.username);
-    var value_1 = ArrayList_init();
-    $receiver_8.put_xwzc9p$(key_8, value_1);
-    ensureNotNull(this.playlistSeguidos.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(playlist1);
-    ensureNotNull(this.playlistSeguidos.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(playlist2);
-    var $receiver_9 = this.recomendaciones;
-    var key_9 = ensureNotNull(autor3.username);
-    var value_2 = ArrayList_init();
-    $receiver_9.put_xwzc9p$(key_9, value_2);
-    ensureNotNull(this.recomendaciones.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(playlist1);
-    ensureNotNull(this.recomendaciones.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(playlist2);
-    ensureNotNull(this.recomendaciones.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(autor2);
-    ensureNotNull(this.recomendaciones.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(autor1);
-    ensureNotNull(this.recomendaciones.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(cancion1);
-    ensureNotNull(this.recomendaciones.get_11rb$(ensureNotNull(autor3.username))).add_11rb$(cancion2);
-    this.trends.add_11rb$(cancion1);
-    this.trends.add_11rb$(cancion2);
-    this.generos.add_11rb$(new Pair('Rock', this.trends));
-    this.generesList.add_11rb$('Rock');
-    this.generesList.add_11rb$('Rap');
-    this.generesList.add_11rb$('Trap');
-    this.albumList.add_11rb$(album1);
-    this.albumList.add_11rb$(album2);
   }
   ServerEmulator.$metadata$ = {
     kind: Kind_OBJECT,
@@ -3882,6 +3872,317 @@ var KOTLINJS = function (_, Kotlin) {
     }
     return ServerEmulator_instance;
   }
+  function InstrumentedTestBackEndSpreadYoutMusic() {
+  }
+  InstrumentedTestBackEndSpreadYoutMusic.prototype.UserRequestTest = function () {
+    var username = 'usuarioPruebasAndroid223';
+    var username2 = 'usuarioPruebasAndroid334';
+    var token;
+    var token2;
+    var password = '1234';
+    var user = User_init_3(username, password, 'Prueba', 'd', 'prueba@prupru.com', null, new Date(1998, 1, 1));
+    var user2 = User_init_3(username2, password, 'Prueba', 'd', 'prueb2a@prupru.com', null, new Date(1998, 1, 1));
+    try {
+      token = doSignUpServer(user);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token = doLoginServer(username, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    try {
+      token2 = doSignUpServer(user2);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token2 = doLoginServer(username2, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    doLogoutServer(username, token);
+    token = doLoginServer(username, password);
+    obtainUserDataServer_0(username, '');
+    obtainUserDataServer_0(username, token);
+    try {
+      addFollowerToUserServer(username, token, username2);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'alreadyFollowing')) {
+          println(e.message);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    if (getFollowedUsersServer(username).size !== 1)
+      throw Exception_init('getFollowedUsers');
+    if (!isUserFollowedByUserServer(username, username2))
+      throw Exception_init('isUserFollowedByUserServer');
+    if (!equals(getNumberOfFollowersOfUserServer(username2), L1))
+      throw Exception_init('getNumberOfFollowersOfUserServer');
+    deleteFollowerToUserServer(username, token, username2);
+    doDeleteAccountServer(username, token);
+    doDeleteAccountServer(username2, token2);
+  };
+  InstrumentedTestBackEndSpreadYoutMusic.prototype.AlbumRequestTest = function () {
+    var username = 'usuarioPruebasAndroid555';
+    var username2 = 'usuarioPruebasAndroid444';
+    var token;
+    var token2;
+    var password = '1234';
+    var user = User_init_3(username, password, 'Prueba', 'd', 'prueba@prupru.com', null, new Date(1998, 1, 1));
+    var user2 = User_init_3(username2, password, 'Prueba', 'd', 'prueb2a@prupru.com', null, new Date(1998, 1, 1));
+    var album = new Album(null, 'Spiderman', user, new Date(1998, 1, 1), 'sdf', emptyList());
+    try {
+      token = doSignUpServer(user);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token = doLoginServer(username, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    try {
+      token2 = doSignUpServer(user2);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token2 = doLoginServer(username2, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    var id = createAlbumsServer(username, token, album);
+    obtainAlbumFromID(id);
+    if (obtainAlbumsFromUserServer(username).size !== 1)
+      throw Exception_init('obtainAlbumsFromUserServer');
+    doDeleteAccountServer(username, token);
+    doDeleteAccountServer(username2, token2);
+  };
+  InstrumentedTestBackEndSpreadYoutMusic.prototype.SongsRequestTest = function () {
+    var username = 'usuarioPruebasAndroid666';
+    var username2 = 'usuarioPruebasAndroid777';
+    var token;
+    var token2;
+    var password = '1234';
+    var user = User_init_3(username, password, 'Prueba', 'd', 'prueba@prupru.com', null, new Date(1998, 1, 1));
+    var user2 = User_init_3(username2, password, 'Prueba', 'd', 'prueb2a@prupru.com', null, new Date(1998, 1, 1));
+    var album = new Album(null, 'Spiderman', user, new Date(1998, 1, 1), 'sdf', emptyList());
+    try {
+      token = doSignUpServer(user);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token = doLoginServer(username, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    try {
+      token2 = doSignUpServer(user2);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token2 = doLoginServer(username2, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    var id = createAlbumsServer(username, token, album);
+    var albumpass = obtainAlbumFromID(id);
+    var song = new Song(null, 'nobre', 'df', '', L0, ensureNotNull(albumpass), 'ds', null);
+    var idS = uploadSongServer(username, token, song);
+    var songD = obtainSongFromID(idS);
+    addReproductionToSongServer(username2, token2, idS);
+    setSongFavoutireServer(username2, token2, idS);
+    if (!isSongFavoutireByUserServer(username2, token2, idS))
+      throw Exception_init('isSongFavoutireByUserServer');
+    obtainFavouriteSongsByUserServer(username2, token2);
+    obtainLastSongListenedServer(username2, token2);
+    unSetSongFavoutireServer(username2, token2, idS);
+    deleteSongServer(username, token, ensureNotNull(songD));
+    doDeleteAccountServer(username, token);
+    doDeleteAccountServer(username2, token2);
+  };
+  InstrumentedTestBackEndSpreadYoutMusic.prototype.PlaylistRequestTest = function () {
+    var username = 'usuarioPruebasAndroid888';
+    var username2 = 'usuarioPruebasAndroid999';
+    var token;
+    var token2;
+    var password = '1234';
+    var user = User_init_3(username, password, 'Prueba', 'd', 'prueba@prupru.com', null, new Date(1998, 1, 1));
+    var user2 = User_init_3(username2, password, 'Prueba', 'd', 'prueb2a@prupru.com', null, new Date(1998, 1, 1));
+    var album = new Album(null, 'Spiderman', user, new Date(1998, 1, 1), 'sdf', emptyList());
+    try {
+      token = doSignUpServer(user);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token = doLoginServer(username, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    try {
+      token2 = doSignUpServer(user2);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token2 = doLoginServer(username2, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    var id = createAlbumsServer(username, token, album);
+    var albumpass = obtainAlbumFromID(id);
+    var song = new Song(null, 'nobre', 'df', '', L0, ensureNotNull(albumpass), null, '');
+    var idS = uploadSongServer(username, token, song);
+    var songD = obtainSongFromID(idS);
+    var songList = ArrayList_init();
+    songList.add_11rb$(ensureNotNull(songD));
+    var playlist = new Playlist(null, 'nombre', albumpass.creator, 'sadas', songList, emptyList());
+    var pid = createPlaylistServer(playlist.creator.username, token, playlist);
+    var playlistData = obtainPlaylistDataServer(pid);
+    addFollowerToPlaylistServer(username2, token2, pid);
+    if (!isPlaylistFollowedByUserServer(username2, pid))
+      throw Exception_init('isPlaylistFollowedByUserServer');
+    getNumberOfFollowersOfPlaylistServer(pid);
+    getFollowedPlaylistsServer(username2);
+    obtainUpdatedPlaylistsFollowedByUserServer(username2, token2, L30);
+    deleteFollowerToPlaylistServer(username2, token2, pid);
+    deleteSongServer(username, token, songD);
+    deletePlaylistServer(playlist.creator.username, token, ensureNotNull(playlistData));
+    doDeleteAccountServer(username, token);
+    doDeleteAccountServer(username2, token2);
+  };
+  InstrumentedTestBackEndSpreadYoutMusic.prototype.ComplexRequestsTest = function () {
+    var username = 'usuarioPruebasAndroid10101r';
+    var username2 = 'usuarioPruebasAndroid1010d';
+    var token;
+    var token2;
+    var password = '1234';
+    var user = User_init_3(username, password, 'Prueba', 'd', 'prueba@prupru.com', null, new Date(1998, 1, 1));
+    var user2 = User_init_3(username2, password, 'Prueba', 'd', 'prueb2a@prupru.com', null, new Date(1998, 1, 1));
+    var album = new Album(null, 'Spiderman', user, new Date(1998, 1, 1), 'sdf', emptyList());
+    try {
+      token = doSignUpServer(user);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token = doLoginServer(username, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    try {
+      token2 = doSignUpServer(user2);
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        if (equals(e.message, 'userExists')) {
+          token2 = doLoginServer(username2, password);
+        }
+         else {
+          throw Exception_init_0(e);
+        }
+      }
+       else
+        throw e;
+    }
+    var id = createAlbumsServer(username, token, album);
+    var albumpass = obtainAlbumFromID(id);
+    var song = new Song(null, 'nobre', 'df', '', L0, album, null, '');
+    var idS = uploadSongServer(username, token, song);
+    var songD = obtainSongFromID(idS);
+    var songList = ArrayList_init();
+    songList.add_11rb$(ensureNotNull(songD));
+    var playlist = new Playlist(null, 'nombre', ensureNotNull(albumpass).creator, 'sadas', songList, emptyList());
+    var pid = createPlaylistServer(playlist.creator.username, token, playlist);
+    var playlistData = obtainPlaylistDataServer(pid);
+    addFollowerToPlaylistServer(username2, token2, pid);
+    if (!isPlaylistFollowedByUserServer(username2, pid))
+      throw Exception_init('isPlaylistFollowedByUserServer');
+    getNumberOfFollowersOfPlaylistServer(pid);
+    getFollowedPlaylistsServer(username2);
+    obtainUpdatedPlaylistsFollowedByUserServer(username2, token2, L30);
+    deleteFollowerToPlaylistServer(username2, token2, pid);
+    obtainSongsFromUserServer(albumpass.creator.username);
+    obtainPlaylistsFromUserServer(albumpass.creator.username);
+    obtainRecomendationsForUserServer(username, token, L20);
+    obtainResultForQueryServer(L20, 'gosepumbs', null);
+    obtainResultForQueryServer(L20, 'gosepumbs', 1);
+    obtainPopularByGenreServer(L20);
+    isOtherSessionOpenFromSameUserServer(username, token);
+    obtainGeneresServer();
+    doDeleteAccountServer(username, token);
+    doDeleteAccountServer(username2, token2);
+  };
+  InstrumentedTestBackEndSpreadYoutMusic.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'InstrumentedTestBackEndSpreadYoutMusic',
+    interfaces: []
+  };
+  _.test_user = test_user;
+  _.test_logout = test_logout;
+  _.test_following = test_following;
+  _.test_album = test_album;
+  _.testfav = testfav;
+  _.test_songlist = test_songlist;
+  _.test_songs = test_songs;
+  _.main_kand9s$ = main;
   var package$apis = _.apis || (_.apis = {});
   package$apis.createForm_alv746$ = createForm;
   Object.defineProperty(package$apis, 'server', {
@@ -3901,13 +4202,13 @@ var KOTLINJS = function (_, Kotlin) {
     }
   });
   package$apis.obtainAlbumFromID_s8cxhz$ = obtainAlbumFromID;
-  package$apis.obtainSongFromID_s8cxhz$ = obtainSongFromID;
+  package$apis.obtainSongFromID_2gd3um$ = obtainSongFromID;
   package$apis.obtainUserDataServerFromID_s8cxhz$ = obtainUserDataServerFromID;
   package$apis.obtainUserDataServerFromID_tqiios$ = obtainUserDataServerFromID_0;
   package$apis.obtainUserDataServer_61zpoe$ = obtainUserDataServer;
   package$apis.obtainUserDataServer_jyasbz$ = obtainUserDataServer_0;
   package$apis.obtainSongsFromUserServer_61zpoe$ = obtainSongsFromUserServer;
-  package$apis.obtainPlayListFromIdServer_s8cxhz$ = obtainPlayListFromIdServer;
+  package$apis.obtainPlaylistDataServer_s8cxhz$ = obtainPlaylistDataServer;
   package$apis.obtainPlaylistsFromUserServer_61zpoe$ = obtainPlaylistsFromUserServer;
   package$apis.isServerOnline = isServerOnline;
   package$apis.doLoginServer_puj7f4$ = doLoginServer;
@@ -3937,7 +4238,7 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.obtainPopularSongsServer_s8cxhz$ = obtainPopularSongsServer;
   package$apis.obtainNewSongsFromFollowedArtistOfUserServer_18v4st$ = obtainNewSongsFromFollowedArtistOfUserServer;
   package$apis.obtainTrendSongsServer_s8cxhz$ = obtainTrendSongsServer;
-  package$apis.obtainTrendSongsInUserCountryServer_4wgjuj$ = obtainTrendSongsInUserCountryServer;
+  package$apis.obtainTrendSongsInUserCountryServer_18v4st$ = obtainTrendSongsInUserCountryServer;
   package$apis.obtainUpdatedPlaylistsFollowedByUserServer_18v4st$ = obtainUpdatedPlaylistsFollowedByUserServer;
   package$apis.obtainResultForQueryServer_4k4yms$ = obtainResultForQueryServer;
   package$apis.obtainPopularByGenreServer_s8cxhz$ = obtainPopularByGenreServer;
@@ -3959,31 +4260,24 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.verifyUser_shg59h$ = verifyUser;
   package$apis.deleteSongServer_jecffn$ = deleteSongServer;
   package$apis.doUpdateAccountServer_oqo341$ = doUpdateAccountServer;
-  package$apis.isServerOnline2 = isServerOnline2;
   var package$controller = _.controller || (_.controller = {});
-  package$controller.main_kand9s$ = main;
-  _.test_user = test_user;
-  _.test_logout = test_logout;
-  _.test_following = test_following;
-  _.test_album = test_album;
-  _.testfav = testfav;
-  _.test_songlist = test_songlist;
-  _.test_songs = test_songs;
-  _.main_kand9s$ = main_0;
+  package$controller.main_kand9s$ = main_0;
   var package$models = _.models || (_.models = {});
   package$models.Album = Album;
   package$models.Playlist = Playlist;
   package$models.Recommendation = Recommendation;
   package$models.Song = Song;
   package$models.User_init_puj7f4$ = User_init;
-  package$models.User_init_61zpoe$ = User_init_0;
-  package$models.User_init_s8cxhz$ = User_init_1;
-  package$models.User_init_w74nik$ = User_init_2;
+  package$models.User_init_ii6ut2$ = User_init_0;
+  package$models.User_init_jxwrzd$ = User_init_1;
+  package$models.User_init_op6446$ = User_init_2;
+  package$models.User_init_2cpulk$ = User_init_3;
   package$models.User = User;
   var package$test = _.test || (_.test = {});
   Object.defineProperty(package$test, 'ServerEmulator', {
     get: ServerEmulator_getInstance
   });
+  package$test.InstrumentedTestBackEndSpreadYoutMusic = InstrumentedTestBackEndSpreadYoutMusic;
   server = 'http://155.210.13.105:7800';
   dataServerAdress = 'http://155.210.13.105:7480';
   songLocationUploadPrefix = 'song_';
@@ -3992,7 +4286,7 @@ var KOTLINJS = function (_, Kotlin) {
   albumUploadPrefix = 'album_';
   playlistUploadPrefix = 'playlist_';
   s3 = null;
-  main_0([]);
+  main([]);
   Kotlin.defineModule('KOTLINJS', _);
   return _;
 }(typeof KOTLINJS === 'undefined' ? {} : KOTLINJS, kotlin);

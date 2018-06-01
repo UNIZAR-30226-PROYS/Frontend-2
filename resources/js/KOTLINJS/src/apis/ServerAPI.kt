@@ -225,18 +225,22 @@ fun obtainAlbumFromID(id: Long): Album? {
                              val id: Long, val title: String, val songs: LongArray)
 
         data class Data(val album: AlbumData, val error: String)
-
+        println(req.responseText)
         val json = JSON.parse<Data>(req.responseText)
 
         if (json.error == "ok") {
             val songs = mutableListOf<Song>()
             for(i in json.album.songs.toList()){
-                val song = obtainSongFromID(i)
+                val song = obtainSongFromID(i, false)
                 if (song != null) {
                     songs.add(song)
                 }
             }
-            return Album(json.album.id, json.album.title, obtainUserDataServerFromID(json.album.user_id, null)!!, Date(), getAlbumCoverPath(json.album.id), songs)
+            val album = Album(json.album.id, json.album.title, obtainUserDataServerFromID(json.album.user_id, null)!!, Date(), getAlbumCoverPath(json.album.id), songs)
+            for(i in songs){
+                i.album = album
+            }
+            return album
         } else {
             Exception(json.error)
         }
@@ -246,17 +250,22 @@ fun obtainAlbumFromID(id: Long): Album? {
     return null
 }
 
-fun obtainSongFromID(id: Long): Song? {
+fun obtainSongFromID(id: Long, album: Boolean = true): Song? {
     val req = XMLHttpRequest()
     req.open("GET", "$server/songs/$id", false)
     req.send(null)
     if (req.status.compareTo(200) == 0) {
-        data class DataSong(val country: String, val upload_time: Long, val id: Long, val albumId: Long, val title: String, val user_id: Long)
+        data class DataSong(val country: String, val upload_time: Long, val id: Long, val album_id: Long, val title: String, val user_id: Long)
         data class Data(val song: DataSong, val error: String)
         val json = JSON.parse<Data>(req.responseText)
         if (json.error == "ok"){
-            return Song(json.song.id,json.song.title,json.song.country, getSongLocationPath(json.song.id), 0,
-                    obtainAlbumFromID(json.song.albumId), "", getSongLyricsPath(json.song.id))
+            if (album) {
+                return Song(json.song.id, json.song.title, json.song.country, getSongLocationPath(json.song.id), 0,
+                        obtainAlbumFromID(json.song.album_id), "", getSongLyricsPath(json.song.id))
+            }else{
+                return Song(json.song.id, json.song.title, json.song.country, getSongLocationPath(json.song.id), 0,
+                        null, "", getSongLyricsPath(json.song.id))
+            }
         }else{
             Exception(json.error)}
     }
@@ -279,12 +288,12 @@ fun obtainUserDataServerFromID(userID: Long, sessionToken: String? = null): User
                             val intragram: String, val admin: Boolean)
         data class Data(val profile: UserData, val error: Boolean)
         val json = JSON.parse<Data>(req.responseText)
-        val user = User(json.profile.nick,json.profile.user, json.profile.mail!!, getUserProfilePicturePath(json.profile.bio))
-        user.biography = json.profile.bio
+        var userDate: Date? = null
         if (json.profile.birth_date.toString() != "-1") {
             val date = json.profile.birth_date.split('-')
-            user.birthDate = Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
+            userDate= Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
         }
+        val user = User(json.profile.nick,json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified,json.profile.mail!!,json.profile.bio,userDate)
         user.country = json.profile.country
         user.facebookAccount = json.profile.facebook
         user.twitterAccount = json.profile.twitter
@@ -320,12 +329,12 @@ fun obtainUserDataServer(username: String, sessionToken: String?): User? {
                             val intragram: String, val admin: Boolean)
         data class Data(val profile: UserData, val error: Boolean)
         val json = JSON.parse<Data>(req.responseText)
-        var user = User(json.profile.nick,json.profile.user, json.profile.mail!!, getUserProfilePicturePath(json.profile.bio))
-        user.biography = json.profile.bio
+        var userDate: Date? = null
         if (json.profile.birth_date.toString() != "-1") {
-            var date = json.profile.birth_date.split('-')
-            user.birthDate = Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
+            val date = json.profile.birth_date.split('-')
+            userDate= Date(date[0].toInt(), date[1].toInt(), date[2].toInt())
         }
+        val user = User(json.profile.nick,json.profile.user, getUserProfilePicturePath(json.profile.bio), json.profile.verified,json.profile.mail!!,json.profile.bio,userDate)
         user.country = json.profile.country
         user.country = json.profile.country
         user.facebookAccount = json.profile.facebook
@@ -377,7 +386,7 @@ fun obtainSongsFromUserServer(username: String): List<Song> {
  * Warning: esta operación puede ser costosa en tiempo
  */
 //@Throws(Exception::class)
-fun obtainPlayListFromIdServer(id: Long): Playlist? {
+fun obtainPlaylistDataServer(id: Long): Playlist? {
     val req = XMLHttpRequest()
     req.open("GET", "$server/songs/$id", false)
     if (req.status.compareTo(200) == 0) {
@@ -420,7 +429,7 @@ fun obtainPlaylistsFromUserServer(username: String): List<Playlist> {
         val json = JSON.parse<Data>(req.responseText)
         if (json.error == "ok"){
             for (i in json.id.toList()) {
-                val songlist = obtainPlayListFromIdServer(i)
+                val songlist = obtainPlaylistDataServer(i)
                 if (songlist != null) {
                     result.add(songlist)
                 }
@@ -709,7 +718,7 @@ fun deleteFollowerToUserServer(username: String, sessionToken: String, followed:
     val req = XMLHttpRequest()
     req.open("POST", "$server/users/$username/unfollow/$followed", false)
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-    req.send(null)
+    req.send("token=$sessionToken")
     if (req.status.compareTo(200) == 0) {
         println(req.responseText)
         data class Data(val error: String)
@@ -741,7 +750,7 @@ fun getFollowedPlaylistsServer(username: String): List<Playlist> {
         val json = JSON.parse<Data>(req.responseText)
         if (json.error == "ok"){
             for (i in json.id.toList()) {
-                val songlist = obtainPlayListFromIdServer(i)
+                val songlist = obtainPlaylistDataServer(i)
                 if (songlist != null) {
                     result.add(songlist)
                 }
@@ -750,7 +759,7 @@ fun getFollowedPlaylistsServer(username: String): List<Playlist> {
         }else{
             Exception(json.error)}
     }
-    return ServerEmulator.playlistSeguidos[username]!!
+    return listOf()
 
 }
 
@@ -944,7 +953,7 @@ fun getFollowersOfPlaylistServer(playlist: Long): List<User> {
 
 
     //@Throws(Exception::class)
-    fun uploadSongServer(username: String, sessionToken: String, song: Song): Boolean {
+    fun uploadSongServer(username: String, sessionToken: String, song: Song): Long {
         println("Upload Song")
         var req = XMLHttpRequest()
         req.open("POST", "$server/songs/$username/create", false)
@@ -954,21 +963,21 @@ fun getFollowersOfPlaylistServer(playlist: Long): List<User> {
             data = createForm(mapOf("token" to sessionToken, "title" to song.name, "albumID" to null,
                     "country" to song.country))
         }else{
-            data = createForm(mapOf("token" to sessionToken, "title" to song.name, "albumID" to song.album.id.toString(),
+            data = createForm(mapOf("token" to sessionToken, "title" to song.name, "albumID" to song.album!!.id.toString(),
                     "country" to song.country))
         }
 
         req.send(data)
         if (req.status.compareTo(200) == 0) {
             println(req.responseText)
-            data class DataSong(val country: String, val upload_time: Long, val id: Long, val title: String, val user_id: Long)
+            data class DataSong(val country: String, val upload_time: Long, val id: Int, val title: String, val user_id: Long)
             data class Data(val song: DataSong, val error: String)
             val json = JSON.parse<Data>(req.responseText)
             if (json.error != "ok"){
                 throw Exception(json.error)
             }
-            song.id = json.song.id
-            return true
+            song.id = json.song.id.toLong()
+            return json.song.id.toLong()
         } else {
             throw Exception("Error ${req.status}")
         }
@@ -1013,7 +1022,7 @@ fun  numbeOfSavoriteSongsByUserServer(username: String, sessionToken: String):In
 //@Throws(Exception::class)
     fun obtainRecomendationsForUserServer(username: String, sessionToken: String, cantidad: Long): List<Recommendation>? {
 //TODO:
-        return ServerEmulator.recomendaciones[username]
+        return listOf()
     }
 
     /**
@@ -1141,9 +1150,9 @@ fun  numbeOfSavoriteSongsByUserServer(username: String, sessionToken: String):In
      * Devuelve las canciones populares en el pais de origen del usuario (ultimo dia o ultimos dias)
      */
 //@Throws(Exception::class)
-    fun obtainTrendSongsInUserCountryServer(username: String, cantidad: Long): List<Song>? {
+    fun obtainTrendSongsInUserCountryServer(username: String, sessionToken: String, cantidad: Long): List<Song>? {
         println("obtainTrendSongsInUserCountryServer")
-        val user = obtainUserDataServer(username, null)
+        val user = obtainUserDataServer(username, sessionToken)
         val req = XMLHttpRequest()
         req.open("GET", "$server/songs/popular/${user!!.country}/?n=$cantidad", false)
         req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -1184,7 +1193,7 @@ fun  numbeOfSavoriteSongsByUserServer(username: String, sessionToken: String):In
 //@Throws(Exception::class)
     fun obtainUpdatedPlaylistsFollowedByUserServer(username: String, sessionToken: String, cantidad: Long): List<Playlist>? {
 //TODO:
-        return ServerEmulator.playlistSeguidos[username]
+        return listOf()
     }
 
     /**
@@ -1311,7 +1320,7 @@ return list
 //@Throws(Exception::class)
     fun obtainPopularByGenreServer(cantidad: Long): List<Pair<String, List<Recommendation>>>? {
 //TODO:
-        return ServerEmulator.generos
+        return listOf()
     }
 
     /**
@@ -1367,29 +1376,34 @@ fun isOtherSessionOpenFromSameUserServer(username: String, sessionToken: String)
         } else {
             Exception("Error")
         }
-        return ServerEmulator.songList[1]
+        return null
     }
 
     /**
      * Crea una lista en el servidor
      */
 //@Throws(Exception::class)
-    fun createPlaylistServer(username: String, sessionToken: String, playlist: Playlist) {
+    fun createPlaylistServer(username: String, sessionToken: String, playlist: Playlist):Long {
         println("createPlaylistServer")
         var req = XMLHttpRequest()
         req.open("PUT", "$server/user-lists/$username/create?token=$sessionToken&title=${playlist.name}", false)
         req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
         req.send(null)
         if (req.status.compareTo(200) == 0) {
-            data class Data(val error: String, val id: Long)
-
+            data class DataList(val creation_time: Long, val amount: Int,val author: Int, val id: Int)
+            data class Data(val error: String, val list: DataList)
             val json = JSON.parse<Data>(req.responseText)
             if (json.error != "ok") {
                 Exception(json.error)
-            } else {
+            }else {
+                playlist.id = json.list.id.toLong()
+                return json.list.id.toLong()
+            }
+
+        }else {
                 Exception("Error")
             }
-        }
+        return -1
     }
 
     /**
@@ -1457,15 +1471,15 @@ fun removeSongToPlayListServer(username: String, sessionToken: String, playlistI
     // CAREFULL NEED TESTING
 //@Throws(Exception::class)
     fun updatePlaylistServer(username: String, sessionToken: String, playlist: Playlist) {
-        val serverlist = obtainPlayListFromIdServer(playlist.id)
+        val serverlist = obtainPlaylistDataServer(playlist.id!!)
         for (song in playlist.content){
             if (song !in serverlist!!.content){
-                addSongToPlayListServer(username, String(),playlist.id,song)
+                addSongToPlayListServer(username, String(),playlist.id!!,song)
             }
         }
         for (song in serverlist!!.content){
             if (song !in playlist.content){
-                removeSongToPlayListServer(username, String(),playlist.id,song)
+                removeSongToPlayListServer(username, String(),playlist.id!!,song)
             }
         }
     }
@@ -1473,7 +1487,7 @@ fun removeSongToPlayListServer(username: String, sessionToken: String, playlistI
     //@Throws(Exception::class)
     fun obtainGeneresServer(): List<String> {
         //TODO:
-        return ServerEmulator.generesList
+        return listOf()
     }
 
     //@Throws(Exception::class)
@@ -1499,12 +1513,12 @@ fun removeSongToPlayListServer(username: String, sessionToken: String, playlistI
         } else {
             Exception("Error ${req.response.toString()}")
         }
-        return ServerEmulator.albumList
+        return listOf()
     }
 
 
     //@Throws(Exception::class)
-    fun createAlbumsServer(username: String, sessionToken: String, album: Album):Boolean {
+    fun createAlbumsServer(username: String, sessionToken: String, album: Album):Long {
         var req = XMLHttpRequest()
         req.open("POST", "$server/albums/$username/create", false)
         req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
@@ -1516,7 +1530,7 @@ fun removeSongToPlayListServer(username: String, sessionToken: String, playlistI
                                  val update_time: Long,
                                  val user_id: Long,
                                  val songs: List<String>,
-                                 val id: Long,
+                                 val id: Int,
                                  val title: String)
             data class Data (val album: DataAlbum, val error: String)
 
@@ -1524,14 +1538,14 @@ fun removeSongToPlayListServer(username: String, sessionToken: String, playlistI
             if (json.error != "ok") {
                 Exception(json.error)
             }else{
-                album.id = json.album.id
+                album.id = json.album.id.toLong()
                 album.creator = obtainUserDataServerFromID(json.album.user_id, null)!!
-                return true
+                return json.album.id.toLong()
             }
         }else {
                 Exception("Error ${req.response.toString()}")
             }
-        return false
+        return -1
     }
 
 fun addSongToAlbumServer(username: String, sessionToken: String, albumId: Long, song: Song){
@@ -1570,15 +1584,15 @@ fun removeSongToAlbumServer(username: String, sessionToken: String, albumId: Lon
 }
     //@Throws(Exception::class)
     fun updateAlbumsServer(username: String, sessionToken: String, album: Album) {
-        val serverlist = obtainAlbumFromID(album.id)
+        val serverlist = obtainAlbumFromID(album.id!!)
         for (song in album.content){
             if (song !in serverlist!!.content){
-                addSongToPlayListServer(username, String(),album.id,song)
+                addSongToPlayListServer(username, String(),album.id!!,song)
             }
         }
         for (song in serverlist!!.content){
             if (song !in album.content){
-                removeSongToPlayListServer(username, String(),album.id,song)
+                removeSongToPlayListServer(username, String(),album.id!!,song)
             }
         }
     }

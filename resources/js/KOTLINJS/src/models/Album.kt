@@ -7,10 +7,11 @@ import kotlin.js.Date
  */
 
 class Album(
-        var id:Long,
+        var id:Long? = null,
         val name: String,
         var creator: User,
         val releaseDate: Date,
         var artLocationUri : String,
         var content: List<Song>
+
 )
