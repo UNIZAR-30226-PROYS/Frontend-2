@@ -115,7 +115,25 @@ class InstrumentedTestBackEndSpreadYoutMusic {
 
         obtainAlbumFromID(id)
 
-        if (obtainAlbumsFromUserServer(username).size != 1) throw Exception("obtainAlbumsFromUserServer")
+        //if (obtainAlbumsFromUserServer(username).size != 1) throw Exception("obtainAlbumsFromUserServer")
+
+        val song = Song(null,"nobre", "df", "", 0, null, null,"")
+
+        val idS = uploadSongServer(username, token, song)
+        val songD = obtainSongFromID(idS)
+
+        addSongToAlbumServer(username,token,id,song)
+        var album2 = obtainAlbumFromID(id)
+
+        if(album2!!.content.size != 1 ) throw Exception("obtainAlbumsFromUserServer")
+
+        removeSongToAlbumServer(username,token,id,song)
+
+        album2 = obtainAlbumFromID(id)
+
+        if(album2!!.content.isNotEmpty()) throw Exception("obtainAlbumsFromUserServer")
+
+        deleteAlbumsServer(username, token,album2)
 
         doDeleteAccountServer(username, token)
         doDeleteAccountServer(username2, token2)

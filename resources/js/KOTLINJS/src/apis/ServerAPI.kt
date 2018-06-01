@@ -93,7 +93,6 @@ private fun getAlbumCoverPath(albumId: Long): String {
     return "$dataServerAdress/$albumUploadPrefix$albumId"
 }
 
-@JsModule("S3")
 external  fun ListBuckets(s3: Any)
 external fun s3Connection(): Any
 external fun UploadFile(s3: Any, file: String, key: String):Boolean
@@ -388,7 +387,8 @@ fun obtainSongsFromUserServer(username: String): List<Song> {
 //@Throws(Exception::class)
 fun obtainPlaylistDataServer(id: Long): Playlist? {
     val req = XMLHttpRequest()
-    req.open("GET", "$server/songs/$id", false)
+    req.open("GET", "$server/users-lists/$id", false)
+    req.send(null)
     if (req.status.compareTo(200) == 0) {
         //val id: Long, val name: String, val creator: User, val artLocationUri: String, val content: List<Song>
         data class Data(val title: String, val author: Long, val creation_time: Long, val songs_size: Int,
@@ -413,6 +413,7 @@ fun obtainPlaylistDataServer(id: Long): Playlist? {
         }else{
             Exception(json.error)}
     }
+    Exception("Error ${req.status.toString()}")
     return null
 }
 
@@ -423,6 +424,7 @@ fun obtainPlaylistDataServer(id: Long): Playlist? {
 fun obtainPlaylistsFromUserServer(username: String): List<Playlist> {
     val req = XMLHttpRequest()
     req.open("GET", "$server/user-lists/$username/lists", false)
+    req.send(null)
     val result = mutableListOf<Playlist>()
     if (req.status.compareTo(200) == 0) {
         data class Data(val size: Int, val id: LongArray, val error: String)
@@ -445,7 +447,8 @@ fun obtainPlaylistsFromUserServer(username: String): List<Playlist> {
 fun isServerOnline(): Boolean {
     try {
         var req = XMLHttpRequest()
-        req.open("GET", "$server/users/lAngelP", false)
+        req.open("GET", "$server/users/abel", false)
+        req.send(null)
         println(req.status)
         if(req.status.toInt() != 200){
             println("error")
@@ -1372,7 +1375,11 @@ fun isOtherSessionOpenFromSameUserServer(username: String, sessionToken: String)
                     }
                 }
             }
-            return result[-1]
+            val index = result.lastIndex
+            if (index ==  -1){
+                return null
+            }
+            return result[index]
         } else {
             Exception("Error")
         }
@@ -1568,7 +1575,7 @@ fun addSongToAlbumServer(username: String, sessionToken: String, albumId: Long, 
 fun removeSongToAlbumServer(username: String, sessionToken: String, albumId: Long, song: Song){
     println("removeSongToAlbumServers")
     var req = XMLHttpRequest()
-    req.open("POST", "$server/user-lists/$username/$albumId/delete", false)
+    req.open("POST", "$server/albums/$username/$albumId/delete", false)
     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
     var data = createForm(mapOf("token" to sessionToken, "songId" to song.id.toString()))
     req.send(data)

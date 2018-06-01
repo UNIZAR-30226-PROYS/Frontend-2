@@ -1,4 +1,4 @@
-module.exports.s3Connection = function s3Connection(){
+function s3Connection(){
     var AWS = require('aws-sdk');
     var ep = new AWS.Endpoint("http://155.210.13.105:7480");
     AWS.config.update({
@@ -14,15 +14,15 @@ module.exports.s3Connection = function s3Connection(){
         region: 'eu-west-1',
         sslEnable: false});
     return s3
-    };
+    }
 
-module.exports.UploadFile= function UploadFile(s3, file, key) {
+function UploadFile(s3, file, key) {
     var uploadParams = {Bucket: "Public", Key: key, Body: "", ACL: "public-read"};
     var fs = require('fs');
     var fileStream = fs.createReadStream(file);
     fileStream.on('error', function(err) {
         console.log('File Error', err);
-    });
+    })
     uploadParams.Body = fileStream;
 
 // call S3 to retrieve upload file to specified bucket
@@ -37,7 +37,7 @@ module.exports.UploadFile= function UploadFile(s3, file, key) {
     });
 
 };
-module.exports.DeleteFile= function DeleteFile(s3, key){
+function DeleteFile(s3, key){
     var params = {
         Bucket: "Public",
         Key: key
@@ -56,8 +56,8 @@ module.exports.DeleteFile= function DeleteFile(s3, key){
         }
         */
     });
-};
-module.exports.ListsBuckets = function ListsBuckets(s3){
+}
+function ListsBuckets(s3){
     s3.listBuckets(function(err, data) {
         if (err) {
             console.log("Error", err);
@@ -65,4 +65,4 @@ module.exports.ListsBuckets = function ListsBuckets(s3){
             console.log("Bucket List", data.Buckets);
         }
     });
-};
+}

@@ -3,25 +3,26 @@ if (typeof kotlin === 'undefined') {
 }
 var KOTLINJS = function (_, Kotlin) {
   'use strict';
-  var equals = Kotlin.equals;
+  var String_0 = String;
   var println = Kotlin.kotlin.io.println_s8jyv4$;
   var toString = Kotlin.toString;
-  var Exception = Kotlin.kotlin.Exception;
-  var L0 = Kotlin.Long.ZERO;
   var ensureNotNull = Kotlin.ensureNotNull;
-  var L_1 = Kotlin.Long.NEG_ONE;
-  var String_0 = String;
   var Kind_CLASS = Kotlin.Kind.CLASS;
+  var equals = Kotlin.equals;
   var toList = Kotlin.kotlin.collections.toList_se6h4x$;
   var Exception_init = Kotlin.kotlin.Exception_init_pdl1vj$;
+  var L0 = Kotlin.Long.ZERO;
   var split = Kotlin.kotlin.text.split_o64adg$;
   var toInt = Kotlin.kotlin.text.toInt_pdl1vz$;
+  var Exception = Kotlin.kotlin.Exception;
   var to = Kotlin.kotlin.to_ujzrz7$;
   var mapOf = Kotlin.kotlin.collections.mapOf_x2b85n$;
   var mapOf_0 = Kotlin.kotlin.collections.mapOf_qfcya0$;
   var toList_0 = Kotlin.kotlin.collections.toList_7wnvza$;
   var toLong = Kotlin.kotlin.text.toLong_pdl1vz$;
   var ArrayList_init = Kotlin.kotlin.collections.ArrayList_init_ww73n8$;
+  var get_lastIndex = Kotlin.kotlin.collections.get_lastIndex_55thoc$;
+  var L_1 = Kotlin.Long.NEG_ONE;
   var iterator = Kotlin.kotlin.js.iterator_s8jyvk$;
   var Kind_INTERFACE = Kotlin.Kind.INTERFACE;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
@@ -29,256 +30,6 @@ var KOTLINJS = function (_, Kotlin) {
   var L1 = Kotlin.Long.ONE;
   var L30 = Kotlin.Long.fromInt(30);
   var L20 = Kotlin.Long.fromInt(20);
-  function test_user() {
-    try {
-      var user = User_init('testJS', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token = doSignUpServer(user);
-      var token2 = doLoginServer('testJS', '1234567');
-      println('Check if equals ' + equals(token, token2).toString());
-      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-        return false;
-      }
-       else
-        throw e;
-    }
-  }
-  function test_logout() {
-    try {
-      var user = User_init('testJS', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token = doSignUpServer(user);
-      doLogoutServer('testJS', token);
-      try {
-        if (doDeleteAccountServer('testJS', token)) {
-          println('Test Error');
-        }
-      }
-       catch (e) {
-        if (Kotlin.isType(e, Exception)) {
-          println(e);
-          println('Test ' + equals(e.message, 'invalidToken').toString());
-        }
-         else
-          throw e;
-      }
-      var token2 = doLoginServer('testJS', '1234567');
-      if (doDeleteAccountServer('testJS', token2)) {
-        println('PASSED');
-        return true;
-      }
-       else {
-        return false;
-      }
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        var token_0 = doLoginServer('testJS', '1234567');
-        doDeleteAccountServer('testJS', token_0);
-        return false;
-      }
-       else
-        throw e;
-    }
-  }
-  function test_following() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var following = getFollowedUsersServer('testJS1');
-      if (!following.isEmpty()) {
-        return false;
-      }
-      var user2 = User_init('testJS2', '1234567');
-      user2.name = 'Test2';
-      user2.email = 'test2@test.com';
-      var token = doSignUpServer(user2);
-      if (!addFollowerToUserServer('testJS1', token1, 'testJS2')) {
-        return false;
-      }
-      if (!isUserFollowedByUserServer('testJS1', 'testJS2')) {
-        return false;
-      }
-      if (isUserFollowedByUserServer('testJS2', 'testJS1')) {
-        return false;
-      }
-      var number = getNumberOfFollowersOfUserServer('testJS2');
-      if (number.toInt() !== 1) {
-        return false;
-      }
-      following = getFollowersOfUserServer('testJS2');
-      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS1')) {
-        return false;
-      }
-      following = getFollowedUsersServer('testJS1');
-      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
-        return false;
-      }
-      if (!deleteFollowerToUserServer('testJS1', '', 'testJS2')) {
-        return false;
-      }
-      following = getFollowedUsersServer('testJS1');
-      if (!following.isEmpty()) {
-        return false;
-      }
-      token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-      token = doLoginServer('testJS2', '1234567');
-      doDeleteAccountServer('testJS2', token);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token_0 = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token_0);
-      token_0 = doLoginServer('testJS2', '1234567');
-      doDeleteAccountServer('testJS2', token_0);
-    }
-    return false;
-  }
-  function test_album() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var albums = obtainAlbumsFromUserServer('testJS1');
-      if (!albums.isEmpty()) {
-        return false;
-      }
-      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
-      createAlbumsServer('testJS1', token1, album);
-      albums = obtainAlbumsFromUserServer('testJS1');
-      if (albums.size === 0 || !equals(albums.get_za3lpa$(0).name, 'testJSAlbum')) {
-        return false;
-      }
-      if (!deleteAlbumsServer('testJS1', token1, album)) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function testfav() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var albums = obtainAlbumsFromUserServer('testJS1');
-      if (!albums.isEmpty()) {
-        return false;
-      }
-      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
-      uploadSongServer('testJS1', token1, song);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
-  function test_songlist() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var songlist = getFollowedPlaylistsServer('testJS1');
-      if (!songlist.isEmpty()) {
-        return false;
-      }
-      var playlist = new Playlist(L_1, 'myPlaylist', user, '', emptyList(), emptyList());
-      createPlaylistServer('testJS1', token1, playlist);
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function test_songs() {
-    try {
-      var user = User_init('testJS1', '1234567');
-      user.name = 'Test1';
-      user.email = 'test@test.com';
-      var token1 = doSignUpServer(user);
-      var songs = obtainSongsFromUserServer('testJS1');
-      if (!songs.isEmpty()) {
-        return false;
-      }
-      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
-      uploadSongServer('testJS1', token1, song);
-      songs = obtainSongsFromUserServer('testJS1');
-      if (songs.size !== 1 || !equals(songs.get_za3lpa$(0).name, 'TestJSSong')) {
-        return false;
-      }
-      return true;
-    }
-     catch (e) {
-      if (Kotlin.isType(e, Exception)) {
-        println(e);
-      }
-       else
-        throw e;
-    }
-    finally {
-      var token = doLoginServer('testJS1', '1234567');
-      doDeleteAccountServer('testJS1', token);
-    }
-    return false;
-  }
-  function main(args) {
-    var Test = new InstrumentedTestBackEndSpreadYoutMusic();
-    Test.UserRequestTest();
-    Test.SongsRequestTest();
-    Test.AlbumRequestTest();
-    Test.ComplexRequestsTest();
-    Test.PlaylistRequestTest();
-  }
   function createForm(mapa) {
     var tmp$, tmp$_0;
     var result = new String_0();
@@ -942,6 +693,7 @@ var KOTLINJS = function (_, Kotlin) {
   obtainSongsFromUserServer$Data.prototype.equals = function (other) {
     return this === other || (other !== null && (typeof other === 'object' && (Object.getPrototypeOf(this) === Object.getPrototypeOf(other) && (Kotlin.equals(this.size, other.size) && Kotlin.equals(this.songs, other.songs) && Kotlin.equals(this.error, other.error)))));
   };
+  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   function obtainSongsFromUserServer(username) {
     var tmp$;
     println('obtainSongsFromUserServer');
@@ -1036,7 +788,8 @@ var KOTLINJS = function (_, Kotlin) {
   function obtainPlaylistDataServer(id) {
     var tmp$, tmp$_0;
     var req = new XMLHttpRequest();
-    req.open('GET', server + '/songs/' + id, false);
+    req.open('GET', server + '/users-lists/' + id, false);
+    req.send(null);
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
       if (equals(json.error, 'ok')) {
@@ -1064,6 +817,7 @@ var KOTLINJS = function (_, Kotlin) {
         Exception_init(json.error);
       }
     }
+    Exception_init('Error ' + req.status.toString());
     return null;
   }
   function obtainPlaylistsFromUserServer$Data(size, id, error) {
@@ -1105,6 +859,7 @@ var KOTLINJS = function (_, Kotlin) {
     var tmp$;
     var req = new XMLHttpRequest();
     req.open('GET', server + '/user-lists/' + username + '/lists', false);
+    req.send(null);
     var result = ArrayList_init();
     if (Kotlin.primitiveCompareTo(req.status, 200) === 0) {
       var json = JSON.parse(req.responseText);
@@ -1128,7 +883,8 @@ var KOTLINJS = function (_, Kotlin) {
   function isServerOnline() {
     try {
       var req = new XMLHttpRequest();
-      req.open('GET', server + '/users/lAngelP', false);
+      req.open('GET', server + '/users/abel', false);
+      req.send(null);
       println(req.status);
       if (req.status !== 200) {
         println('error');
@@ -3016,7 +2772,11 @@ var KOTLINJS = function (_, Kotlin) {
           }
         }
       }
-      return result.get_za3lpa$(-1);
+      var index = get_lastIndex(result);
+      if (index === -1) {
+        return null;
+      }
+      return result.get_za3lpa$(index);
     }
      else {
       Exception_init('Error');
@@ -3498,7 +3258,7 @@ var KOTLINJS = function (_, Kotlin) {
   function removeSongToAlbumServer(username, sessionToken, albumId, song) {
     println('removeSongToAlbumServers');
     var req = new XMLHttpRequest();
-    req.open('POST', server + '/user-lists/' + username + '/' + albumId + '/delete', false);
+    req.open('POST', server + '/albums/' + username + '/' + albumId + '/delete', false);
     req.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     var data = createForm(mapOf_0([to('token', sessionToken), to('songId', toString(song.id))]));
     req.send(data);
@@ -3721,7 +3481,252 @@ var KOTLINJS = function (_, Kotlin) {
       throw Exception_init('Error ' + req.status);
     }
   }
+  function main(args) {
+  }
+  function test_user() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      var token2 = doLoginServer('testJS', '1234567');
+      println('Check if equals ' + equals(token, token2).toString());
+      println('Check if deleted ' + toString(doDeleteAccountServer('testJS', token)));
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_logout() {
+    try {
+      var user = User_init('testJS', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token = doSignUpServer(user);
+      doLogoutServer('testJS', token);
+      try {
+        if (doDeleteAccountServer('testJS', token)) {
+          println('Test Error');
+        }
+      }
+       catch (e) {
+        if (Kotlin.isType(e, Exception)) {
+          println(e);
+          println('Test ' + equals(e.message, 'invalidToken').toString());
+        }
+         else
+          throw e;
+      }
+      var token2 = doLoginServer('testJS', '1234567');
+      if (doDeleteAccountServer('testJS', token2)) {
+        println('PASSED');
+        return true;
+      }
+       else {
+        return false;
+      }
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        var token_0 = doLoginServer('testJS', '1234567');
+        doDeleteAccountServer('testJS', token_0);
+        return false;
+      }
+       else
+        throw e;
+    }
+  }
+  function test_following() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var following = getFollowedUsersServer('testJS1');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      var user2 = User_init('testJS2', '1234567');
+      user2.name = 'Test2';
+      user2.email = 'test2@test.com';
+      var token = doSignUpServer(user2);
+      if (!addFollowerToUserServer('testJS1', token1, 'testJS2')) {
+        return false;
+      }
+      if (!isUserFollowedByUserServer('testJS1', 'testJS2')) {
+        return false;
+      }
+      if (isUserFollowedByUserServer('testJS2', 'testJS1')) {
+        return false;
+      }
+      var number = getNumberOfFollowersOfUserServer('testJS2');
+      if (number.toInt() !== 1) {
+        return false;
+      }
+      following = getFollowersOfUserServer('testJS2');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS1')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS1');
+      if (following.size !== 1 || !equals(following.get_za3lpa$(0).username, 'testJS2')) {
+        return false;
+      }
+      if (!deleteFollowerToUserServer('testJS1', '', 'testJS2')) {
+        return false;
+      }
+      following = getFollowedUsersServer('testJS1');
+      if (!following.isEmpty()) {
+        return false;
+      }
+      token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+      token = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token_0 = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token_0);
+      token_0 = doLoginServer('testJS2', '1234567');
+      doDeleteAccountServer('testJS2', token_0);
+    }
+    return false;
+  }
+  function test_album() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var albums = obtainAlbumsFromUserServer('testJS1');
+      if (!albums.isEmpty()) {
+        return false;
+      }
+      var album = new Album(L0, 'testJSAlbum', ensureNotNull(obtainUserDataServer_0('testJS1', null)), new Date(Date.now()), '', ArrayList_init());
+      createAlbumsServer('testJS1', token1, album);
+      albums = obtainAlbumsFromUserServer('testJS1');
+      if (albums.size === 0 || !equals(albums.get_za3lpa$(0).name, 'testJSAlbum')) {
+        return false;
+      }
+      if (!deleteAlbumsServer('testJS1', token1, album)) {
+        return false;
+      }
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function testfav() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var albums = obtainAlbumsFromUserServer('testJS1');
+      if (!albums.isEmpty()) {
+        return false;
+      }
+      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
+      uploadSongServer('testJS1', token1, song);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function test_songlist() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var songlist = getFollowedPlaylistsServer('testJS1');
+      if (!songlist.isEmpty()) {
+        return false;
+      }
+      var playlist = new Playlist(L_1, 'myPlaylist', user, '', emptyList(), emptyList());
+      createPlaylistServer('testJS1', token1, playlist);
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
+  function test_songs() {
+    try {
+      var user = User_init('testJS1', '1234567');
+      user.name = 'Test1';
+      user.email = 'test@test.com';
+      var token1 = doSignUpServer(user);
+      var songs = obtainSongsFromUserServer('testJS1');
+      if (!songs.isEmpty()) {
+        return false;
+      }
+      var song = new Song(L_1, 'TestJSSong', 'ESP', '', L0, null, '', null);
+      uploadSongServer('testJS1', token1, song);
+      songs = obtainSongsFromUserServer('testJS1');
+      if (songs.size !== 1 || !equals(songs.get_za3lpa$(0).name, 'TestJSSong')) {
+        return false;
+      }
+      return true;
+    }
+     catch (e) {
+      if (Kotlin.isType(e, Exception)) {
+        println(e);
+      }
+       else
+        throw e;
+    }
+    finally {
+      var token = doLoginServer('testJS1', '1234567');
+      doDeleteAccountServer('testJS1', token);
+    }
+    return false;
+  }
   function main_0(args) {
+    var s3 = s3Connection();
+    ListBuckets(s3);
   }
   function Album(id, name, creator, releaseDate, artLocationUri, content) {
     if (id === void 0)
@@ -3982,8 +3987,18 @@ var KOTLINJS = function (_, Kotlin) {
     }
     var id = createAlbumsServer(username, token, album);
     obtainAlbumFromID(id);
-    if (obtainAlbumsFromUserServer(username).size !== 1)
+    var song = new Song(null, 'nobre', 'df', '', L0, null, null, '');
+    var idS = uploadSongServer(username, token, song);
+    var songD = obtainSongFromID(idS);
+    addSongToAlbumServer(username, token, id, song);
+    var album2 = obtainAlbumFromID(id);
+    if (ensureNotNull(album2).content.size !== 1)
       throw Exception_init('obtainAlbumsFromUserServer');
+    removeSongToAlbumServer(username, token, id, song);
+    album2 = obtainAlbumFromID(id);
+    if (!ensureNotNull(album2).content.isEmpty())
+      throw Exception_init('obtainAlbumsFromUserServer');
+    deleteAlbumsServer(username, token, album2);
     doDeleteAccountServer(username, token);
     doDeleteAccountServer(username2, token2);
   };
@@ -4175,14 +4190,6 @@ var KOTLINJS = function (_, Kotlin) {
     simpleName: 'InstrumentedTestBackEndSpreadYoutMusic',
     interfaces: []
   };
-  _.test_user = test_user;
-  _.test_logout = test_logout;
-  _.test_following = test_following;
-  _.test_album = test_album;
-  _.testfav = testfav;
-  _.test_songlist = test_songlist;
-  _.test_songs = test_songs;
-  _.main_kand9s$ = main;
   var package$apis = _.apis || (_.apis = {});
   package$apis.createForm_alv746$ = createForm;
   Object.defineProperty(package$apis, 'server', {
@@ -4261,7 +4268,15 @@ var KOTLINJS = function (_, Kotlin) {
   package$apis.deleteSongServer_jecffn$ = deleteSongServer;
   package$apis.doUpdateAccountServer_oqo341$ = doUpdateAccountServer;
   var package$controller = _.controller || (_.controller = {});
-  package$controller.main_kand9s$ = main_0;
+  package$controller.main_kand9s$ = main;
+  _.test_user = test_user;
+  _.test_logout = test_logout;
+  _.test_following = test_following;
+  _.test_album = test_album;
+  _.testfav = testfav;
+  _.test_songlist = test_songlist;
+  _.test_songs = test_songs;
+  _.main_kand9s$ = main_0;
   var package$models = _.models || (_.models = {});
   package$models.Album = Album;
   package$models.Playlist = Playlist;
@@ -4286,7 +4301,7 @@ var KOTLINJS = function (_, Kotlin) {
   albumUploadPrefix = 'album_';
   playlistUploadPrefix = 'playlist_';
   s3 = null;
-  main([]);
+  main_0([]);
   Kotlin.defineModule('KOTLINJS', _);
   return _;
 }(typeof KOTLINJS === 'undefined' ? {} : KOTLINJS, kotlin);
