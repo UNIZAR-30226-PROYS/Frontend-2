@@ -63,35 +63,35 @@ private const val playlistUploadPrefix = "playlist_"
  * Devuelve la dirección de las letras de una canción
  */
 private fun getSongLyricsPath(songId: Long): String {
-    return "$dataServerAdress/$songLyricsUploadPrefix$songId"
+    return "$dataServerAdress/Public/$songLyricsUploadPrefix$songId"
 }
 
 /**
  * Devuelve la dirección del archivo de música de una canción
  */
 private fun getSongLocationPath(songId: Long): String {
-    return "$dataServerAdress/$songLocationUploadPrefix$songId"
+    return "$dataServerAdress/Public/$songLocationUploadPrefix$songId"
 }
 
 /**
  * Devuelve la dirección de la foto de perfil de un usuario
  */
 private fun getUserProfilePicturePath(username: String): String {
-    return "$dataServerAdress/$userUploadPrefix$username"
+    return "$dataServerAdress/Public/$userUploadPrefix$username"
 }
 
 /**
  * Devuelve la dirección de la foto de portada de una playlist
  */
 private fun getPlaylistCoverPath(playlistId: Long): String {
-    return "$dataServerAdress/$playlistUploadPrefix$playlistId"
+    return "$dataServerAdress/Public/$playlistUploadPrefix$playlistId"
 }
 
 /**
  * Devuelve la dirección de la foto de portada de un álbum
  */
 private fun getAlbumCoverPath(albumId: Long): String {
-    return "$dataServerAdress/$albumUploadPrefix$albumId"
+    return "$dataServerAdress/Public/$albumUploadPrefix$albumId"
 }
 
 
