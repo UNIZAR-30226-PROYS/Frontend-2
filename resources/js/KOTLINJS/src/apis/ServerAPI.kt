@@ -31,6 +31,7 @@ fun createForm(mapa: Map<String, String?>): String{
  * Warning: esta operación puede ser costosa en tiempo
  */
 var server = "http://155.210.13.105:7800"
+var localhost = "http://localhost:3000"
 
 /**
  * Address of Back-End Server
@@ -93,22 +94,17 @@ private fun getAlbumCoverPath(albumId: Long): String {
     return "$dataServerAdress/$albumUploadPrefix$albumId"
 }
 
-external  fun ListBuckets(s3: Any)
-external fun s3Connection(): Any
-external fun UploadFile(s3: Any, file: String, key: String):Boolean
-external fun DeleteFile(s3:Any, key: String):Boolean
-
-var s3: Any? = null
 
 /**
  * Elimina las letras de una canción
  * Devuelve true si la operación ha tenido exito
  */
 private fun deleteSongLyrics(songId: Long): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return DeleteFile(s3!!,"$songLyricsUploadPrefix$songId")
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/DeleteFile/:$songLyricsUploadPrefix$songId", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
 }
 
 /**
@@ -116,10 +112,12 @@ private fun deleteSongLyrics(songId: Long): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun deleteSongLocation(songId: Long): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return DeleteFile(s3!!,"$songLyricsUploadPrefix$songId")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/DeleteFile/:$songLyricsUploadPrefix$songId", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
 }
 
 /**
@@ -127,10 +125,12 @@ private fun deleteSongLocation(songId: Long): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun deleteUserProfilePicture(username: String): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return DeleteFile(s3!!,"$userUploadPrefix$username")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/DeleteFile/:$userUploadPrefix$username", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
 }
 
 /**
@@ -138,10 +138,13 @@ private fun deleteUserProfilePicture(username: String): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun deletePlaylistCover(playlistId: Long): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return DeleteFile(s3!!,"$playlistUploadPrefix$playlistId")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/DeleteFile/:$playlistUploadPrefix$playlistId", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
 }
 
 /**
@@ -149,10 +152,13 @@ private fun deletePlaylistCover(playlistId: Long): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun deleteAlbumCover(albumId: Long): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return DeleteFile(s3!!,"$albumUploadPrefix$albumId")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/DeleteFile/:$albumUploadPrefix$albumId", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
 }
 
 
@@ -161,10 +167,13 @@ private fun deleteAlbumCover(albumId: Long): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun uploadSongLyrics(songId: Long, filePath: String): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return UploadFile(s3!!,filePath, "$songLyricsUploadPrefix$songId")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/uploadFile/$songLyricsUploadPrefix$songId/$filePath", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
 }
 
 /**
@@ -172,10 +181,14 @@ private fun uploadSongLyrics(songId: Long, filePath: String): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun uploadSongLocation(songId: Long, filePath: String): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return UploadFile(s3!!,filePath, "$songLocationUploadPrefix$songId")
+
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/uploadFile/$songLocationUploadPrefix$songId/$filePath", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
 }
 
 /**
@@ -183,10 +196,12 @@ private fun uploadSongLocation(songId: Long, filePath: String): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun uploadUserProfilePicture(username: String, filePath: String): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return UploadFile(s3!!,filePath, "$userUploadPrefix$username")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/uploadFile/$userUploadPrefix$username/$filePath", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
 }
 
 /**
@@ -194,10 +209,13 @@ private fun uploadUserProfilePicture(username: String, filePath: String): Boolea
  * Devuelve true si la operación ha tenido exito
  */
 private fun uploadPlaylistCover(playlistId: Long, filePath: String): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return UploadFile(s3!!,filePath, "$playlistUploadPrefix$playlistId")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/uploadFile/$playlistUploadPrefix$playlistId/$filePath", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
 }
 
 /**
@@ -205,12 +223,35 @@ private fun uploadPlaylistCover(playlistId: Long, filePath: String): Boolean {
  * Devuelve true si la operación ha tenido exito
  */
 private fun uploadAlbumCover(albumId: Long, filePath: String): Boolean {
-    if (s3 == null){
-        s3 = s3Connection()
-    }
-    return UploadFile(s3!!,filePath, "$albumUploadPrefix$albumId")
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/uploadFile/$albumUploadPrefix$albumId/$filePath", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
 }
 
+
+fun uploadFile(key: String, filePath: String): Boolean {
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/uploadFile/$key/$filePath", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
+}
+
+fun deleteFile(key: String): Boolean {
+
+    val req = XMLHttpRequest()
+    req.open("GET", "$server/AWS/DeleteFile/$key", false)
+    req.setRequestHeader("Content-Type", "applicatiosn/x-www-form-urlencoded")
+    req.send()
+    return req.status.compareTo(200) == 0
+
+}
 /*
                             PETICIONES AUXILIARES
  */

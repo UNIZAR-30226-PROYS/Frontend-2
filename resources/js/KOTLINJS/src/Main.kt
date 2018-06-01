@@ -240,14 +240,14 @@ fun test_songs():Boolean{
 
 fun main(args: Array<String>) {
     //isUserAdmin("abel","bmckb8sp5afrrjdz")
-
-
+    uploadFile("mykey","")
+    /*
     val Test = InstrumentedTestBackEndSpreadYoutMusic()
     //Test.UserRequestTest() //PASSED
     //Test.SongsRequestTest() //PASSED
     //Test.AlbumRequestTest() //PASSED
     Test.PlaylistRequestTest()
     Test.ComplexRequestsTest()
-
+    */
 
 }
