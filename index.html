@@ -164,7 +164,9 @@ layout: general
         font-weight: bold;
    }
 
-
+    .song-chart :hover{
+        box-shadow: 8px 8px white;
+    }
     #song-chart-content-1{
         width: 400px;
         border-right: solid 6px red;
@@ -219,19 +221,19 @@ layout: general
     }
     #album-chart-content-2{
         width: 320px;
-        border-left: solid 6px gray;
+        border-left: solid 6px white;
     }
     #album-chart-content-3{
         width: 220px;
-        border-left: solid 6px cornflowerblue;
+        border-left: solid 6px white;
     }
     #album-chart-content-4{
         width: 200px;
-        border-left: solid 6px yellowgreen;
+        border-left: solid 6px white;
     }
     #album-chart-content-5{
         width: 120px;
-        border-left: solid 6px #009926;
+        border-left: solid 6px white;
     }
     #album-chart-container{
 		position:relative;
@@ -445,13 +447,13 @@ layout: general
         }
 
         /******** canciones *********/
-        inner = "";
+        var inner = "";
         var songs = KOTLINJS.apis.obtainPopularSongsServer_s8cxhz$(5);
         for( var i = 0; i < songs.modCount; i++ ){
             inner +=
                 "<div class=\"song-chart\">\n" +
                 "        <a href='http://127.0.0.1:4000/song?id=" + songs.array_hd7ov6$_0[i].id + "'>\n" +
-                "        <img class=\"song-chart-image\" src=\"" + songs.array_hd7ov6$_0[i].album.artLocationUri + "\">\n" +
+                "        <img class=\"song-chart-image\" src=\"resources/imgs/wu.jpg\">\n" +
                 "        <div class=\"song-chart-content\" id=\"song-chart-content-" + (i+1) + "\">\n" +
                 "            <p class=\"song-chart-content-titulo\">" + songs.array_hd7ov6$_0[i].name + "</p>\n" +
                 "            <p>" + songs.array_hd7ov6$_0[i].album.creator.name + "</p>\n" +
@@ -462,7 +464,7 @@ layout: general
         for( var i = 5-songs.modCount-1; i < 5; i++ ){
             inner +=
                 "<div class=\"song-chart\">\n" +
-                "        <img class=\"song-chart-image\" src=\"resources/imgs/voidalbum.jpg\">\n" +
+                "        <img class=\"song-chart-image\" src=\"resources/imgs/wu.jpg\">\n" +
                 "        <div class=\"song-chart-content\" id=\"song-chart-content-" + (i+1) + "\" style='width: 30px;' >\n" +
             "            <p class=\"song-chart-content-titulo\" style='color: transparent'>Titulo</p>\n" +
             "            <p style='color: transparent'>Artista</p>\n" +
@@ -471,9 +473,11 @@ layout: general
         }
         document.getElementById("container-song-chart").innerHTML = inner;
 
-
         /*******   generos  *******/
+<<<<<<< HEAD
 
+=======
+>>>>>>> backend
         var inner = "";
         var generos = KOTLINJS.apis.obtainGeneresServer();
         var colorpal = ["#d5f4e6", "#80ced6", "#fefbd8", "#618685"];
@@ -485,7 +489,7 @@ layout: general
                 "            </div>";
         }
         $("#generos-container").append(inner);
-*/
+
 
         if( ( user == undefined || user == "" || user.length == 0 ) ){
 
@@ -555,8 +559,53 @@ layout: general
 
 
             <!-- Wrapper for slides -->
-            <div class="carousel-inner" id="carousel-novedades">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="info-carousel">TITULO</h1>
+                                <h1 class="info-carousel-artista">TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                </div>
 
+                <div class="item">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1 class="info-carousel">TITULO</h1>
+                                <h1 class="info-carousel-artista">TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <a href="">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                </div>
+
+                <div class="item">
+                    <div class="container-fluid carousel-content">
+                        <div class="row">
+                            <div class="col">
+                                <h1>TITULO</h1>
+                                <h1>TITULO</h1>
+                            </div>
+                            <div class="col">
+                                <img src="resources/imgs/wu.jpg" alt="Los Angeles">
+                            </div>
+                        </div>
+                    </div>
+                    <img class="back-image-carousel" src="resources/imgs/wu.jpg" alt="Los Angeles" style="width:100%;">
+                </div>
             </div>
 
             <!-- Left and right controls -->
@@ -636,45 +685,45 @@ layout: general
 
     <div id="album-chart-container" align='right'>
         <div class="album-chart">
-            <a href="http://127.0.0.1:4000/playlist?type=album&id=3">
+            <a href="">
             <div class="album-chart-content" id="album-chart-content-1">
-                <p class="album-chart-content-titulo">Beerbongs & Bentleys</p>
-                <p class="album-chart-content-artista">Post Malone</p>
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
-            <img class="album-chart-image" src="resources/imgs/albumpost.jpg">
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
             </a>
         </div>
 
         <div class="album-chart">
             <div class="album-chart-content" id="album-chart-content-2">
-                <p class="album-chart-content-titulo">A$AP Forever</p>
-                <p class="album-chart-content-artista">A$AP Rocky</p>
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
-            <img class="album-chart-image" src="resources/imgs/albumasap.jpeg">
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
 
 		<div class="album-chart">
             <div class="album-chart-content" id="album-chart-content-3">
-                <p class="album-chart-content-titulo">Enter the 36 chamber</p>
-                <p class="album-chart-content-artista">Wu Tang</p>
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
             <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
 
 		<div class="album-chart">
             <div class="album-chart-content" id="album-chart-content-4">
-                <p class="album-chart-content-titulo">Tranquility Base Hotel &</p>
-                <p class="album-chart-content-artista">Artic Monkeys</p>
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
-            <img class="album-chart-image" src="resources/imgs/albumartic.jpg">
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
 
 		<div class="album-chart">
             <div class="album-chart-content" id="album-chart-content-5">
-                <p class="album-chart-content-titulo">DAMN</p>
-                <p class="album-chart-content-artista">Kendrick Lamar</p>
+                <p class="album-chart-content-titulo">Titulo</p>
+                <p class="album-chart-content-artista">Artista</p>
             </div>
-            <img class="album-chart-image" src="resources/imgs/albumkendr.jpg">
+            <img class="album-chart-image" src="resources/imgs/wu.jpg">
         </div>
     </div>
 
@@ -683,24 +732,24 @@ layout: general
         <div class="container-fluid">
             <div class="row" id="artists-chart-fis">
                 <div class="col-sm-2"></div>
-                <a href="http://127.0.0.1:4000/profile?user=Kendrick">
-                <div class="col-sm-3"><img src="resources/imgs/albumkendr.jpg"></div>
+                <a href="">
+                <div class="col-sm-3"><img src="resources/imgs/nas-illmatic.jpg"></div>
                 </a>
                 <div class="col-sm-2"></div>
             </div>
             <div class="row" id="artist-chart-sec">
                 <div class="col-sm-1"></div>
-                <div class="col-sm-2" ><img src="resources/imgs/artistasap.jpeg"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
                 <div class="col-sm-1"></div>
-                <div class="col-sm-2"><img src="resources/imgs/artistartic.jpg"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
                 <div class="col-sm-1"></div>
             </div>
             <div class="row" id="artist-chart-thr">
                 <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
                 <div class="col-sm-1"></div>
-                <div class="col-sm-2"><img src="resources/imgs/artistkendr.jpg"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
                 <div class="col-sm-1"></div>
-                <div class="col-sm-2"><img src="resources/imgs/artistbea.JPG"></div>
+                <div class="col-sm-2"><img src="resources/imgs/nas-illmatic.jpg"></div>
 
             </div>
         </div>
@@ -751,21 +800,19 @@ layout: general
     <div id="generos-content">
         <div class="grid-container" id="generos-container">
 
+<!--
             <div class="grid-s grid-item-1 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px"  onclick="redirectToGen()">
                 <a href="http://127.0.0.1:4000/playlist?type=genero&name=Rock" style="color: #000;">
                 <h5 style="margin: auto; width: 30%; font-size: 25px">Rap</h5>
                 </a>
             </div>
-
             <div class="grid-s grid-item-2 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px" onclick="redirectToGen()">
                 <a href="http://127.0.0.1:4000/playlist?type=genero&name=Rock" style="color: #000;">
                 <h5 style="margin: auto; width: 30%; font-size: 25px">Rock</h5>
                 </a>
             </div>
             <div class="grid-s grid-item-3 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px" onclick="redirectToGen()">
-                <a href="" style="color: #000;">
-                <h5 style="margin: auto; width: 30%; font-size: 25px">Trap</h5>
-                </a>
+                <h5 style="margin: auto; width: 30%; font-size: 25px">Genero1</h5>
             </div>
 
             <div class="grid-s grid-item-4 your-element" data-tilt data-tilt-max="50" data-tilt-speed="400" data-tilt-perspective="500" style="background-color: #d5f4e6; padding-top: 50px" onclick="redirectToGen()">

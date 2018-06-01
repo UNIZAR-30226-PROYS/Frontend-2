@@ -4,6 +4,7 @@ package models
  * Created by abel on 26/04/18.
  */
 
+<<<<<<< HEAD
 class Song() : Recommendation {
         var id: Long = 0
         var name: String = ""
@@ -13,6 +14,9 @@ class Song() : Recommendation {
         var album: Album = Album()
         var genere:String? = null
         var lyricsPath:String? = null
+=======
+class Song(var id: Long?, val name: String, val country: String, var locationUri: String, val duration: Long, var album: Album?, val genere:String?, val lyricsPath:String?) : Recommendation {
+>>>>>>> backend
 
     constructor(id: Long, name: String, country: String, locationUri: String, duration:Long, album:Album, genere:String, lyrics:String):this(){
         this.id = id

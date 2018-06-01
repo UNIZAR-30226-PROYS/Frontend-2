@@ -5,7 +5,11 @@ import kotlin.collections.ArrayList
 import kotlin.js.Date
 
 object ServerEmulator {
+<<<<<<< HEAD
 
+=======
+    /*
+>>>>>>> backend
     val songList = HashMap<Long, Song>()
     val userList = HashMap<String, User>()
     val playlistList = HashMap<Long, Playlist>()
@@ -31,8 +35,13 @@ object ServerEmulator {
         val album1 = Album(1,"Jazz", autor1, Date(2018, 3, 22), "http://storage.googleapis.com/automotive-media/album_art.jpg", mutableListOf())
         val album2 = Album(2,"Blues", autor2, Date(2017, 6, 27), "http://storage.googleapis.com/automotive-media/album_art_2.jpg", mutableListOf())
 
+<<<<<<< HEAD
         val cancion1 = Song(album = album1, id = 1, name = "Jazz in Paris",duration = 103000L, locationUri = "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3", lyricsPath ="", genere = "", country= "")
         val cancion2 = Song(album = album2, id = 2, name = "The Messenger",  duration = 132000L, locationUri = "http://storage.googleapis.com/automotive-media/The_Messenger.mp3", lyricsPath ="", genere = "", country = "")
+=======
+        val cancion1 = Song(album = album1, id = 1, name = "Jazz in Paris",duration = 103000L, locationUri = "http://storage.googleapis.com/automotive-media/Jazz_In_Paris.mp3", lyricsPath = null, genere = null, country= "")
+        val cancion2 = Song(album = album2, id = 2, name = "The Messenger",  duration = 132000L, locationUri = "http://storage.googleapis.com/automotive-media/The_Messenger.mp3", lyricsPath = null, genere = null, country = "")
+>>>>>>> backend
 
         val list1 = ArrayList<Song>()
         list1.add(cancion1)
@@ -89,5 +98,5 @@ object ServerEmulator {
         albumList.add(album2)
 
     }
-
+    */
 }

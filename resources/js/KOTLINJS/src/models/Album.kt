@@ -6,6 +6,7 @@ import kotlin.js.Date
  * Created by abel on 26/04/18.
  */
 
+<<<<<<< HEAD
 class Album() : Recommendation {
 
     var id: Long = 0
@@ -32,3 +33,14 @@ class Album() : Recommendation {
     }
 
 }
+=======
+class Album(
+        var id:Long? = null,
+        val name: String,
+        var creator: User,
+        val releaseDate: Date,
+        var artLocationUri : String,
+        var content: List<Song>
+
+)
+>>>>>>> backend

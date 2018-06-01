@@ -4,11 +4,19 @@ import models.Playlist
 import models.Song
 import models.User
 import org.w3c.xhr.XMLHttpRequest
+<<<<<<< HEAD
+=======
+import test.InstrumentedTestBackEndSpreadYoutMusic
+>>>>>>> backend
 import kotlin.js.Date
 import kotlin.js.Json
 import kotlin.js.iterator
 import kotlin.js.json
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> backend
 fun test_user(): Boolean{
     try {
         var user = User("testJS", "1234567")
@@ -133,9 +141,13 @@ fun test_album():Boolean{
             return false
         }
         var album = Album(0, "testJSAlbum", obtainUserDataServer("testJS1",null)!!, Date(Date.now()),"", mutableListOf())
+<<<<<<< HEAD
         if (!createAlbumsServer("testJS1",token1,album)){
             return false
         }
+=======
+        createAlbumsServer("testJS1",token1,album)
+>>>>>>> backend
         albums = obtainAlbumsFromUserServer("testJS1")
         if (albums.size == 0 || albums[0].name != "testJSAlbum"){
             return false
@@ -166,9 +178,14 @@ fun testfav():Boolean{
         }
         var song : Song = Song(-1,"TestJSSong","ESP","",0,null,"",null)
 
+<<<<<<< HEAD
         if(!uploadSongServer("testJS1", token1,song)){
             return false
         }
+=======
+        uploadSongServer("testJS1", token1,song)
+
+>>>>>>> backend
 
 
         return true
@@ -221,9 +238,13 @@ fun test_songs():Boolean{
         }
         var song : Song = Song(-1,"TestJSSong","ESP","",0,null,"",null)
 
+<<<<<<< HEAD
         if(!uploadSongServer("testJS1", token1,song)){
             return false
         }
+=======
+        uploadSongServer("testJS1", token1,song)
+>>>>>>> backend
         songs = obtainSongsFromUserServer("testJS1")
         if (songs.size != 1 || songs[0].name != "TestJSSong"){
             return false
@@ -240,6 +261,7 @@ fun test_songs():Boolean{
     }
     return false
 }
+<<<<<<< HEAD
 */
 
 fun main(args: Array<String>) {
@@ -256,6 +278,21 @@ fun main(args: Array<String>) {
     }catch (e: Exception){
         print(e)
     }
+=======
+
+
+fun main(args: Array<String>) {
+    println(obtainUserDataServer("abelfff")!!.pictureLocationUri)
+    //isUserAdmin("abel","bmckb8sp5afrrjdz")
+    //uploadFile("mykey","")
+    /*
+    val Test = InstrumentedTestBackEndSpreadYoutMusic()
+    //Test.UserRequestTest() //PASSED
+    //Test.SongsRequestTest() //PASSED
+    //Test.AlbumRequestTest() //PASSED
+    Test.PlaylistRequestTest()
+    Test.ComplexRequestsTest()
+>>>>>>> backend
     */
 
 }
